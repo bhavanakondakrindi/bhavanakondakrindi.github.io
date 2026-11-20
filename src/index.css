@@ -6,10 +6,10 @@
   :root {
     --bg-primary: #FAF7F2;
     --bg-surface: #FFFFFF;
-    --text-primary: #1E1E24;
-    --text-muted: #64748B;
-    --accent-color: #F472B6;
-    --border-color: #1E1E24;
+    --text-primary: #1A1714;
+    --text-muted: #57534E;
+    --accent-color: #E11D48;
+    --border-color: #1A1714;
   }
 
   html {
@@ -24,36 +24,146 @@
   }
 }
 
-/* Notebook Graph Paper Texture */
+/* ==============================================================================
+   AUTHENTIC SCRAPBOOK & PAPER TEXTURES
+   ============================================================================== */
+
+/* Fine Millimeter / Graph Paper */
 .bg-graph-paper {
   background-size: 24px 24px;
   background-image: 
-    linear-gradient(to right, rgba(148, 163, 184, 0.18) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.18) 1px, transparent 1px);
+    linear-gradient(to right, rgba(148, 163, 184, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.22) 1px, transparent 1px);
 }
 
 .bg-graph-paper-fine {
-  background-size: 16px 16px;
+  background-size: 14px 14px;
   background-image: 
-    linear-gradient(to right, rgba(148, 163, 184, 0.14) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.14) 1px, transparent 1px);
+    linear-gradient(to right, rgba(148, 163, 184, 0.16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.16) 1px, transparent 1px);
 }
 
-.bg-lined-paper {
+/* Ruled Notebook Paper with left margin */
+.bg-ruled-paper {
   background-size: 100% 28px;
-  background-image: linear-gradient(to bottom, transparent 27px, rgba(148, 163, 184, 0.22) 28px);
+  background-image: linear-gradient(to bottom, transparent 27px, rgba(148, 163, 184, 0.25) 28px);
 }
 
 .bg-dot-grid {
-  background-image: radial-gradient(rgba(100, 116, 139, 0.25) 1.5px, transparent 1.5px);
+  background-image: radial-gradient(rgba(100, 116, 139, 0.28) 1.5px, transparent 1.5px);
   background-size: 20px 20px;
 }
 
-/* Washi Tape styling with realistic semi-transparency and ripped ends */
+/* Blueprint Dark Grid Paper */
+.bg-blueprint-grid {
+  background-color: #0F172A;
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(56, 189, 248, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.15) 1px, transparent 1px);
+}
+
+/* ==============================================================================
+   RIPPED & TORN PAPER EDGES
+   ============================================================================== */
+
+.torn-paper-bottom {
+  position: relative;
+}
+.torn-paper-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background-repeat: repeat-x;
+  background-size: 28px 14px;
+  background-image: radial-gradient(circle at 14px 0, transparent 9px, #FAF7F2 10px);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.torn-paper-top {
+  position: relative;
+}
+.torn-paper-top::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background-repeat: repeat-x;
+  background-size: 28px 14px;
+  background-image: radial-gradient(circle at 14px 14px, transparent 9px, #FAF7F2 10px);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Jagged Zigzag Cut Edge */
+.edge-zigzag-bottom {
+  clip-path: polygon(
+    0% 0%, 100% 0%, 100% calc(100% - 10px),
+    98% 100%, 96% calc(100% - 10px), 94% 100%, 92% calc(100% - 10px), 90% 100%,
+    88% calc(100% - 10px), 86% 100%, 84% calc(100% - 10px), 82% 100%, 80% calc(100% - 10px),
+    78% 100%, 76% calc(100% - 10px), 74% 100%, 72% calc(100% - 10px), 70% 100%,
+    68% calc(100% - 10px), 66% 100%, 64% calc(100% - 10px), 62% 100%, 60% calc(100% - 10px),
+    58% 100%, 56% calc(100% - 10px), 54% 100%, 52% calc(100% - 10px), 50% 100%,
+    48% calc(100% - 10px), 46% 100%, 44% calc(100% - 10px), 42% 100%, 40% calc(100% - 10px),
+    38% 100%, 36% calc(100% - 10px), 34% 100%, 32% calc(100% - 10px), 30% 100%,
+    28% calc(100% - 10px), 26% 100%, 24% calc(100% - 10px), 22% 100%, 20% calc(100% - 10px),
+    18% 100%, 16% calc(100% - 10px), 14% 100%, 12% calc(100% - 10px), 10% 100%,
+    8% calc(100% - 10px), 6% 100%, 4% calc(100% - 10px), 2% 100%, 0% calc(100% - 10px)
+  );
+}
+
+/* ==============================================================================
+   AIRMAIL BORDER STRIP (Reference 5)
+   ============================================================================== */
+.airmail-strip {
+  background: repeating-linear-gradient(
+    -45deg,
+    #DC2626 0,
+    #DC2626 12px,
+    #FFFFFF 12px,
+    #FFFFFF 20px,
+    #2563EB 20px,
+    #2563EB 32px,
+    #FFFFFF 32px,
+    #FFFFFF 40px
+  );
+  height: 10px;
+}
+
+/* ==============================================================================
+   EDITORIAL HIGHLIGHTER STROKES (Reference 1 & 4)
+   ============================================================================== */
+.highlight-pink {
+  background: linear-gradient(104deg, rgba(251, 207, 232, 0) 0.9%, rgba(251, 207, 232, 0.85) 2.4%, rgba(251, 207, 232, 0.75) 5.8%, rgba(251, 207, 232, 0.6) 93%, rgba(251, 207, 232, 0.1) 98%);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+.highlight-yellow {
+  background: linear-gradient(104deg, rgba(254, 240, 138, 0) 0.9%, rgba(254, 240, 138, 0.9) 2.4%, rgba(254, 240, 138, 0.8) 5.8%, rgba(254, 240, 138, 0.65) 93%, rgba(254, 240, 138, 0.1) 98%);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+.highlight-blue {
+  background: linear-gradient(104deg, rgba(186, 230, 253, 0) 0.9%, rgba(186, 230, 253, 0.85) 2.4%, rgba(186, 230, 253, 0.75) 5.8%, rgba(186, 230, 253, 0.6) 93%, rgba(186, 230, 253, 0.1) 98%);
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+/* ==============================================================================
+   WASHI TAPE WITH REALISTIC JAGGED SERRATION
+   ============================================================================== */
 .washi-tape {
   position: relative;
-  background: rgba(254, 240, 138, 0.85);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  background: rgba(254, 240, 138, 0.88);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   clip-path: polygon(
     0% 4px, 2% 0px, 4% 3px, 6% 1px, 8% 4px, 10% 0px,
     90% 0px, 92% 3px, 94% 1px, 96% 4px, 98% 0px, 100% 3px,
@@ -63,93 +173,59 @@
   backdrop-filter: blur(1px);
 }
 
-.washi-tape-pink {
-  background: rgba(251, 207, 232, 0.85);
-}
-
-.washi-tape-mint {
-  background: rgba(167, 243, 208, 0.85);
-}
-
-.washi-tape-blue {
-  background: rgba(186, 230, 253, 0.85);
-}
-
-.washi-tape-lavender {
-  background: rgba(221, 214, 254, 0.85);
-}
-
-/* Torn paper edge effect */
-.torn-edge-bottom {
+/* ==============================================================================
+   FILE FOLDER TAB STYLING (Reference 8)
+   ============================================================================== */
+.folder-card {
   position: relative;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+  border-bottom-left-radius: 24px;
 }
-.torn-edge-bottom::after {
-  content: '';
+
+.folder-tab-badge {
   position: absolute;
-  bottom: -10px;
+  top: -28px;
   left: 0;
-  right: 0;
-  height: 12px;
-  background-repeat: repeat-x;
-  background-size: 24px 12px;
-  background-image: radial-gradient(circle at 12px 0, transparent 8px, #FAF7F2 9px);
-  pointer-events: none;
+  height: 30px;
+  padding: 0 16px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  display: flex;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid #1A1714;
+  border-bottom: none;
 }
 
-.torn-edge-top {
-  position: relative;
-}
-.torn-edge-top::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  left: 0;
-  right: 0;
-  height: 12px;
-  background-repeat: repeat-x;
-  background-size: 24px 12px;
-  background-image: radial-gradient(circle at 12px 12px, transparent 8px, #FAF7F2 9px);
-  pointer-events: none;
+/* ==============================================================================
+   POLAROID & CRAFT PAPER SHADOWS
+   ============================================================================== */
+.shadow-scrapbook {
+  box-shadow: 4px 5px 0px 0px #1A1714;
 }
 
-/* Polaroid Photo Card */
-.polaroid-frame {
-  background: #FFFFFF;
-  padding: 12px 12px 28px 12px;
-  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.06), 2px 4px 0px rgba(30, 30, 36, 0.08);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+.shadow-scrapbook-lg {
+  box-shadow: 6px 8px 0px 0px #1A1714;
 }
 
-.polaroid-frame:hover {
-  box-shadow: 0 18px 36px -8px rgba(0, 0, 0, 0.18), 3px 6px 0px rgba(30, 30, 36, 0.12);
+.shadow-scrapbook-xl {
+  box-shadow: 10px 12px 0px 0px #1A1714;
 }
 
-/* Paper Stamp / Scalloped edge */
-.scalloped-badge {
-  position: relative;
-  border-radius: 9999px;
-  filter: drop-shadow(2px 3px 0px #1E1E24);
+.shadow-polaroid {
+  box-shadow: 
+    0 16px 32px -8px rgba(0, 0, 0, 0.14),
+    0 4px 12px -2px rgba(0, 0, 0, 0.08),
+    3px 4px 0px rgba(26, 23, 20, 0.1);
 }
 
-/* Custom Scrollbar for Scrapbook Vibe */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #FAF7F2;
-}
-::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 4px;
-  border: 2px solid #FAF7F2;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
-}
-
-/* Custom Desktop Cursor (small circular pointer with subtle hover effect, non-blocking) */
+/* ==============================================================================
+   CUSTOM CURSOR (NON-BLOCKING, TOUCH-AWARE)
+   ============================================================================== */
 @media (pointer: fine) {
   .custom-cursor-active,
   .custom-cursor-active * {
@@ -164,11 +240,10 @@
   left: 0;
   width: 8px;
   height: 8px;
-  background-color: #1E1E24;
+  background-color: #1A1714;
   border-radius: 50%;
   transform: translate(-50%, -50%);
   z-index: 99999;
-  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
 }
 
 .cursor-ring {
@@ -178,27 +253,12 @@
   left: 0;
   width: 28px;
   height: 28px;
-  border: 1.5px solid rgba(30, 30, 36, 0.5);
+  border: 1.5px solid rgba(26, 23, 20, 0.5);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   z-index: 99998;
-  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
 }
 
-.cursor-hover .cursor-dot {
-  width: 6px;
-  height: 6px;
-  background-color: #F43F5E;
-}
-
-.cursor-hover .cursor-ring {
-  width: 44px;
-  height: 44px;
-  border-color: #F43F5E;
-  background-color: rgba(244, 63, 94, 0.08);
-}
-
-/* Hide custom cursor on touch screens */
 @media (pointer: coarse) {
   .cursor-dot,
   .cursor-ring {
