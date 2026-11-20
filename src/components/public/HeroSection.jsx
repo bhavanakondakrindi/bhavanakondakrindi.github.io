@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { usePortfolio } from '../../context/PortfolioContext';
-import { ArrowDown, Mail, ExternalLink, Sparkles, Code2, GraduationCap, ArrowUpRight } from 'lucide-react';
+import { ArrowDown, Mail, ExternalLink, Sparkles, Code2, GraduationCap, ArrowUpRight, Compass, Terminal } from 'lucide-react';
 import { WashiTape } from '../ui/WashiTape';
 import { BinderClip } from '../ui/BinderClip';
-import { PostmarkStamp, CherriesSticker, RibbonBow } from '../ui/VintageStamps';
+import { PostmarkStamp, CherriesSticker, RibbonBow, EditorialBarcode } from '../ui/VintageStamps';
 import { SparkleStar, GemSticker, DoodleArrow } from '../ui/DoodleArrow';
 
 export const HeroSection = () => {
@@ -12,194 +12,228 @@ export const HeroSection = () => {
   const profile = publishedData?.profile || {};
 
   return (
-    <section className="relative pt-12 pb-24 md:pt-20 md:pb-32 overflow-hidden bg-graph-paper">
+    <section className="relative pt-8 pb-20 md:pt-14 md:pb-28 overflow-hidden bg-graph-paper">
       
-      {/* Subtle Floating Stamp in Background (Non-intrusive, elegantly placed) */}
-      <div className="absolute top-8 right-12 hidden xl:block opacity-85">
-        <PostmarkStamp text="KLH CSE DEPT" date="HYDERABAD • 2025" rotate={4} color="#DC2626" />
+      {/* Background Decorative Postmark Stamps & Floating Accents */}
+      <div className="absolute top-6 left-6 hidden lg:block opacity-75">
+        <PostmarkStamp text="KLH CSE DEPT" date="HYDERABAD • 2025" rotate={-8} color="#DC2626" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="absolute top-8 right-8 hidden lg:block opacity-85">
+        <EditorialBarcode />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         
-        {/* Editorial Header Eyebrow Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#1A1714]/20 mb-12">
-          <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border-2 border-[#1A1714] shadow-scrapbook text-xs font-mono font-bold text-slate-900">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>KLH Deemed to be University</span>
-            </span>
-            <span className="text-xs font-mono text-slate-500 hidden sm:inline font-semibold">
-              B.Tech Computer Science & Engineering
-            </span>
+        {/* Top Editorial Issue Pill */}
+        <motion.div
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border-2 border-[#1A1714] shadow-scrapbook text-xs font-mono font-bold text-slate-900 mb-8"
+        >
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span>KLH Deemed to be University • Computer Science & Engineering</span>
+          <span className="text-slate-300">•</span>
+          <span className="text-rose-600 font-black">CGPA ~{profile.cgpa || "9.5"}</span>
+        </motion.div>
+
+        {/* MASSIVE CENTERED EDITORIAL MASTHEAD */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="relative max-w-5xl mx-auto mb-6"
+        >
+          {/* Cherries sticker floating over title */}
+          <div className="absolute -top-6 left-12 hidden sm:block animate-wiggle">
+            <CherriesSticker size={42} />
           </div>
 
-          <div className="flex items-center gap-3 text-xs font-mono">
-            <span className="px-3 py-1 rounded-full bg-[#FEF08A] border-2 border-[#1A1714] font-black text-amber-950 shadow-xs">
-              ★ CGPA ~{profile.cgpa || "9.5"} / 10.0
-            </span>
-            <span className="text-slate-400 hidden sm:inline">•</span>
-            <span className="text-slate-600 font-bold hidden sm:inline">Sophomore (2nd Year)</span>
+          {/* Star sparkle accent */}
+          <div className="absolute -top-4 right-16 hidden sm:block animate-float">
+            <SparkleStar size={34} color="#FBBF24" />
           </div>
-        </div>
 
-        {/* Main Hero Spread: Asymmetric Editorial Composition */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
-          
-          {/* Left Column: Typography, Story & Actions (7 cols) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7 space-y-6"
-          >
-            {/* Cursive greeting label */}
-            <div className="flex items-center gap-2">
-              <span className="font-handwriting text-2xl text-rose-600 font-bold -rotate-1">
-                developer portfolio & creative journal
-              </span>
-              <DoodleArrow rotate={-5} color="#E11D48" className="w-8 h-5" />
+          <h1 className="font-editorial text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-[#1A1714] leading-[0.9] select-none">
+            Bhavana <br />
+            <span className="relative inline-block font-serif italic font-normal text-slate-900 mt-2">
+              <span className="relative z-10">Kondakrindi</span>
+              {/* Soft highlighter brush stroke */}
+              <span className="absolute -bottom-1 -left-3 -right-3 h-8 sm:h-12 bg-[#FBCFE8]/80 -rotate-0.5 rounded-sm -z-0" />
+            </span>
+          </h1>
+
+          <div className="mt-4 flex items-center justify-center gap-2">
+            <span className="font-handwriting text-2xl text-rose-600 font-bold -rotate-1">
+              creative developer portfolio & digital sketchbook
+            </span>
+          </div>
+        </motion.div>
+
+        {/* ART-DIRECTED CENTRAL COLLAGE EXHIBITION (Front & Center) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="relative max-w-2xl mx-auto my-12"
+        >
+          {/* Backing warm craft paper frame */}
+          <div className="relative bg-[#FEF9C3] p-4 sm:p-6 rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl">
+            
+            {/* Top Washi Tape */}
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
+              <WashiTape color="pink" width="140px" height="26px" rotate={-1} />
             </div>
 
-            {/* Oversized High-Contrast Editorial Display */}
-            <div>
-              <h1 className="font-editorial text-6xl sm:text-7xl md:text-8xl font-black tracking-tight text-[#1A1714] leading-[0.94]">
-                Bhavana <br />
-                <span className="relative inline-block font-serif italic font-normal text-slate-900 mt-1">
-                  <span className="relative z-10">Kondakrindi</span>
-                  {/* Soft organic highlighter stroke */}
-                  <span className="absolute -bottom-1 -left-1 -right-2 h-7 sm:h-9 bg-[#FBCFE8]/80 -rotate-0.5 rounded-sm -z-0" />
-                </span>
-              </h1>
+            {/* Wire Heart Paperclip */}
+            <div className="absolute -top-5 left-10 z-30">
+              <BinderClip type="heart-clip" rotate={-6} />
             </div>
 
-            {/* Deck / Mission */}
-            <p className="font-display text-lg sm:text-xl font-semibold text-slate-800 max-w-xl leading-relaxed pt-1">
-              {profile.tagline || "Exploring code, designing interactive software & solving practical problems."}
-            </p>
-
-            {/* Factual Intro Note Card */}
-            <div className="relative p-6 rounded-2xl bg-white border-2 border-[#1A1714] shadow-scrapbook max-w-xl">
-              {/* Corner washi tape */}
-              <div className="absolute -top-3 left-8 z-10">
-                <WashiTape color="yellow" width="100px" height="24px" rotate={-1} />
-              </div>
-
-              <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-sans pt-1">
-                {profile.intro}
-              </p>
-            </div>
-
-            {/* Practical Focus Pills */}
-            <div className="flex flex-wrap items-center gap-2 pt-1">
-              {[
-                "Airline Disruption Management",
-                "A* Drone Routing AI",
-                "React Frontend Systems",
-                "Java & Classical OOP"
-              ].map((tag, i) => (
-                <span
-                  key={i}
-                  className="text-xs font-mono font-semibold px-3 py-1 rounded-lg bg-white border border-[#1A1714]/25 text-slate-800 shadow-xs hover:border-[#1A1714] transition-colors"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-
-            {/* CTAs */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
-              <a
-                href="#projects"
-                className="group inline-flex items-center gap-2.5 px-7 py-4 rounded-2xl bg-[#1A1714] text-white font-mono font-bold text-xs uppercase tracking-wider shadow-scrapbook hover:shadow-scrapbook-lg hover:-translate-y-0.5 active:translate-y-0 transition-all"
-              >
-                <span>Explore Curated Projects</span>
-                <ArrowDown className="w-4 h-4 text-yellow-300 group-hover:translate-y-1 transition-transform" />
-              </a>
-
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-white border-2 border-[#1A1714] text-slate-900 font-mono font-bold text-xs uppercase tracking-wider shadow-scrapbook hover:bg-slate-50 hover:-translate-y-0.5 transition-all"
-              >
-                <Mail className="w-4 h-4 text-rose-500" />
-                <span>Get in Touch</span>
-              </a>
-            </div>
-
-          </motion.div>
-
-          {/* Right Column: Art-Directed Portrait Presentation (5 cols) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-5 flex justify-center lg:justify-end"
-          >
-            <div className="relative w-full max-w-sm">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
               
-              {/* Backing Craft Paper Mount */}
-              <div className="absolute -inset-3 bg-[#FEF9C3] rounded-3xl border-2 border-[#1A1714] shadow-scrapbook transform rotate-1 -z-10" />
-
-              {/* Main Polaroid Card Container */}
-              <div className="relative bg-white p-4 pb-8 rounded-2xl border-3 border-[#1A1714] shadow-scrapbook-lg transform -rotate-0.5 hover:rotate-0 transition-transform duration-300">
-                
-                {/* Washi Tape fastening top */}
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-                  <WashiTape color="pink" width="120px" height="26px" rotate={-1} />
-                </div>
-
-                {/* Wire Heart Paperclip (Reference 6) */}
-                <div className="absolute -top-5 left-6 z-30">
-                  <BinderClip type="heart-clip" rotate={-4} />
-                </div>
-
-                {/* Photo Inset */}
-                <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-slate-100 border-2 border-[#1A1714]/20 shadow-inner">
-                  <img
-                    src={profile.avatarUrl}
-                    alt={profile.name}
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80";
-                    }}
-                  />
-
-                  {/* Corner Label */}
-                  <div className="absolute bottom-3 left-3 bg-[#1A1714]/90 backdrop-blur-xs text-white px-2.5 py-1 rounded font-mono text-[10px] font-bold">
-                    KLH CSE • 2025
+              {/* Left Note: Academic Merit & Facts */}
+              <div className="md:col-span-4 text-left space-y-3 order-2 md:order-1">
+                <div className="bg-white p-3.5 rounded-xl border-2 border-[#1A1714] shadow-xs transform -rotate-1 hover:rotate-0 transition-transform">
+                  <span className="font-mono text-[9px] uppercase font-bold text-slate-400 block tracking-wider">
+                    ACADEMIC LOG
+                  </span>
+                  <div className="font-editorial font-bold text-sm text-slate-900 mt-0.5">
+                    KLH University
+                  </div>
+                  <p className="text-[11px] font-mono text-slate-600 mt-0.5">
+                    CSE Sophomore (2nd Yr)
+                  </p>
+                  <div className="mt-2 pt-1.5 border-t border-slate-200 flex items-center justify-between text-xs font-mono font-bold">
+                    <span>CGPA:</span>
+                    <span className="text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">
+                      ~{profile.cgpa || "9.5"} / 10
+                    </span>
                   </div>
                 </div>
 
-                {/* Polaroid Caption */}
-                <div className="mt-4 text-center">
-                  <p className="font-handwriting text-2xl text-[#1A1714] font-bold leading-tight">
-                    {profile.avatarCaption || "Bhavana Kondakrindi • CSE @ KLH"}
+                <div className="bg-white p-3 rounded-xl border-2 border-[#1A1714] shadow-xs hidden sm:block">
+                  <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-slate-800">
+                    <Code2 className="w-3.5 h-3.5 text-purple-700" />
+                    <span>Focus: Systems & Web</span>
+                  </div>
+                  <p className="text-[11px] text-slate-600 font-sans mt-1 leading-normal">
+                    React.js dashboards, Python AI simulations & Java OOP.
                   </p>
-                  <p className="text-[10px] font-mono uppercase tracking-widest text-slate-500 mt-1 font-semibold">
-                    KLH Deemed to be University
+                </div>
+              </div>
+
+              {/* Centerpiece: Bhavana's Polaroid Photo */}
+              <div className="md:col-span-4 flex justify-center order-1 md:order-2">
+                <div className="relative bg-white p-3 pb-6 rounded-2xl border-2 border-[#1A1714] shadow-scrapbook transform rotate-1 hover:rotate-0 transition-transform duration-300 w-full max-w-[220px]">
+                  
+                  <div className="aspect-[4/5] rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shadow-inner">
+                    <img
+                      src={profile.avatarUrl}
+                      alt={profile.name}
+                      className="w-full h-full object-cover select-none"
+                      onError={(e) => {
+                        e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80";
+                      }}
+                    />
+                  </div>
+
+                  <div className="mt-2.5 text-center">
+                    <p className="font-handwriting text-xl text-[#1A1714] font-bold leading-tight">
+                      {profile.avatarCaption || "Bhavana Kondakrindi"}
+                    </p>
+                    <p className="text-[9px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">
+                      KLH CSE • 2025
+                    </p>
+                  </div>
+
+                  {/* Ribbon bow accent */}
+                  <div className="absolute -bottom-3 -left-3 z-30">
+                    <RibbonBow />
+                  </div>
+
+                  {/* Gem sticker accent */}
+                  <div className="absolute -bottom-2 -right-2 z-30">
+                    <GemSticker type="ruby" size={28} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Note: Engineering Philosophy */}
+              <div className="md:col-span-4 text-left space-y-3 order-3">
+                <div className="bg-white p-3.5 rounded-xl border-2 border-[#1A1714] shadow-xs transform rotate-1 hover:rotate-0 transition-transform">
+                  <span className="font-mono text-[9px] uppercase font-bold text-slate-400 block tracking-wider">
+                    CORE PHILOSOPHY
+                  </span>
+                  <div className="font-editorial font-bold text-sm text-slate-900 mt-0.5">
+                    Practical Technology
+                  </div>
+                  <p className="text-[11px] font-sans text-slate-600 mt-1 leading-normal">
+                    "I believe in building working, user-centered software that solves real-world challenges."
                   </p>
                 </div>
 
-                {/* Red Ribbon Bow sticker at corner */}
-                <div className="absolute -bottom-4 -left-4 z-30">
-                  <RibbonBow />
+                <div className="bg-white p-3 rounded-xl border-2 border-[#1A1714] shadow-xs hidden sm:block">
+                  <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-slate-800">
+                    <Terminal className="w-3.5 h-3.5 text-emerald-700" />
+                    <span>Algorithmic Thinking</span>
+                  </div>
+                  <p className="text-[11px] text-slate-600 font-sans mt-1 leading-normal">
+                    Classical algorithms, data structures & pathfinding models.
+                  </p>
                 </div>
-
-                {/* Ruby Gem Sticker at corner */}
-                <div className="absolute -bottom-3 -right-3 z-30">
-                  <GemSticker type="ruby" size={32} />
-                </div>
-
               </div>
 
             </div>
-          </motion.div>
 
-        </div>
+          </div>
+        </motion.div>
+
+        {/* Narrative Deck & Introduction */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="max-w-2xl mx-auto space-y-4 mb-8"
+        >
+          <p className="font-display text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+            {profile.tagline || "Exploring code, designing interactive software & solving practical problems."}
+          </p>
+
+          <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-sans">
+            {profile.intro}
+          </p>
+        </motion.div>
+
+        {/* CTAs & Quick Focus Tags */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2"
+        >
+          <a
+            href="#projects"
+            className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#1A1714] text-white font-mono font-bold text-xs uppercase tracking-wider shadow-scrapbook hover:shadow-scrapbook-lg hover:-translate-y-0.5 active:translate-y-0 transition-all"
+          >
+            <span>Explore Selected Projects</span>
+            <ArrowDown className="w-4 h-4 text-yellow-300 group-hover:translate-y-1 transition-transform" />
+          </a>
+
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-white border-2 border-[#1A1714] text-slate-900 font-mono font-bold text-xs uppercase tracking-wider shadow-scrapbook hover:bg-slate-50 hover:-translate-y-0.5 transition-all"
+          >
+            <Mail className="w-4 h-4 text-rose-500" />
+            <span>Send a Direct Note</span>
+          </a>
+        </motion.div>
 
       </div>
 
-      {/* Marquee Ticker Strip Divider */}
-      <div className="mt-16 border-y-2 border-[#1A1714] bg-[#FEF08A] py-3 overflow-hidden shadow-xs">
+      {/* Marquee Ribbon Banner Strip */}
+      <div className="mt-16 border-y-2 border-[#1A1714] bg-[#FEF08A] py-3.5 overflow-hidden shadow-xs">
         <div className="flex whitespace-nowrap animate-marquee">
           <div className="flex items-center gap-8 text-xs sm:text-sm font-mono font-bold tracking-widest text-[#1A1714] uppercase">
             <span>★ COMPUTER SCIENCE ENGINEERING</span>

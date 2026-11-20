@@ -30,7 +30,7 @@ export const ProjectsSection = () => {
 
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
-      const offset = direction === 'left' ? -420 : 420;
+      const offset = direction === 'left' ? -460 : 460;
       scrollContainerRef.current.scrollBy({ left: offset, behavior: 'smooth' });
       setTimeout(checkScroll, 300);
     }
@@ -52,7 +52,7 @@ export const ProjectsSection = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#FEF08A] border-2 border-[#1A1714] font-mono text-xs font-bold text-amber-950 uppercase tracking-widest mb-3 shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FEF08A] border-2 border-[#1A1714] font-mono text-xs font-bold text-amber-950 uppercase tracking-widest mb-3 shadow-xs">
               <Bookmark className="w-3.5 h-3.5 text-amber-800" />
               <span>Chapter 03 // Engineering Artifacts</span>
             </div>
@@ -67,7 +67,7 @@ export const ProjectsSection = () => {
           {/* Carousel Arrow Controls */}
           <div className="flex items-center gap-3">
             <span className="text-xs font-mono text-slate-500 hidden sm:inline font-semibold">
-              Drag to explore dossiers
+              Drag or use controls
             </span>
             <button
               onClick={() => scroll('left')}
@@ -109,13 +109,13 @@ export const ProjectsSection = () => {
               onClick={() => setActiveProjectModal(project)}
               whileHover={{ y: -8, scale: 1.01 }}
               transition={{ duration: 0.25 }}
-              className="group relative shrink-0 w-[360px] sm:w-[420px] rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-lg hover:shadow-scrapbook-xl transition-all cursor-pointer flex flex-col justify-between overflow-hidden snap-start"
+              className="group relative shrink-0 w-[360px] sm:w-[440px] rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-lg hover:shadow-scrapbook-xl transition-all cursor-pointer flex flex-col justify-between overflow-hidden snap-start"
               style={{
                 backgroundColor: project.color || '#FFFFFF',
               }}
             >
               {/* Dossier Header Bar */}
-              <div className="relative p-6 pb-4 bg-white/80 border-b-2 border-[#1A1714]/15">
+              <div className="relative p-6 pb-4 bg-white/85 border-b-2 border-[#1A1714]/15">
                 
                 {/* Washi Tape strip holding top of dossier */}
                 <div className="absolute -top-3 left-8 z-10">
