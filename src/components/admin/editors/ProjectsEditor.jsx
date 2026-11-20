@@ -256,23 +256,68 @@ export const ProjectsEditor = () => {
           </div>
 
           {/* Image & Scrapbook Styling */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="sm:col-span-2">
-              <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
-                Screenshot / Image URL
-              </label>
-              <input
-                type="text"
-                value={activeProject.image || ''}
-                onChange={(e) => updateCurrentProject('image', e.target.value)}
-                className="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-mono bg-white"
-              />
+          <div className="p-5 rounded-2xl bg-slate-50 border-2 border-slate-200 space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-xs font-bold uppercase text-slate-700">
+                Project Cover & Screenshot
+              </span>
+              <span className="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                Laptop Upload Supported
+              </span>
             </div>
 
-            <div>
-              <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
-                Card Background Color
-              </label>
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+              {/* Preview Thumbnail */}
+              <div className="sm:col-span-4">
+                <div className="aspect-video rounded-xl overflow-hidden border-2 border-[#1A1714] bg-slate-900 shadow-xs">
+                  <img
+                    src={activeProject.image || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"}
+                    alt="Project Preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* Upload controls */}
+              <div className="sm:col-span-8 space-y-3">
+                <label className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1A1714] text-white text-xs font-mono font-bold hover:bg-slate-800 cursor-pointer shadow-xs">
+                  <ImageIcon className="w-4 h-4 text-yellow-300" />
+                  <span>Choose Screenshot from Laptop</span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const reader = new FileReader();
+                      reader.onload = (event) => {
+                        updateCurrentProject('image', event.target.result);
+                      };
+                      reader.readAsDataURL(file);
+                    }}
+                    className="hidden"
+                  />
+                </label>
+
+                <div>
+                  <label className="block text-[10px] font-mono uppercase text-slate-500 font-bold mb-1">
+                    Or Image Web URL
+                  </label>
+                  <input
+                    type="text"
+                    value={activeProject.image || ''}
+                    onChange={(e) => updateCurrentProject('image', e.target.value)}
+                    placeholder="https://..."
+                    className="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-mono bg-white"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-slate-200 flex items-center justify-between">
+              <span className="text-xs font-mono font-bold text-slate-700 uppercase">
+                Card Background Tint
+              </span>
               <div className="flex items-center gap-2">
                 <input
                   type="color"
@@ -280,7 +325,9 @@ export const ProjectsEditor = () => {
                   onChange={(e) => updateCurrentProject('color', e.target.value)}
                   className="w-8 h-8 rounded border border-black/20 cursor-pointer"
                 />
-                <span className="text-xs font-mono uppercase">{activeProject.color || '#FEF9C3'}</span>
+                <span className="text-xs font-mono uppercase font-bold text-slate-600">
+                  {activeProject.color || '#FEF9C3'}
+                </span>
               </div>
             </div>
           </div>

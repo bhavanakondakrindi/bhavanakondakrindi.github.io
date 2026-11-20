@@ -1,12 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { usePortfolio } from '../../context/PortfolioContext';
-import { GraduationCap, Code2, Compass, Lightbulb, BookOpen, CheckCircle2, Bookmark } from 'lucide-react';
+import { GraduationCap, Code2, Compass, Lightbulb, BookOpen, CheckCircle2, Bookmark, Award } from 'lucide-react';
 import { WashiTape } from '../ui/WashiTape';
 import { BinderClip } from '../ui/BinderClip';
 import { PostmarkStamp } from '../ui/VintageStamps';
 import { GemSticker, SparkleStar } from '../ui/DoodleArrow';
-import { SpiralSpine } from '../ui/SpiralSpine';
 
 export const AboutSection = () => {
   const { publishedData } = usePortfolio();
@@ -35,7 +34,7 @@ export const AboutSection = () => {
           </div>
         </div>
 
-        {/* The Open Spiral Notebook Spread (Double-Page Composition) */}
+        {/* The Open Spiral Notebook Spread */}
         <div className="relative bg-white rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl overflow-hidden">
           
           {/* Top Washi Tape fastening notebook */}
@@ -48,7 +47,7 @@ export const AboutSection = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 relative">
             
-            {/* Left Page: Field Notes, Identity & Academic Log (5 cols) */}
+            {/* Left Page: Academic Dossier & Field Record (5 cols) */}
             <div className="lg:col-span-5 p-6 sm:p-8 bg-[#FDFBF7] bg-graph-paper-fine border-b-2 lg:border-b-0 lg:border-r-2 border-[#1A1714] flex flex-col justify-between space-y-8 relative">
               
               <div className="space-y-6">
@@ -56,68 +55,83 @@ export const AboutSection = () => {
                 {/* Page Title Stamp */}
                 <div className="flex items-center justify-between border-b-2 border-dashed border-[#1A1714]/20 pb-3">
                   <span className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
-                    PAGE 01 // IDENTITY
+                    FIELD LOG // ACADEMIC RECORD
                   </span>
-                  <span className="font-mono text-[11px] font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
-                    CSE SOPHOMORE
+                  <span className="font-mono text-[11px] font-bold text-rose-600 bg-rose-50 px-2.5 py-0.5 rounded border border-rose-200">
+                    KLH CSE '27
                   </span>
                 </div>
 
-                {/* Polaroid of Bhavana with Handwritten Note */}
-                <div className="relative bg-white p-3 pb-6 rounded-xl border-2 border-[#1A1714] shadow-scrapbook transform -rotate-1 hover:rotate-0 transition-transform">
+                {/* Stamped University Index Card */}
+                <div className="relative bg-white p-5 rounded-2xl border-2 border-[#1A1714] shadow-scrapbook space-y-4">
                   
-                  {/* Metal Bulldog Clip at Top (Reference 6) */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-                    <BinderClip type="metal-black" rotate={2} />
+                  {/* Metal Bulldog Clip at Top */}
+                  <div className="absolute -top-4 left-6 z-20">
+                    <BinderClip type="metal-black" rotate={-2} />
                   </div>
 
-                  <div className="aspect-[4/3] rounded-lg overflow-hidden bg-slate-100 border border-slate-200">
-                    <img
-                      src={profile.avatarUrl}
-                      alt={profile.name}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80";
-                      }}
-                    />
+                  <div className="flex items-center gap-3 pt-1">
+                    <div className="w-10 h-10 rounded-xl bg-[#FEF08A] border-2 border-[#1A1714] flex items-center justify-center font-editorial font-bold text-lg">
+                      KLH
+                    </div>
+                    <div>
+                      <h3 className="font-editorial text-lg font-bold text-slate-900 leading-tight">
+                        KLH Deemed to be University
+                      </h3>
+                      <p className="text-xs font-mono text-slate-500">
+                        Hyderabad, Telangana, India
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="mt-3 text-center">
-                    <p className="font-handwriting text-lg text-slate-900 font-bold leading-tight">
-                      Bhavana Kondakrindi
-                    </p>
-                    <p className="font-mono text-[10px] text-slate-500 uppercase tracking-widest mt-0.5">
-                      KLH Deemed to be University
-                    </p>
+                  <div className="space-y-2 pt-2 border-t border-slate-200 text-xs font-mono text-slate-700">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold">Undergraduate Program:</span>
+                      <span>B.Tech CSE</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold">Year of Study:</span>
+                      <span className="bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded border border-emerald-300 font-bold">
+                        Second Year (Sophomore)
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold">Academic Standing:</span>
+                      <span className="text-rose-700 font-black text-sm">
+                        CGPA ~{profile.cgpa || "9.5"} / 10.0
+                      </span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Academic Snapshot Card */}
-                <div className="bg-[#FEF08A] p-5 rounded-2xl border-2 border-[#1A1714] shadow-xs space-y-2">
+                {/* Practical Engineering Snapshot */}
+                <div className="bg-[#FEF9C3] p-5 rounded-2xl border-2 border-[#1A1714] shadow-xs space-y-3">
                   <div className="flex items-center gap-2 text-amber-950 font-mono text-xs font-bold uppercase">
-                    <GraduationCap className="w-4 h-4 text-amber-800" />
-                    <span>Academic Standing</span>
+                    <Award className="w-4 h-4 text-amber-800" />
+                    <span>Technical Strengths</span>
                   </div>
 
-                  <div className="flex items-baseline justify-between pt-1">
-                    <span className="font-editorial text-2xl font-black text-slate-900">
-                      CGPA ~{profile.cgpa || "9.5"}
-                    </span>
-                    <span className="text-xs font-mono font-bold text-amber-900">
-                      2nd Year B.Tech CSE
-                    </span>
-                  </div>
-
-                  <p className="text-xs font-sans text-amber-950/80 leading-relaxed pt-1">
-                    Maintaining high academic rigor while actively developing practical software systems and algorithmic simulations.
-                  </p>
+                  <ul className="space-y-2 text-xs font-sans text-amber-950/90 leading-relaxed">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-700 shrink-0 mt-0.5" />
+                      <span><strong>Algorithmic Thinking:</strong> Data structures, classical AI pathfinding heuristics, and optimization.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-700 shrink-0 mt-0.5" />
+                      <span><strong>Frontend Craftsmanship:</strong> Clean React architecture, responsive state machines, and intuitive UX.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-700 shrink-0 mt-0.5" />
+                      <span><strong>Practical Problem Solving:</strong> Creating systems that address real disruptions, logistics, and student collaboration.</span>
+                    </li>
+                  </ul>
                 </div>
 
               </div>
 
               {/* Bottom Botanical Gem Accent */}
               <div className="flex items-center justify-between pt-4 border-t border-[#1A1714]/10 text-xs font-mono text-slate-500">
-                <span>Field Log: Hyderabad, India</span>
+                <span>Verified Academic Standing</span>
                 <GemSticker type="emerald" size={24} />
               </div>
 
@@ -131,10 +145,10 @@ export const AboutSection = () => {
                 {/* Page Title Stamp */}
                 <div className="flex items-center justify-between border-b-2 border-dashed border-[#1A1714]/20 pb-3">
                   <span className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
-                    PAGE 02 // ESSAY & PRACTICAL CRAFT
+                    ESSAY // PHILOSOPHY & MOTIVATION
                   </span>
                   <span className="font-mono text-[11px] font-bold text-slate-600">
-                    SOURCE OF TRUTH
+                    ENTRY 01
                   </span>
                 </div>
 
@@ -156,7 +170,7 @@ export const AboutSection = () => {
                   ))}
                 </div>
 
-                {/* Pinned Sticky Note: Learning & Building Philosophy (Reference 5 & 8) */}
+                {/* Pinned Sticky Note: Learning & Building Philosophy */}
                 <div className="relative bg-[#FEF9C3] p-5 rounded-2xl border-2 border-[#1A1714] shadow-scrapbook">
                   {/* Pink Binder Clip holding the note */}
                   <div className="absolute -top-4 right-8">
@@ -201,8 +215,8 @@ export const AboutSection = () => {
 
               {/* Bottom Page Number & Signoff */}
               <div className="flex items-center justify-between pt-4 border-t border-[#1A1714]/10 text-xs font-mono text-slate-500">
-                <span className="font-bold text-[#1A1714]">BK. DIGITAL JOURNAL • VOL. 2025</span>
-                <span>ENTRY 01 / 05</span>
+                <span className="font-bold text-[#1A1714]">BHAVANA KONDAKRINDI • DEV JOURNAL</span>
+                <span>PAGE 02 OF 05</span>
               </div>
 
             </div>

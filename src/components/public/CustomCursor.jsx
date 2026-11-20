@@ -1,39 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { usePortfolio } from '../../context/PortfolioContext';
 
 export const CustomCursor = () => {
   const { publishedData } = usePortfolio();
   const enabled = publishedData?.appearance?.customCursorEnabled !== false;
 
-  const [pos, setPos] = useState({ x: -100, y: -100 });
-  const [trail, setTrail] = useState({ x: -100, y: -100 });
+  const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
   const [isHovered, setIsHovered] = useState(false);
+  const [isTextTarget, setIsTextTarget] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
 
+  // Smooth trail position
+  const trailPos = useRef({ x: -100, y: -100 });
+  const trailElementRef = useRef(null);
+  const dotElementRef = useRef(null);
+
   useEffect(() => {
-    // Check for touch device or reduced motion
-    const checkTouch = () => {
-      if (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window) {
-        setIsTouch(true);
-      }
-    };
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
+    // Detect touch device or accessibility preference
+    if (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window) {
+      setIsTouch(true);
+      return;
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setIsTouch(true);
       return;
     }
 
-    checkTouch();
-
     const onMouseMove = (e) => {
-      setPos({ x: e.clientX, y: e.clientY });
+      const x = e.clientX;
+      const y = e.clientY;
+      setMousePos({ x, y });
+
       if (!isVisible) setIsVisible(true);
 
-      // Check if hovering interactive element
+      // Instantly position the center dot with ZERO lag
+      if (dotElementRef.current) {
+        dotElementRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+      }
+
+      // Check target type
       const target = e.target;
-      const isInteractive = target.closest('a, button, input, select, textarea, [role="button"], .clickable');
-      setIsHovered(Boolean(isInteractive));
+      const isInput = target.closest('input, textarea, select, [contenteditable="true"]');
+      setIsTextTarget(Boolean(isInput));
+
+      const isInteractive = target.closest('a, button, [role="button"], input, select, textarea, .clickable, [tabindex="0"]');
+      setIsHovered(Boolean(isInteractive) && !isInput);
     };
 
     const onMouseLeave = () => setIsVisible(false);
@@ -50,49 +62,58 @@ export const CustomCursor = () => {
     };
   }, [isVisible]);
 
-  // Smooth trail animation via requestAnimationFrame
+  // Silky smooth interpolation loop for the outer ring aura
   useEffect(() => {
     if (isTouch || !enabled) return;
 
     let animId;
-    const updateTrail = () => {
-      setTrail((prev) => {
-        const dx = pos.x - prev.x;
-        const dy = pos.y - prev.y;
-        return {
-          x: prev.x + dx * 0.22,
-          y: prev.y + dy * 0.22,
-        };
-      });
-      animId = requestAnimationFrame(updateTrail);
+    const animateTrail = () => {
+      const dx = mousePos.x - trailPos.current.x;
+      const dy = mousePos.y - trailPos.current.y;
+      
+      trailPos.current.x += dx * 0.28;
+      trailPos.current.y += dy * 0.28;
+
+      if (trailElementRef.current) {
+        trailElementRef.current.style.transform = `translate3d(${trailPos.current.x}px, ${trailPos.current.y}px, 0) translate(-50%, -50%)`;
+      }
+
+      animId = requestAnimationFrame(animateTrail);
     };
 
-    animId = requestAnimationFrame(updateTrail);
+    animId = requestAnimationFrame(animateTrail);
     return () => cancelAnimationFrame(animId);
-  }, [pos, isTouch, enabled]);
+  }, [mousePos, isTouch, enabled]);
 
-  if (isTouch || !enabled || !isVisible) return null;
+  if (isTouch || !enabled) return null;
 
   return (
-    <div className={`pointer-events-none fixed inset-0 z-[999999] transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      {/* Small precise dot */}
+    <div
+      className={`pointer-events-none fixed inset-0 z-[999999] transition-opacity duration-300 ${
+        isVisible && !isTextTarget ? 'opacity-100' : 'opacity-0'
+      }`}
+      aria-hidden="true"
+    >
+      {/* Precision Instant Pointer Dot (Zero Latency) */}
       <div
-        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 transition-[transform,background-color] duration-150 ease-out z-[99999]"
+        ref={dotElementRef}
+        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[99999] transition-[background-color,transform] duration-150 ease-out"
         style={{
-          transform: `translate(${pos.x}px, ${pos.y}px) translate(-50%, -50%) scale(${isHovered ? 0.7 : 1})`,
-          backgroundColor: isHovered ? '#F43F5E' : '#1E1E24',
+          backgroundColor: isHovered ? '#E11D48' : '#1A1714',
+          willChange: 'transform',
         }}
       />
 
-      {/* Delicate trailing ring */}
+      {/* Silky Outer Ring Aura */}
       <div
-        className="fixed top-0 left-0 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 border border-slate-700/40 transition-[width,height,border-color,background-color] duration-200 ease-out z-[99998]"
+        ref={trailElementRef}
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[99998] transition-[width,height,border-color,background-color] duration-200 ease-out"
         style={{
-          transform: `translate(${trail.x}px, ${trail.y}px) translate(-50%, -50%)`,
-          width: isHovered ? '38px' : '24px',
-          height: isHovered ? '38px' : '24px',
-          borderColor: isHovered ? '#F43F5E' : 'rgba(30, 30, 36, 0.45)',
-          backgroundColor: isHovered ? 'rgba(244, 63, 94, 0.08)' : 'transparent',
+          width: isHovered ? '36px' : '22px',
+          height: isHovered ? '36px' : '22px',
+          border: isHovered ? '1.5px solid #E11D48' : '1px solid rgba(26, 23, 20, 0.4)',
+          backgroundColor: isHovered ? 'rgba(225, 29, 72, 0.08)' : 'transparent',
+          willChange: 'transform',
         }}
       />
     </div>
