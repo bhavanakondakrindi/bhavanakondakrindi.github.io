@@ -12,10 +12,7 @@ import {
   FolderOpen,
   ArrowRight
 } from 'lucide-react';
-import { WashiTape } from '../ui/WashiTape';
-import { BinderClip } from '../ui/BinderClip';
-import { PostmarkStamp, RibbonBow } from '../ui/VintageStamps';
-import { GemSticker, SparkleStar } from '../ui/DoodleArrow';
+import { DynamicSticker } from '../ui/DynamicSticker';
 
 export const SkillsSection = () => {
   const { publishedData } = usePortfolio();
@@ -69,12 +66,8 @@ export const SkillsSection = () => {
     <section id="skills" className="py-20 md:py-32 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-graph-paper">
       
       {/* Whimsical Bedazzling Gem Background Accents */}
-      <div className="absolute top-12 right-12 pointer-events-none hidden lg:block">
-        <GemSticker type="diamond" size={34} />
-      </div>
-      <div className="absolute bottom-12 left-10 pointer-events-none hidden lg:block">
-        <GemSticker type="amethyst" size={32} />
-      </div>
+      <DynamicSticker id="skills_gem_diamond" className="absolute top-12 right-12 pointer-events-none hidden lg:block" />
+      <DynamicSticker id="skills_gem_amethyst" className="absolute bottom-12 left-10 pointer-events-none hidden lg:block" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -91,7 +84,7 @@ export const SkillsSection = () => {
                 Technical <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Toolbox</span>
               </h2>
               <div className="absolute -top-3 -right-6 pointer-events-none">
-                <SparkleStar size={24} color="#86EFAC" />
+                <DynamicSticker id="skills_sparkle" />
               </div>
             </div>
 
@@ -101,7 +94,7 @@ export const SkillsSection = () => {
           </div>
 
           <div className="hidden sm:block">
-            <PostmarkStamp text="COMPETENCY ARCHIVE" date="CSE 2025 • VERIFIED" color="#059669" rotate={-3} />
+            <DynamicSticker id="skills_postmark" />
           </div>
         </div>
 
@@ -112,6 +105,7 @@ export const SkillsSection = () => {
           
           {categories.map((categoryGroup, catIdx) => {
             const theme = getFolderTheme(catIdx);
+            const tapeId = catIdx === 0 ? 'skills_tape_tray1' : catIdx === 1 ? 'skills_tape_tray2' : 'skills_tape_tray3';
 
             return (
               <div
@@ -120,7 +114,7 @@ export const SkillsSection = () => {
               >
                 {/* Washi Tape Header (Uncut) */}
                 <div className="absolute -top-3.5 left-10 pointer-events-none z-20">
-                  <WashiTape color={theme.tapeColor} width="120px" height="24px" rotate={catIdx % 2 === 0 ? -2 : 2} />
+                  <DynamicSticker id={tapeId} />
                 </div>
 
                 {/* Folder Top Metadata */}

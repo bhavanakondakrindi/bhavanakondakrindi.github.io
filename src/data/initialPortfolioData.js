@@ -365,6 +365,75 @@ export const initialPortfolioData = {
     binderClipsEnabled: true,
     paperGridIntensity: "medium",
     customCursorEnabled: true,
+    individualStickers: {
+      // HERO SECTION
+      hero_cherries: { id: "hero_cherries", section: "hero", label: "Cherries Sticker over Masthead", category: "sticker", type: "cherries", size: 42, rotate: 0, visible: true },
+      hero_sparkle: { id: "hero_sparkle", section: "hero", label: "Golden Sparkle Star near Title", category: "sparkle", type: "sparkle-star", size: 34, color: "#FBBF24", rotate: 12, visible: true },
+      hero_postmark: { id: "hero_postmark", section: "hero", label: "KLH CSE Dept Postmark Stamp", category: "stamp", type: "postmark", text: "KLH CSE DEPT", date: "HYDERABAD • 2025", color: "#DC2626", rotate: -8, visible: true },
+      hero_barcode: { id: "hero_barcode", section: "hero", label: "Editorial Barcode Top-Right", category: "stamp", type: "barcode", visible: true },
+      hero_polaroid_tape: { id: "hero_polaroid_tape", section: "hero", label: "Yellow Washi Tape on Polaroid", category: "washi", type: "washi", color: "yellow", rotate: 3, visible: true },
+      hero_polaroid_gem: { id: "hero_polaroid_gem", section: "hero", label: "Ruby Gem on Polaroid Corner", category: "gem", type: "ruby", size: 24, rotate: 6, visible: true },
+      hero_polaroid_bow: { id: "hero_polaroid_bow", section: "hero", label: "Red Ribbon Bow on Polaroid", category: "sticker", type: "ribbon-bow", rotate: -8, visible: true },
+      hero_cv_tape: { id: "hero_cv_tape", section: "hero", label: "Lavender Washi Tape on CV Folio", category: "washi", type: "washi", color: "lavender", rotate: -2, visible: true },
+      hero_cv_wax: { id: "hero_cv_wax", section: "hero", label: "Golden Wax Seal on CV Folio", category: "stamp", type: "wax-seal", visible: true },
+
+      // ABOUT SECTION
+      about_gem_moon: { id: "about_gem_moon", section: "about", label: "Pink Crystal Moon (Top Left)", category: "gem", type: "pink-moon", size: 36, rotate: -4, visible: true },
+      about_gem_butterfly: { id: "about_gem_butterfly", section: "about", label: "Emerald Butterfly Gem (Top Right)", category: "gem", type: "butterfly", size: 34, rotate: 8, visible: true },
+      about_gem_topaz: { id: "about_gem_topaz", section: "about", label: "Golden Topaz Gem (Bottom Left)", category: "gem", type: "topaz", size: 30, rotate: 12, visible: true },
+      about_sparkle: { id: "about_sparkle", section: "about", label: "Sparkle Star over Heading", category: "sparkle", type: "sparkle-star", size: 24, color: "#FDE047", rotate: 0, visible: true },
+      about_tape_top: { id: "about_tape_top", section: "about", label: "Pink Washi Tape on Journal Spread", category: "washi", type: "washi", color: "pink", rotate: -2, visible: true },
+      about_ribbon_top: { id: "about_ribbon_top", section: "about", label: "Red Ribbon Bow on Journal Spread", category: "sticker", type: "ribbon-bow", rotate: 6, visible: true },
+      about_clip_top: { id: "about_clip_top", section: "about", label: "Black Binder Clip on Journal Spine", category: "clip", type: "binder-clip", color: "black-clip", rotate: -2, visible: true },
+      about_postmark: { id: "about_postmark", section: "about", label: "Field Log Postmark Stamp", category: "stamp", type: "postmark", text: "FIELD LOG", date: "HYDERABAD • 2025", color: "#0284C7", rotate: -2, visible: true },
+      about_polaroid_tape: { id: "about_polaroid_tape", section: "about", label: "Yellow Washi Tape on Snapshot", category: "washi", type: "washi", color: "yellow", rotate: 3, visible: true },
+      about_polaroid_gem: { id: "about_polaroid_gem", section: "about", label: "Ruby Gem on Snapshot Corner", category: "gem", type: "ruby", size: 24, rotate: -6, visible: true },
+      about_clip_sticky: { id: "about_clip_sticky", section: "about", label: "Pink Binder Clip on Philosophy Sticky Note", category: "clip", type: "binder-clip", color: "pink-binder", rotate: 4, visible: true },
+      about_amethyst: { id: "about_amethyst", section: "about", label: "Amethyst Heart Gem on Page 02", category: "gem", type: "amethyst", size: 20, rotate: 0, visible: true },
+
+      // SKILLS SECTION
+      skills_gem_diamond: { id: "skills_gem_diamond", section: "skills", label: "Cyan Diamond Gem (Top Right)", category: "gem", type: "diamond", size: 34, rotate: 4, visible: true },
+      skills_gem_amethyst: { id: "skills_gem_amethyst", section: "skills", label: "Amethyst Heart Gem (Bottom Left)", category: "gem", type: "amethyst", size: 32, rotate: -8, visible: true },
+      skills_sparkle: { id: "skills_sparkle", section: "skills", label: "Sparkle Star over Heading", category: "sparkle", type: "sparkle-star", size: 24, color: "#86EFAC", rotate: 0, visible: true },
+      skills_postmark: { id: "skills_postmark", section: "skills", label: "Competency Archive Postmark Stamp", category: "stamp", type: "postmark", text: "COMPETENCY ARCHIVE", date: "CSE 2025 • VERIFIED", color: "#059669", rotate: -3, visible: true },
+      skills_tape_tray1: { id: "skills_tape_tray1", section: "skills", label: "Yellow Washi Tape on Languages Tray", category: "washi", type: "washi", color: "yellow", rotate: -2, visible: true },
+      skills_tape_tray2: { id: "skills_tape_tray2", section: "skills", label: "Pink Washi Tape on Web Dev Tray", category: "washi", type: "washi", color: "pink", rotate: 2, visible: true },
+      skills_tape_tray3: { id: "skills_tape_tray3", section: "skills", label: "Blue Washi Tape on CS Foundations Tray", category: "washi", type: "washi", color: "blue", rotate: -2, visible: true },
+
+      // PROJECTS SECTION
+      proj_gem_diamond: { id: "proj_gem_diamond", section: "projects", label: "Cyan Diamond Gem (Top Left)", category: "gem", type: "diamond", size: 32, rotate: 0, visible: true },
+      proj_gem_moon: { id: "proj_gem_moon", section: "projects", label: "Pink Crystal Moon (Top Right)", category: "gem", type: "pink-moon", size: 36, rotate: 6, visible: true },
+      proj_gem_butterfly: { id: "proj_gem_butterfly", section: "projects", label: "Emerald Butterfly (Bottom Left)", category: "gem", type: "butterfly", size: 34, rotate: -6, visible: true },
+      proj_gem_topaz: { id: "proj_gem_topaz", section: "projects", label: "Golden Topaz (Bottom Right)", category: "gem", type: "topaz", size: 30, rotate: 10, visible: true },
+      proj_sparkle: { id: "proj_sparkle", section: "projects", label: "Sparkle Star over Heading", category: "sparkle", type: "sparkle-star", size: 24, color: "#FDE047", rotate: 0, visible: true },
+      proj_postmark: { id: "proj_postmark", section: "projects", label: "Field Spec 2025 Postmark Stamp", category: "stamp", type: "postmark", text: "FIELD SPEC", date: "2025", color: "#0284C7", rotate: -4, visible: true },
+      proj_tape_p1: { id: "proj_tape_p1", section: "projects", label: "Yellow Sticky Tape on Project 1", category: "washi", type: "washi", color: "yellow", rotate: 1, visible: true },
+      proj_tape_p4: { id: "proj_tape_p4", section: "projects", label: "Green Sticky Tape on Project 4", category: "washi", type: "washi", color: "green", rotate: -1, visible: true },
+      proj_tape_p2: { id: "proj_tape_p2", section: "projects", label: "Blue Sticky Tape on Project 2", category: "washi", type: "washi", color: "blue", rotate: -1, visible: true },
+      proj_tape_p5: { id: "proj_tape_p5", section: "projects", label: "Coral Sticky Tape on Project 5", category: "washi", type: "washi", color: "coral", rotate: -2, visible: true },
+      proj_tape_p6: { id: "proj_tape_p6", section: "projects", label: "Pink Sticky Tape on Project 6", category: "washi", type: "washi", color: "pink", rotate: 2, visible: true },
+      proj_tape_p3: { id: "proj_tape_p3", section: "projects", label: "Lavender Sticky Tape on Project 3", category: "washi", type: "washi", color: "lavender", rotate: -1, visible: true },
+      proj_clip_p3: { id: "proj_clip_p3", section: "projects", label: "Lavender Binder Clip on Project 3", category: "clip", type: "binder-clip", color: "lavender", rotate: 4, visible: true },
+
+      // EDUCATION SECTION
+      edu_gem_topaz: { id: "edu_gem_topaz", section: "education", label: "Golden Topaz Gem (Top Right)", category: "gem", type: "topaz", size: 32, rotate: 0, visible: true },
+      edu_gem_amethyst: { id: "edu_gem_amethyst", section: "education", label: "Amethyst Heart Gem (Bottom Left)", category: "gem", type: "amethyst", size: 36, rotate: -5, visible: true },
+      edu_sparkle: { id: "edu_sparkle", section: "education", label: "Sparkle Star over Heading", category: "sparkle", type: "sparkle-star", size: 24, color: "#C084FC", rotate: 0, visible: true },
+      edu_postmark: { id: "edu_postmark", section: "education", label: "Academic Merit Postmark Stamp", category: "stamp", type: "postmark", text: "ACADEMIC MERIT", date: "KLH CSE • 2025", color: "#7C3AED", rotate: 3, visible: true },
+      edu_tape_diploma: { id: "edu_tape_diploma", section: "education", label: "Lavender Washi Tape on Degree", category: "washi", type: "washi", color: "lavender", rotate: -2, visible: true },
+      edu_ribbon_diploma: { id: "edu_ribbon_diploma", section: "education", label: "Red Ribbon Bow on Degree", category: "sticker", type: "ribbon-bow", rotate: -6, visible: true },
+      edu_tape_achievements: { id: "edu_tape_achievements", section: "education", label: "Yellow Washi Tape on Achievements", category: "washi", type: "washi", color: "yellow", rotate: 1, visible: true },
+      edu_tape_certifications: { id: "edu_tape_certifications", section: "education", label: "Green Washi Tape on Certifications", category: "washi", type: "washi", color: "green", rotate: -2, visible: true },
+
+      // CONTACT SECTION
+      contact_gem_diamond: { id: "contact_gem_diamond", section: "contact", label: "Cyan Diamond Gem (Top Left)", category: "gem", type: "diamond", size: 36, rotate: 0, visible: true },
+      contact_gem_butterfly: { id: "contact_gem_butterfly", section: "contact", label: "Emerald Butterfly Gem (Bottom Right)", category: "gem", type: "butterfly", size: 32, rotate: 6, visible: true },
+      contact_sparkle: { id: "contact_sparkle", section: "contact", label: "Sparkle Star over Heading", category: "sparkle", type: "sparkle-star", size: 24, color: "#FDA4AF", rotate: 0, visible: true },
+      contact_tape_top: { id: "contact_tape_top", section: "contact", label: "Coral Washi Tape on Airmail Parcel", category: "washi", type: "washi", color: "coral", rotate: -1, visible: true },
+      contact_postmark: { id: "contact_postmark", section: "contact", label: "Air Mail Cancellation Stamp", category: "stamp", type: "postmark", text: "AIR MAIL", date: "HYD • 2025", color: "#DC2626", rotate: -5, visible: true },
+      contact_ribbon_bottom: { id: "contact_ribbon_bottom", section: "contact", label: "Red Ribbon Bow at Sign-Off", category: "sticker", type: "ribbon-bow", rotate: 0, visible: true },
+      contact_gem_ruby: { id: "contact_gem_ruby", section: "contact", label: "Ruby Gem at Sign-Off", category: "gem", type: "ruby", size: 32, rotate: 0, visible: true },
+    },
   },
 
   animations: {

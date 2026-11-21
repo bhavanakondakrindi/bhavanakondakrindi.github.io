@@ -19,14 +19,16 @@
 
   /* Desktop Custom Cursor: Hide default arrow cursor completely so double cursor never occurs ON PUBLIC PORTFOLIO */
   @media (hover: hover) and (pointer: fine) {
-    body:not(.admin-mode),
-    body:not(.admin-mode) * {
+    body:not(.admin-mode):not(.resume-open),
+    body:not(.admin-mode):not(.resume-open) * {
       cursor: none !important;
     }
 
-    /* Restore all standard native system cursors inside Admin Portal */
+    /* Restore all standard native system cursors inside Admin Portal & Resume Modal */
     body.admin-mode,
     body.admin-mode *,
+    body.resume-open,
+    body.resume-open *,
     .admin-view,
     .admin-view *,
     [data-admin-root],
@@ -37,6 +39,10 @@
     body.admin-mode button,
     body.admin-mode [role="button"],
     body.admin-mode label,
+    body.resume-open a,
+    body.resume-open button,
+    body.resume-open [role="button"],
+    body.resume-open label,
     .admin-view a,
     .admin-view button,
     .admin-view [role="button"],
@@ -49,6 +55,8 @@
     }
     body.admin-mode input,
     body.admin-mode textarea,
+    body.resume-open input,
+    body.resume-open textarea,
     .admin-view input,
     .admin-view textarea,
     [data-admin-root] input,

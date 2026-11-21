@@ -11,9 +11,7 @@ import {
   GraduationCap
 } from 'lucide-react';
 import { Github, Linkedin } from '../ui/BrandIcons';
-import { WashiTape } from '../ui/WashiTape';
-import { PostmarkStamp, RibbonBow } from '../ui/VintageStamps';
-import { GemSticker, SparkleStar } from '../ui/DoodleArrow';
+import { DynamicSticker } from '../ui/DynamicSticker';
 
 export const ContactSection = () => {
   const { publishedData } = usePortfolio();
@@ -32,12 +30,8 @@ export const ContactSection = () => {
     <section id="contact" className="py-20 md:py-32 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-graph-paper">
       
       {/* Whimsical Bedazzling Gem Background Accents */}
-      <div className="absolute top-16 left-12 pointer-events-none hidden lg:block">
-        <GemSticker type="diamond" size={36} />
-      </div>
-      <div className="absolute bottom-16 right-16 pointer-events-none hidden lg:block">
-        <GemSticker type="butterfly" size={32} />
-      </div>
+      <DynamicSticker id="contact_gem_diamond" className="absolute top-16 left-12 pointer-events-none hidden lg:block" />
+      <DynamicSticker id="contact_gem_butterfly" className="absolute bottom-16 right-16 pointer-events-none hidden lg:block" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -53,7 +47,7 @@ export const ContactSection = () => {
               Get In <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Touch</span>
             </h2>
             <div className="absolute -top-3 -right-6 pointer-events-none">
-              <SparkleStar size={24} color="#FDA4AF" />
+              <DynamicSticker id="contact_sparkle" />
             </div>
           </div>
 
@@ -67,7 +61,7 @@ export const ContactSection = () => {
           
           {/* Top Washi Tape (Positioned freely without clipping!) */}
           <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-30 pointer-events-none">
-            <WashiTape color="coral" width="160px" height="26px" rotate={-1} />
+            <DynamicSticker id="contact_tape_top" />
           </div>
 
           {/* Inner Content with Rounded Corners */}
@@ -101,7 +95,7 @@ export const ContactSection = () => {
 
                 {/* Cancellation Postmark */}
                 <div className="shrink-0">
-                  <PostmarkStamp text="AIR MAIL" date="HYD • 2025" color="#DC2626" rotate={-5} />
+                  <DynamicSticker id="contact_postmark" />
                 </div>
               </div>
 
@@ -213,12 +207,12 @@ export const ContactSection = () => {
 
                 {/* Red Ribbon Bow Sticker */}
                 <div className="absolute bottom-0 left-4 hidden sm:block pointer-events-none">
-                  <RibbonBow />
+                  <DynamicSticker id="contact_ribbon_bottom" />
                 </div>
 
                 {/* Gem Sticker */}
                 <div className="absolute bottom-0 right-4 hidden sm:block pointer-events-none">
-                  <GemSticker type="ruby" size={32} />
+                  <DynamicSticker id="contact_gem_ruby" />
                 </div>
               </div>
 

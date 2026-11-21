@@ -12,10 +12,7 @@ import {
   School,
   Star
 } from 'lucide-react';
-import { WashiTape } from '../ui/WashiTape';
-import { BinderClip } from '../ui/BinderClip';
-import { PostmarkStamp, RibbonBow } from '../ui/VintageStamps';
-import { GemSticker, SparkleStar } from '../ui/DoodleArrow';
+import { DynamicSticker } from '../ui/DynamicSticker';
 
 export const EducationSection = () => {
   const { publishedData } = usePortfolio();
@@ -28,12 +25,8 @@ export const EducationSection = () => {
     <section id="education" className="py-20 md:py-32 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-ruled-paper">
       
       {/* Whimsical Bedazzling Gems in Background */}
-      <div className="absolute top-16 right-16 pointer-events-none hidden lg:block">
-        <GemSticker type="topaz" size={32} />
-      </div>
-      <div className="absolute bottom-20 left-10 pointer-events-none hidden lg:block">
-        <GemSticker type="amethyst" size={36} />
-      </div>
+      <DynamicSticker id="edu_gem_topaz" className="absolute top-16 right-16 pointer-events-none hidden lg:block" />
+      <DynamicSticker id="edu_gem_amethyst" className="absolute bottom-20 left-10 pointer-events-none hidden lg:block" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -49,7 +42,7 @@ export const EducationSection = () => {
                 Academic <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Standing</span>
               </h2>
               <div className="absolute -top-3 -right-6 pointer-events-none">
-                <SparkleStar size={24} color="#C084FC" />
+                <DynamicSticker id="edu_sparkle" />
               </div>
             </div>
             <p className="text-slate-600 font-sans text-base max-w-xl mt-2">
@@ -58,7 +51,7 @@ export const EducationSection = () => {
           </div>
 
           <div className="hidden sm:block">
-            <PostmarkStamp text="ACADEMIC MERIT" date="KLH CSE • 2025" color="#7C3AED" rotate={3} />
+            <DynamicSticker id="edu_postmark" />
           </div>
         </div>
 
@@ -72,11 +65,11 @@ export const EducationSection = () => {
           >
             {/* Washi Tape & Bow Header (Sitting proud on top, completely uncut!) */}
             <div className="absolute -top-3.5 left-12 z-20 pointer-events-none">
-              <WashiTape color="lavender" width="140px" height="26px" rotate={-2} />
+              <DynamicSticker id="edu_tape_diploma" />
             </div>
 
             <div className="absolute -top-5 right-10 z-20 hidden sm:block pointer-events-none">
-              <RibbonBow rotate={-6} />
+              <DynamicSticker id="edu_ribbon_diploma" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -190,7 +183,7 @@ export const EducationSection = () => {
           {/* Achievements Card */}
           <div className="relative bg-white rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-8 space-y-6 overflow-visible">
             <div className="absolute -top-3 left-10 pointer-events-none">
-              <WashiTape color="yellow" width="110px" height="22px" rotate={1} />
+              <DynamicSticker id="edu_tape_achievements" />
             </div>
 
             <div className="flex items-center justify-between border-b-2 border-[#1A1714]/15 pb-4">
@@ -235,7 +228,7 @@ export const EducationSection = () => {
           {/* Certifications & Practical Badges */}
           <div className="relative bg-white rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-8 space-y-6 overflow-visible">
             <div className="absolute -top-3 right-10 pointer-events-none">
-              <WashiTape color="green" width="110px" height="22px" rotate={-2} />
+              <DynamicSticker id="edu_tape_certifications" />
             </div>
 
             <div className="flex items-center justify-between border-b-2 border-[#1A1714]/15 pb-4">

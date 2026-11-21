@@ -16,10 +16,7 @@ import {
   Layers,
   Heart
 } from 'lucide-react';
-import { WashiTape } from '../ui/WashiTape';
-import { BinderClip } from '../ui/BinderClip';
-import { PostmarkStamp, RibbonBow } from '../ui/VintageStamps';
-import { GemSticker, SparkleStar } from '../ui/DoodleArrow';
+import { DynamicSticker } from '../ui/DynamicSticker';
 
 export const AboutSection = () => {
   const { publishedData } = usePortfolio();
@@ -30,15 +27,9 @@ export const AboutSection = () => {
     <section id="about" className="py-20 md:py-32 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-graph-paper">
       
       {/* Whimsical Bedazzling Background Accents */}
-      <div className="absolute top-12 left-8 pointer-events-none hidden lg:block">
-        <GemSticker type="pink-moon" size={36} />
-      </div>
-      <div className="absolute top-24 right-10 pointer-events-none hidden lg:block">
-        <GemSticker type="butterfly" size={34} />
-      </div>
-      <div className="absolute bottom-16 left-12 pointer-events-none hidden lg:block">
-        <GemSticker type="topaz" size={30} />
-      </div>
+      <DynamicSticker id="about_gem_moon" className="absolute top-12 left-8 pointer-events-none hidden lg:block" />
+      <DynamicSticker id="about_gem_butterfly" className="absolute top-24 right-10 pointer-events-none hidden lg:block" />
+      <DynamicSticker id="about_gem_topaz" className="absolute bottom-16 left-12 pointer-events-none hidden lg:block" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -55,7 +46,7 @@ export const AboutSection = () => {
             </h2>
             {/* Whimsical bedazzling sparkle */}
             <div className="absolute -top-3 -right-6 pointer-events-none">
-              <SparkleStar size={24} color="#FDE047" />
+              <DynamicSticker id="about_sparkle" />
             </div>
           </div>
 
@@ -71,13 +62,13 @@ export const AboutSection = () => {
           
           {/* Top Washi Tape, Binder Clip & Bow (Positioned freely without overflow-hidden slicing them!) */}
           <div className="absolute -top-3.5 left-12 z-30 pointer-events-none">
-            <WashiTape color="pink" width="130px" height="26px" rotate={-2} />
+            <DynamicSticker id="about_tape_top" />
           </div>
           <div className="absolute -top-5 right-12 z-30 hidden sm:block pointer-events-none">
-            <RibbonBow rotate={6} />
+            <DynamicSticker id="about_ribbon_top" />
           </div>
           <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-30 pointer-events-none hidden md:block">
-            <BinderClip type="black-clip" rotate={-2} />
+            <DynamicSticker id="about_clip_top" />
           </div>
 
           {/* Inner Content Wrapper with rounded corners for the split background */}
@@ -94,13 +85,13 @@ export const AboutSection = () => {
                     <span className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
                       PAGE 01 // FIELD IDENTITY
                     </span>
-                    <PostmarkStamp text="FIELD LOG" date="HYDERABAD • 2025" color="#0284C7" rotate={-2} />
+                    <DynamicSticker id="about_postmark" />
                   </div>
 
                   {/* Polaroid Frame of Workspace / Developer Identity */}
                   <div className="relative mx-auto max-w-xs bg-white p-3.5 pb-8 rounded-2xl border-2 border-[#1A1714] shadow-scrapbook transform -rotate-1 hover:rotate-0 transition-transform duration-300">
                     <div className="absolute -top-3 right-8 z-10 pointer-events-none">
-                      <WashiTape color="yellow" width="80px" height="20px" rotate={3} />
+                      <DynamicSticker id="about_polaroid_tape" />
                     </div>
 
                     <div className="aspect-square rounded-xl overflow-hidden border border-slate-200 bg-slate-900 relative">
@@ -126,7 +117,7 @@ export const AboutSection = () => {
 
                     {/* Cute Bedazzling Gem on Polaroid Corner */}
                     <div className="absolute -bottom-2 -right-2 pointer-events-none">
-                      <GemSticker type="ruby" size={24} />
+                      <DynamicSticker id="about_polaroid_gem" />
                     </div>
                   </div>
 
@@ -169,7 +160,7 @@ export const AboutSection = () => {
                       PAGE 02 // ESSAY & PRINCIPLES
                     </span>
                     <div className="flex items-center gap-2">
-                      <GemSticker type="amethyst" size={20} />
+                      <DynamicSticker id="about_amethyst" />
                       <span className="font-mono text-[11px] font-bold text-sky-800 bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-200">
                         SOPHOMORE PERSPECTIVE
                       </span>
@@ -202,7 +193,7 @@ export const AboutSection = () => {
                   {/* Sticky Note: How I Approach Building */}
                   <div className="relative bg-[#FEF9C3] p-5 rounded-2xl border-2 border-[#1A1714] shadow-xs mt-6">
                     <div className="absolute -top-3.5 right-6 pointer-events-none">
-                      <BinderClip type="pink-binder" rotate={4} />
+                      <DynamicSticker id="about_clip_sticky" />
                     </div>
 
                     <div className="flex items-start gap-3">

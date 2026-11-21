@@ -2,10 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { usePortfolio } from '../../context/PortfolioContext';
 import { ArrowDown, Mail, ExternalLink, Sparkles, Code2, GraduationCap, ArrowUpRight, Compass, Terminal } from 'lucide-react';
-import { WashiTape } from '../ui/WashiTape';
-import { BinderClip } from '../ui/BinderClip';
-import { PostmarkStamp, CherriesSticker, RibbonBow, EditorialBarcode } from '../ui/VintageStamps';
-import { SparkleStar, GemSticker, DoodleArrow } from '../ui/DoodleArrow';
+import { DynamicSticker } from '../ui/DynamicSticker';
 
 export const HeroSection = () => {
   const { publishedData, setIsResumeModalOpen } = usePortfolio();
@@ -15,13 +12,8 @@ export const HeroSection = () => {
     <section className="relative pt-8 pb-20 md:pt-14 md:pb-28 overflow-hidden bg-graph-paper">
       
       {/* Background Decorative Postmark Stamps & Floating Accents */}
-      <div className="absolute top-6 left-6 hidden lg:block opacity-75">
-        <PostmarkStamp text="KLH CSE DEPT" date="HYDERABAD • 2025" rotate={-8} color="#DC2626" />
-      </div>
-
-      <div className="absolute top-8 right-8 hidden lg:block opacity-85">
-        <EditorialBarcode />
-      </div>
+      <DynamicSticker id="hero_postmark" className="absolute top-6 left-6 hidden lg:block opacity-75" />
+      <DynamicSticker id="hero_barcode" className="absolute top-8 right-8 hidden lg:block opacity-85" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         
@@ -46,14 +38,10 @@ export const HeroSection = () => {
           className="relative max-w-5xl mx-auto mb-6"
         >
           {/* Cherries sticker floating over title */}
-          <div className="absolute -top-6 left-12 hidden sm:block animate-wiggle">
-            <CherriesSticker size={42} />
-          </div>
+          <DynamicSticker id="hero_cherries" className="absolute -top-6 left-12 hidden sm:block animate-wiggle" />
 
           {/* Star sparkle accent */}
-          <div className="absolute -top-4 right-16 hidden sm:block animate-float">
-            <SparkleStar size={34} color="#FBBF24" />
-          </div>
+          <DynamicSticker id="hero_sparkle" className="absolute -top-4 right-16 hidden sm:block animate-float" />
 
           <h1 className="font-editorial text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-[#1A1714] leading-[0.9] select-none">
             Bhavana <br />
@@ -82,13 +70,13 @@ export const HeroSection = () => {
           <div className="relative bg-[#FEF9C3] p-4 sm:p-6 rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl">
             
             {/* Top Washi Tape */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20">
-              <WashiTape color="pink" width="140px" height="26px" rotate={-1} />
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+              <DynamicSticker id="hero_polaroid_tape" />
             </div>
 
             {/* Wire Heart Paperclip */}
-            <div className="absolute -top-5 left-10 z-30">
-              <BinderClip type="heart-clip" rotate={-6} />
+            <div className="absolute -top-5 left-10 z-30 pointer-events-none">
+              <DynamicSticker id="hero_polaroid_clip" fallback={{ category: "clip", type: "heart-clip", rotate: -6 }} />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
@@ -149,13 +137,13 @@ export const HeroSection = () => {
                   </div>
 
                   {/* Ribbon bow accent */}
-                  <div className="absolute -bottom-3 -left-3 z-30">
-                    <RibbonBow />
+                  <div className="absolute -bottom-3 -left-3 z-30 pointer-events-none">
+                    <DynamicSticker id="hero_polaroid_bow" />
                   </div>
 
                   {/* Gem sticker accent */}
-                  <div className="absolute -bottom-2 -right-2 z-30">
-                    <GemSticker type="ruby" size={28} />
+                  <div className="absolute -bottom-2 -right-2 z-30 pointer-events-none">
+                    <DynamicSticker id="hero_polaroid_gem" />
                   </div>
                 </div>
               </div>
@@ -244,16 +232,13 @@ export const HeroSection = () => {
             >
               {/* Washi Tape Corner (Uncut) */}
               <div className="absolute -top-3 left-8 pointer-events-none z-20">
-                <WashiTape color="lavender" width="90px" height="20px" rotate={-2} />
+                <DynamicSticker id="hero_cv_tape" />
               </div>
 
               {/* Left Details */}
               <div className="flex items-center gap-3.5 sm:gap-4">
                 {/* Golden Wax Seal with BK Monogram */}
-                <div className="w-12 h-12 rounded-full bg-[#FEF08A] border-2 border-[#1A1714] shadow-xs flex flex-col items-center justify-center shrink-0 group-hover:rotate-6 transition-transform">
-                  <span className="font-editorial font-black text-sm text-amber-950 leading-none">BK</span>
-                  <span className="text-[6px] font-mono font-bold uppercase text-amber-900">VERIFIED</span>
-                </div>
+                <DynamicSticker id="hero_cv_wax" />
 
                 <div>
                   <div className="flex items-center gap-2">

@@ -13,10 +13,7 @@ import {
   Layers,
   Sparkles
 } from 'lucide-react';
-import { WashiTape } from '../ui/WashiTape';
-import { BinderClip } from '../ui/BinderClip';
-import { PostmarkStamp, RibbonBow } from '../ui/VintageStamps';
-import { GemSticker, SparkleStar } from '../ui/DoodleArrow';
+import { DynamicSticker } from '../ui/DynamicSticker';
 
 export const ProjectsSection = () => {
   const { publishedData, setActiveProjectModal } = usePortfolio();
@@ -43,18 +40,10 @@ export const ProjectsSection = () => {
     <section id="projects" className="py-16 md:py-24 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-graph-paper">
       
       {/* Whimsical Bedazzling Background Accents */}
-      <div className="absolute top-10 left-6 pointer-events-none hidden lg:block">
-        <GemSticker type="diamond" size={32} />
-      </div>
-      <div className="absolute top-16 right-10 pointer-events-none hidden lg:block">
-        <GemSticker type="pink-moon" size={36} />
-      </div>
-      <div className="absolute bottom-12 left-10 pointer-events-none hidden lg:block">
-        <GemSticker type="butterfly" size={34} />
-      </div>
-      <div className="absolute bottom-16 right-8 pointer-events-none hidden lg:block">
-        <GemSticker type="topaz" size={30} />
-      </div>
+      <DynamicSticker id="proj_gem_diamond" className="absolute top-10 left-6 pointer-events-none hidden lg:block" />
+      <DynamicSticker id="proj_gem_moon" className="absolute top-16 right-10 pointer-events-none hidden lg:block" />
+      <DynamicSticker id="proj_gem_butterfly" className="absolute bottom-12 left-10 pointer-events-none hidden lg:block" />
+      <DynamicSticker id="proj_gem_topaz" className="absolute bottom-16 right-8 pointer-events-none hidden lg:block" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -71,7 +60,7 @@ export const ProjectsSection = () => {
                 Selected <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Works</span>
               </h2>
               <div className="absolute -top-3 -right-6 pointer-events-none">
-                <SparkleStar size={24} color="#FDE047" />
+                <DynamicSticker id="proj_sparkle" />
               </div>
             </div>
 
@@ -85,7 +74,7 @@ export const ProjectsSection = () => {
               📌 6 Interactive Dossiers
             </span>
             <div className="hidden sm:block">
-              <PostmarkStamp text="FIELD SPEC" date="2025" color="#0284C7" rotate={-4} />
+              <DynamicSticker id="proj_postmark" />
             </div>
           </div>
         </div>
@@ -111,7 +100,7 @@ export const ProjectsSection = () => {
             >
               {/* Sticky Tape at Top Center (Uncut, no overflow clipping!) */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-                <WashiTape color="yellow" width="90px" height="20px" rotate={1} />
+                <DynamicSticker id="proj_tape_p1" />
               </div>
 
               <div className="space-y-2 pt-1">
@@ -163,7 +152,7 @@ export const ProjectsSection = () => {
             >
               {/* Sticky Tape */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-                <WashiTape color="green" width="90px" height="20px" rotate={-1} />
+                <DynamicSticker id="proj_tape_p4" />
               </div>
 
               <div className="space-y-2 pt-1">
@@ -222,7 +211,7 @@ export const ProjectsSection = () => {
             >
               {/* Sticky Tape at Top Center */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-                <WashiTape color="blue" width="130px" height="22px" rotate={-1} />
+                <DynamicSticker id="proj_tape_p2" />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center pt-1">
@@ -294,7 +283,7 @@ export const ProjectsSection = () => {
               >
                 {/* Sticky Tape */}
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-                  <WashiTape color="coral" width="80px" height="18px" rotate={-2} />
+                  <DynamicSticker id="proj_tape_p5" />
                 </div>
 
                 <div className="space-y-2 pt-1">
@@ -344,7 +333,7 @@ export const ProjectsSection = () => {
               >
                 {/* Sticky Tape */}
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-                  <WashiTape color="pink" width="80px" height="18px" rotate={2} />
+                  <DynamicSticker id="proj_tape_p6" />
                 </div>
 
                 <div className="space-y-2 pt-1">
@@ -403,12 +392,12 @@ export const ProjectsSection = () => {
             >
               {/* Lavender Sticky Tape at Top Center */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-                <WashiTape color="lavender" width="100px" height="20px" rotate={-1} />
+                <DynamicSticker id="proj_tape_p3" />
               </div>
 
               {/* Binder Clip on Top Right */}
               <div className="absolute -top-4 right-4 z-20 pointer-events-none hidden sm:block">
-                <BinderClip type="lavender" rotate={4} />
+                <DynamicSticker id="proj_clip_p3" />
               </div>
 
               <div className="space-y-3 pt-1">

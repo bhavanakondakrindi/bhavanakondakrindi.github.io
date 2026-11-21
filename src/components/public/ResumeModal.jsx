@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePortfolio } from '../../context/PortfolioContext';
 import {
@@ -14,12 +14,29 @@ import {
   CheckCircle2,
   Code2,
   BookOpen,
-  Mail
+  Mail,
+  FileCheck
 } from 'lucide-react';
 import { WashiTape } from '../ui/WashiTape';
-import { BinderClip } from '../ui/BinderClip';
-import { PostmarkStamp, RibbonBow } from '../ui/VintageStamps';
-import { GemSticker } from '../ui/DoodleArrow';
+import { PostmarkStamp } from '../ui/VintageStamps';
+
+// Helper to convert Base64 Data URL to Blob safely (bypasses browser about:blank#blocked security restriction)
+function base64ToBlob(base64Data, contentType = 'application/pdf') {
+  try {
+    const parts = base64Data.split(';base64,');
+    const base64 = parts.length > 1 ? parts[1] : parts[0];
+    const binaryString = window.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return new Blob([bytes], { type: contentType });
+  } catch (err) {
+    console.error('Failed to parse base64 data to blob:', err);
+    return null;
+  }
+}
 
 export const ResumeModal = () => {
   const { isResumeModalOpen, setIsResumeModalOpen, publishedData } = usePortfolio();
@@ -27,6 +44,42 @@ export const ResumeModal = () => {
   const resume = profile?.resume || {};
   const resumeUrl = resume?.url || profile?.resumeUrl || '';
   const hasFile = Boolean(resumeUrl && resumeUrl !== '#' && resumeUrl.length > 5);
+
+  const [blobUrl, setBlobUrl] = useState('');
+
+  // Generate safe blob URL whenever resumeUrl changes
+  useEffect(() => {
+    if (hasFile && resumeUrl.startsWith('data:')) {
+      const mime = resumeUrl.includes('image/') ? 'image/png' : 'application/pdf';
+      const blob = base64ToBlob(resumeUrl, mime);
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        setBlobUrl(url);
+        return () => {
+          URL.revokeObjectURL(url);
+        };
+      }
+    } else if (hasFile) {
+      setBlobUrl(resumeUrl);
+    } else {
+      setBlobUrl('');
+    }
+  }, [resumeUrl, hasFile]);
+
+  // Lock body scroll and restore standard native cursor while resume modal is open
+  useEffect(() => {
+    if (isResumeModalOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('resume-open');
+    } else {
+      document.body.style.overflow = 'auto';
+      document.body.classList.remove('resume-open');
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+      document.body.classList.remove('resume-open');
+    };
+  }, [isResumeModalOpen]);
 
   // Keyboard accessibility
   useEffect(() => {
@@ -39,17 +92,29 @@ export const ResumeModal = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isResumeModalOpen, setIsResumeModalOpen]);
 
-  // Lock body scroll when modal is open
-  useEffect(() => {
-    if (isResumeModalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
+  // Safe handler to open PDF in a new tab without "about:blank#blocked"
+  const handleOpenInNewTab = (e) => {
+    e?.preventDefault();
+    if (blobUrl) {
+      window.open(blobUrl, '_blank', 'noopener,noreferrer');
+    } else if (resumeUrl) {
+      window.open(resumeUrl, '_blank', 'noopener,noreferrer');
     }
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isResumeModalOpen]);
+  };
+
+  // Safe handler to download PDF directly without redirecting to a blank screen
+  const handleDownload = (e) => {
+    e?.preventDefault();
+    const downloadSource = blobUrl || resumeUrl;
+    if (!downloadSource) return;
+
+    const link = document.createElement('a');
+    link.href = downloadSource;
+    link.download = resume.fileName || 'Bhavana_Kondakrindi_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <AnimatePresence>
@@ -96,33 +161,32 @@ export const ResumeModal = () => {
               {/* Close & Action Controls */}
               <div className="flex items-center gap-2">
                 {hasFile && (
-                  <a
-                    href={resumeUrl}
-                    download={resume.fileName || "Bhavana_Kondakrindi_Resume.pdf"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-mono font-bold hover:bg-emerald-700 shadow-xs transition-colors"
+                  <button
+                    type="button"
+                    onClick={handleDownload}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-mono font-bold hover:bg-emerald-700 shadow-xs transition-colors cursor-pointer"
+                    title="Download PDF to Laptop"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span className="hidden sm:inline">Download</span>
-                  </a>
+                  </button>
                 )}
 
                 {hasFile && (
-                  <a
-                    href={resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 rounded-xl border-2 border-[#1A1714] bg-white hover:bg-slate-100 transition-colors shadow-xs"
-                    title="Open Full Document in New Tab"
+                  <button
+                    type="button"
+                    onClick={handleOpenInNewTab}
+                    className="p-2 rounded-xl border-2 border-[#1A1714] bg-white hover:bg-slate-100 transition-colors shadow-xs cursor-pointer"
+                    title="Open Full Document in New Tab (Zero blank page)"
                   >
                     <ExternalLink className="w-4 h-4 text-slate-700" />
-                  </a>
+                  </button>
                 )}
 
                 <button
+                  type="button"
                   onClick={() => setIsResumeModalOpen(false)}
-                  className="p-2 rounded-xl bg-rose-50 text-rose-700 hover:bg-rose-100 border-2 border-[#1A1714] transition-colors shadow-xs"
+                  className="p-2 rounded-xl bg-rose-50 text-rose-700 hover:bg-rose-100 border-2 border-[#1A1714] transition-colors shadow-xs cursor-pointer"
                   title="Close Folio (Escape)"
                 >
                   <X className="w-4 h-4" />
@@ -133,42 +197,58 @@ export const ResumeModal = () => {
             {/* Folio Scrollable Body */}
             <div className="overflow-y-auto p-6 sm:p-8 space-y-6 bg-graph-paper-fine">
               
-              {/* If user uploaded a document or link, embed it or show launchpad */}
+              {/* If user uploaded a document or link, embed it safely with native viewer */}
               {hasFile ? (
                 <div className="space-y-4">
                   <div className="p-4 rounded-xl bg-white border-2 border-[#1A1714] shadow-xs flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-lg bg-[#DDD6FE] border border-purple-300 flex items-center justify-center">
-                        <FileText className="w-5 h-5 text-purple-800" />
+                        <FileCheck className="w-5 h-5 text-purple-800" />
                       </div>
                       <div>
                         <h4 className="font-editorial font-bold text-slate-900 text-base">
-                          {resume.fileName || "Bhavana Kondakrindi — Curriculum Vitae"}
+                          {resume.fileName || "Bhavana_Kondakrindi_CV.pdf"}
                         </h4>
                         <p className="text-xs font-mono text-slate-500">
-                          {resume.fileSize ? `${resume.fileSize} • ` : ''}Verified PDF Record
+                          {resume.fileSize ? `${resume.fileSize} • ` : ''}Verified Document Record
                         </p>
                       </div>
                     </div>
 
-                    <a
-                      href={resumeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-xl bg-[#1A1714] text-white font-mono text-xs font-bold hover:bg-slate-800 transition-colors flex items-center gap-1.5 shadow-xs"
-                    >
-                      <span>Open Full PDF</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={handleDownload}
+                        className="px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-300 font-mono text-xs font-bold hover:bg-emerald-100 transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+                      >
+                        <Download className="w-3.5 h-3.5 text-emerald-700" />
+                        <span className="hidden sm:inline">Save PDF</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={handleOpenInNewTab}
+                        className="px-4 py-2 rounded-xl bg-[#1A1714] text-white font-mono text-xs font-bold hover:bg-slate-800 transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+                      >
+                        <span>Open Full PDF</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-yellow-300" />
+                      </button>
+                    </div>
                   </div>
 
-                  {/* Document Viewer Frame */}
-                  <div className="rounded-2xl border-2 border-[#1A1714] overflow-hidden bg-slate-900 shadow-scrapbook min-h-[500px] h-[65vh]">
-                    <iframe
-                      src={resumeUrl}
-                      title="Bhavana Kondakrindi Resume"
-                      className="w-full h-full border-none"
-                    />
+                  {/* Document Viewer Frame (Using safe Object Blob URL) */}
+                  <div className="rounded-2xl border-2 border-[#1A1714] overflow-hidden bg-slate-900 shadow-scrapbook min-h-[500px] h-[65vh] relative">
+                    {blobUrl ? (
+                      <iframe
+                        src={`${blobUrl}#toolbar=1&navpanes=0`}
+                        title="Bhavana Kondakrindi Resume"
+                        className="w-full h-full border-none"
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center h-full text-white font-mono text-xs">
+                        Loading document preview...
+                      </div>
+                    )}
                   </div>
                 </div>
               ) : (
@@ -257,14 +337,14 @@ export const ResumeModal = () => {
                     <div className="flex items-center gap-2 text-amber-950 font-sans">
                       <Sparkles className="w-4 h-4 text-amber-700 shrink-0" />
                       <span>
-                        <strong>Admin Note:</strong> You can upload and replace this with your custom PDF file anytime in the Admin Studio!
+                        <strong>Admin Note:</strong> You can upload your PDF resume directly from your laptop in the Admin Studio!
                       </span>
                     </div>
 
                     <a
                       href="#/admin"
                       onClick={() => setIsResumeModalOpen(false)}
-                      className="px-3.5 py-1.5 rounded-lg bg-[#1A1714] text-white font-mono text-[11px] font-bold hover:bg-slate-800 transition-colors shrink-0 text-center"
+                      className="px-3.5 py-1.5 rounded-lg bg-[#1A1714] text-white font-mono text-[11px] font-bold hover:bg-slate-800 transition-colors shrink-0 text-center cursor-pointer"
                     >
                       Upload PDF in Admin Studio
                     </a>
@@ -279,8 +359,9 @@ export const ResumeModal = () => {
             <div className="bg-white border-t-2 border-[#1A1714] px-6 py-3.5 flex items-center justify-between shrink-0 text-xs font-mono text-slate-500">
               <span>Bhavana Kondakrindi • Academic Dossier</span>
               <button
+                type="button"
                 onClick={() => setIsResumeModalOpen(false)}
-                className="px-4 py-1.5 rounded-xl bg-[#1A1714] text-white font-mono text-xs font-bold hover:bg-slate-800 transition-colors shadow-xs"
+                className="px-4 py-1.5 rounded-xl bg-[#1A1714] text-white font-mono text-xs font-bold hover:bg-slate-800 transition-colors shadow-xs cursor-pointer"
               >
                 Close Folio
               </button>

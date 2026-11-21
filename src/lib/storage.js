@@ -33,6 +33,10 @@ export const getPublishedData = async () => {
       if (parsed?.projects && parsed.projects.length < initialPortfolioData.projects.length) {
         parsed.projects = initialPortfolioData.projects;
       }
+      if (!parsed?.appearance?.individualStickers) {
+        if (!parsed.appearance) parsed.appearance = {};
+        parsed.appearance.individualStickers = initialPortfolioData.appearance.individualStickers;
+      }
       return parsed;
     }
   } catch (e) {
@@ -64,7 +68,12 @@ export const getDraftData = async () => {
   try {
     const local = localStorage.getItem(STORAGE_KEY_DRAFT);
     if (local) {
-      return JSON.parse(local);
+      const parsed = JSON.parse(local);
+      if (!parsed?.appearance?.individualStickers) {
+        if (!parsed.appearance) parsed.appearance = {};
+        parsed.appearance.individualStickers = initialPortfolioData.appearance.individualStickers;
+      }
+      return parsed;
     }
   } catch (e) {
     console.error('Error reading local draft data:', e);
