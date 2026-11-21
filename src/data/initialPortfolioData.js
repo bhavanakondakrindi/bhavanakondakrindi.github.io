@@ -15,7 +15,6 @@ export const initialPortfolioData = {
     ],
     avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
     avatarCaption: "Bhavana Kondakrindi • CSE 2nd Year @ KLH",
-    resumeUrl: "#",
     socialLinks: {
       github: "https://github.com/bhavanakondakrindi",
       linkedin: "https://linkedin.com/in/bhavana-kondakrindi-26bb57379",
@@ -374,8 +373,6 @@ export const initialPortfolioData = {
       hero_polaroid_tape: { id: "hero_polaroid_tape", section: "hero", label: "Yellow Washi Tape on Polaroid", category: "washi", type: "washi", color: "yellow", rotate: 3, visible: true },
       hero_polaroid_gem: { id: "hero_polaroid_gem", section: "hero", label: "Ruby Gem on Polaroid Corner", category: "gem", type: "ruby", size: 24, rotate: 6, visible: true },
       hero_polaroid_bow: { id: "hero_polaroid_bow", section: "hero", label: "Red Ribbon Bow on Polaroid", category: "sticker", type: "ribbon-bow", rotate: -8, visible: true },
-      hero_cv_tape: { id: "hero_cv_tape", section: "hero", label: "Lavender Washi Tape on CV Folio", category: "washi", type: "washi", color: "lavender", rotate: -2, visible: true },
-      hero_cv_wax: { id: "hero_cv_wax", section: "hero", label: "Golden Wax Seal on CV Folio", category: "stamp", type: "wax-seal", visible: true },
 
       // ABOUT SECTION
       about_gem_moon: { id: "about_gem_moon", section: "about", label: "Pink Crystal Moon (Top Left)", category: "gem", type: "pink-moon", size: 36, rotate: -4, visible: true },

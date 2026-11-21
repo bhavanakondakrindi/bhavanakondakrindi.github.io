@@ -14,7 +14,6 @@ import {
   Zap,
   Image,
   Database,
-  FileText,
   ArrowLeft
 } from 'lucide-react';
 
@@ -27,7 +26,6 @@ export const AdminSidebar = () => {
       items: [
         { id: 'overview', label: 'Overview', icon: LayoutDashboard },
         { id: 'hero', label: 'Profile & Laptop Photo', icon: User, highlight: true },
-        { id: 'resume', label: 'Curriculum Vitae / Resume', icon: FileText, highlight: true },
         { id: 'about', label: 'About & Journal', icon: BookOpen },
         { id: 'skills', label: 'Technical Skills', icon: Code2, badge: draftData?.skills?.reduce((acc, c) => acc + (c.items?.length || 0), 0) },
         { id: 'projects', label: 'Projects & Case Files', icon: FolderGit2, badge: draftData?.projects?.length },

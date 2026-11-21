@@ -5,7 +5,7 @@ import { ArrowDown, Mail, ExternalLink, Sparkles, Code2, GraduationCap, ArrowUpR
 import { DynamicSticker } from '../ui/DynamicSticker';
 
 export const HeroSection = () => {
-  const { publishedData, setIsResumeModalOpen } = usePortfolio();
+  const { publishedData } = usePortfolio();
   const profile = publishedData?.profile || {};
 
   return (
@@ -217,57 +217,6 @@ export const HeroSection = () => {
             <span>Send a Direct Note</span>
           </a>
         </motion.div>
-
-        {/* WAX-SEALED ARCHIVAL RESUME FOLIO CARD (Beautiful, Different & Tactile) */}
-        {profile?.resume?.enabled !== false && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="max-w-xl mx-auto mt-8"
-          >
-            <div
-              onClick={() => setIsResumeModalOpen(true)}
-              className="group relative bg-[#FFFBEB] hover:bg-white rounded-2xl border-2 border-[#1A1714] shadow-[4px_5px_0px_#1A1714] hover:shadow-[6px_8px_0px_#1A1714] hover:-translate-y-1 transition-all duration-200 cursor-pointer p-4 sm:p-5 flex items-center justify-between gap-4 text-left overflow-visible"
-            >
-              {/* Washi Tape Corner (Uncut) */}
-              <div className="absolute -top-3 left-8 pointer-events-none z-20">
-                <DynamicSticker id="hero_cv_tape" />
-              </div>
-
-              {/* Left Details */}
-              <div className="flex items-center gap-3.5 sm:gap-4">
-                {/* Golden Wax Seal with BK Monogram */}
-                <DynamicSticker id="hero_cv_wax" />
-
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-[9px] font-black uppercase tracking-widest text-purple-900 bg-purple-100 px-2 py-0.5 rounded border border-purple-200">
-                      OFFICIAL FOLIO // 2025
-                    </span>
-                    <span className="text-[10px] font-mono font-bold text-emerald-700 hidden sm:inline">
-                      ● Active Record
-                    </span>
-                  </div>
-
-                  <h3 className="font-editorial text-lg sm:text-xl font-black text-slate-900 group-hover:text-purple-900 transition-colors mt-0.5">
-                    {profile.resume?.buttonText || "Curriculum Vitae"}
-                  </h3>
-
-                  <p className="text-xs font-sans text-slate-600 line-clamp-1">
-                    {profile.resume?.tagline || "B.Tech CSE Sophomore • KLH Deemed to be University • CGPA ~9.5"}
-                  </p>
-                </div>
-              </div>
-
-              {/* Right Action Button */}
-              <div className="shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#1A1714] text-white group-hover:bg-purple-900 font-mono text-xs font-bold shadow-xs transition-colors">
-                <span className="hidden sm:inline">Inspect Folio</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-yellow-300" />
-              </div>
-            </div>
-          </motion.div>
-        )}
 
       </div>
 

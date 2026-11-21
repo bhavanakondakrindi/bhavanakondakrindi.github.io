@@ -27,7 +27,7 @@ export const CustomCursor = () => {
     }
 
     const onMouseMove = (e) => {
-      if (document.body.classList.contains('admin-mode') || document.body.classList.contains('resume-open')) {
+      if (document.body.classList.contains('admin-mode')) {
         if (isVisible) setIsVisible(false);
         return;
       }
@@ -85,7 +85,7 @@ export const CustomCursor = () => {
     return () => cancelAnimationFrame(animId);
   }, [mousePos, isTouch, enabled]);
 
-  if (isTouch || !enabled || document.body.classList.contains('admin-mode') || document.body.classList.contains('resume-open')) return null;
+  if (isTouch || !enabled || document.body.classList.contains('admin-mode')) return null;
 
   return (
     <div

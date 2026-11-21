@@ -12,7 +12,6 @@ import { EducationSection } from './components/public/EducationSection';
 import { ContactSection } from './components/public/ContactSection';
 import { Footer } from './components/public/Footer';
 import { ProjectDetailModal } from './components/public/ProjectDetailModal';
-import { ResumeModal } from './components/public/ResumeModal';
 import { CustomCursor } from './components/public/CustomCursor';
 
 // Lazy-loaded Admin Components (keeps public bundle ultra fast)
@@ -111,9 +110,6 @@ const MainApp = () => {
 
       {/* Expanding Interactive Project Detail Experience */}
       <ProjectDetailModal />
-
-      {/* Wax-Sealed Archival Resume / Folio Viewer */}
-      <ResumeModal />
 
     </div>
   );

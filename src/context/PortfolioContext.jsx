@@ -28,7 +28,6 @@ export const PortfolioProvider = ({ children }) => {
 
   // Public interactive states
   const [activeProjectModal, setActiveProjectModal] = useState(null);
-  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [activeThemeId, setActiveThemeId] = useState('warm-editorial');
 
   // Load initial data
@@ -163,8 +162,6 @@ export const PortfolioProvider = ({ children }) => {
         setAdminPreviewDevice,
         activeProjectModal,
         setActiveProjectModal,
-        isResumeModalOpen,
-        setIsResumeModalOpen,
         activeThemeId,
         setActiveThemeId,
         updateDraft,

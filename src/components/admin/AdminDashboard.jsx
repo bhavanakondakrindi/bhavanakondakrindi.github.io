@@ -17,7 +17,6 @@ import { ScrapbookEditor } from './editors/ScrapbookEditor';
 import { AnimationsEditor } from './editors/AnimationsEditor';
 import { MediaLibraryEditor } from './editors/MediaLibraryEditor';
 import { SupabaseSettingsEditor } from './editors/SupabaseSettingsEditor';
-import { ResumeEditor } from './editors/ResumeEditor';
 
 export const AdminDashboard = () => {
   const { activeAdminTab } = usePortfolio();
@@ -29,8 +28,6 @@ export const AdminDashboard = () => {
         return <OverviewEditor />;
       case 'hero':
         return <HeroEditor />;
-      case 'resume':
-        return <ResumeEditor />;
       case 'about':
         return <AboutEditor />;
       case 'skills':
