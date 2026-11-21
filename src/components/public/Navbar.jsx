@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { usePortfolio } from '../../context/PortfolioContext';
 import { useAuth } from '../../context/AuthContext';
-import { Palette, Lock, Menu, X, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Palette, Lock, Menu, X, ArrowUpRight, Sparkles, FileText } from 'lucide-react';
 import { EditorialBarcode } from '../ui/VintageStamps';
 
 export const Navbar = () => {
-  const { publishedData, activeThemeId, setActiveThemeId } = usePortfolio();
+  const { publishedData, activeThemeId, setActiveThemeId, setIsResumeModalOpen } = usePortfolio();
   const { isAdmin } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [paletteDropdownOpen, setPaletteDropdownOpen] = useState(false);
@@ -89,8 +89,20 @@ export const Navbar = () => {
           ))}
         </nav>
 
-        {/* Actions: Palette Quick Switcher & Mobile Menu */}
+        {/* Actions: CV Folio, Palette Quick Switcher & Mobile Menu */}
         <div className="flex items-center gap-2.5">
+          {/* CV / Resume Folio Button (Beautiful & Different) */}
+          {publishedData?.profile?.resume?.enabled !== false && (
+            <button
+              onClick={() => setIsResumeModalOpen(true)}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono font-bold bg-[#DDD6FE] text-purple-950 border-2 border-[#1A1714] rounded-full shadow-scrapbook hover:bg-[#C4B5FD] hover:-translate-y-0.5 active:translate-y-0 transition-all"
+              title="Inspect Curriculum Vitae Folio"
+            >
+              <FileText className="w-3.5 h-3.5 text-purple-800" />
+              <span className="hidden sm:inline">CV Folio</span>
+            </button>
+          )}
+
           {/* Palette Switcher */}
           <div className="relative">
             <button
@@ -159,6 +171,21 @@ export const Navbar = () => {
               <span className="text-xs text-rose-600 font-bold">[{link.num}]</span>
             </a>
           ))}
+
+          {/* Mobile CV Folio Trigger */}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setIsResumeModalOpen(true);
+            }}
+            className="flex items-center justify-between w-full px-3 py-2 text-sm font-mono font-bold bg-[#DDD6FE] text-purple-950 rounded-lg border border-purple-300"
+          >
+            <span className="flex items-center gap-2">
+              <FileText className="w-4 h-4 text-purple-800" />
+              <span>Curriculum Vitae Folio</span>
+            </span>
+            <span className="text-xs font-bold text-purple-700">↗</span>
+          </button>
 
           <div className="pt-3 border-t border-slate-300">
             <a

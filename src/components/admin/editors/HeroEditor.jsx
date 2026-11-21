@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { usePortfolio } from '../../../context/PortfolioContext';
-import { Upload, Image as ImageIcon, Check, Trash2, Link, Sparkles, GraduationCap } from 'lucide-react';
+import { Upload, Image as ImageIcon, Check, Trash2, Link, Sparkles, GraduationCap, FileText } from 'lucide-react';
 
 export const HeroEditor = () => {
-  const { draftData, updateDraft } = usePortfolio();
+  const { draftData, updateDraft, setActiveAdminTab } = usePortfolio();
   const profile = draftData?.profile || {};
   const fileInputRef = useRef(null);
   const [showUrlInput, setShowUrlInput] = useState(false);
@@ -292,6 +292,31 @@ export const HeroEditor = () => {
             />
           </div>
         </div>
+      </div>
+
+      {/* Quick link to Resume & Curriculum Vitae Studio */}
+      <div className="bg-[#FAF5FF] p-5 rounded-2xl border-2 border-[#1A1714] shadow-scrapbook flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-purple-200 border-2 border-[#1A1714] flex items-center justify-center shrink-0">
+            <FileText className="w-5 h-5 text-purple-900" />
+          </div>
+          <div>
+            <h4 className="font-editorial font-bold text-purple-950 text-base">
+              Curriculum Vitae / Academic Resume
+            </h4>
+            <p className="text-xs font-mono text-purple-800">
+              {profile.resume?.fileName ? `Current file: ${profile.resume.fileName}` : 'Upload your custom PDF from laptop (or link Google Drive)'}
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setActiveAdminTab('resume')}
+          className="px-4 py-2 rounded-xl bg-[#1A1714] text-white text-xs font-mono font-bold hover:bg-slate-800 transition-colors shadow-xs shrink-0"
+        >
+          Open Resume Studio →
+        </button>
       </div>
 
     </div>

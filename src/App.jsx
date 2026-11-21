@@ -12,6 +12,7 @@ import { EducationSection } from './components/public/EducationSection';
 import { ContactSection } from './components/public/ContactSection';
 import { Footer } from './components/public/Footer';
 import { ProjectDetailModal } from './components/public/ProjectDetailModal';
+import { ResumeModal } from './components/public/ResumeModal';
 import { CustomCursor } from './components/public/CustomCursor';
 
 // Lazy-loaded Admin Components (keeps public bundle ultra fast)
@@ -36,6 +37,18 @@ const MainApp = () => {
 
   const isAdminRoute = currentHash.startsWith('#/admin');
 
+  // Toggle admin-mode on body to restore standard cursors inside Admin Studio
+  useEffect(() => {
+    if (isAdminRoute) {
+      document.body.classList.add('admin-mode');
+    } else {
+      document.body.classList.remove('admin-mode');
+    }
+    return () => {
+      document.body.classList.remove('admin-mode');
+    };
+  }, [isAdminRoute]);
+
   if (isLoading) {
     return (
       <div className="fixed inset-0 bg-[#FAF7F2] bg-graph-paper flex flex-col items-center justify-center p-4">
@@ -52,20 +65,22 @@ const MainApp = () => {
   // Admin Route Experience
   if (isAdminRoute) {
     return (
-      <Suspense
-        fallback={
-          <div className="fixed inset-0 bg-[#FAF7F2] bg-graph-paper flex flex-col items-center justify-center p-4">
-            <div className="w-12 h-12 bg-white rounded-xl border-2 border-[#1E1E24] shadow-scrapbook flex items-center justify-center font-editorial font-bold text-xl animate-spin">
-              BK
+      <div data-admin-root="true" className="admin-view">
+        <Suspense
+          fallback={
+            <div className="fixed inset-0 bg-[#FAF7F2] bg-graph-paper flex flex-col items-center justify-center p-4">
+              <div className="w-12 h-12 bg-white rounded-xl border-2 border-[#1E1E24] shadow-scrapbook flex items-center justify-center font-editorial font-bold text-xl animate-spin">
+                BK
+              </div>
+              <p className="mt-3 font-mono text-xs uppercase text-slate-600">
+                Loading Admin Studio...
+              </p>
             </div>
-            <p className="mt-3 font-mono text-xs uppercase text-slate-600">
-              Loading Admin Studio...
-            </p>
-          </div>
-        }
-      >
-        {!isAdmin ? <AdminAuthModal /> : <AdminDashboard />}
-      </Suspense>
+          }
+        >
+          {!isAdmin ? <AdminAuthModal /> : <AdminDashboard />}
+        </Suspense>
+      </div>
     );
   }
 
@@ -96,6 +111,9 @@ const MainApp = () => {
 
       {/* Expanding Interactive Project Detail Experience */}
       <ProjectDetailModal />
+
+      {/* Wax-Sealed Archival Resume / Folio Viewer */}
+      <ResumeModal />
 
     </div>
   );

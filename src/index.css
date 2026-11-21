@@ -17,10 +17,43 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
-  /* Desktop Custom Cursor: Hide default arrow cursor completely so double cursor never occurs */
+  /* Desktop Custom Cursor: Hide default arrow cursor completely so double cursor never occurs ON PUBLIC PORTFOLIO */
   @media (hover: hover) and (pointer: fine) {
-    *, *::before, *::after, html, body, a, button, input, select, textarea, [role="button"], label {
+    body:not(.admin-mode),
+    body:not(.admin-mode) * {
       cursor: none !important;
+    }
+
+    /* Restore all standard native system cursors inside Admin Portal */
+    body.admin-mode,
+    body.admin-mode *,
+    .admin-view,
+    .admin-view *,
+    [data-admin-root],
+    [data-admin-root] * {
+      cursor: auto !important;
+    }
+    body.admin-mode a,
+    body.admin-mode button,
+    body.admin-mode [role="button"],
+    body.admin-mode label,
+    .admin-view a,
+    .admin-view button,
+    .admin-view [role="button"],
+    .admin-view label,
+    [data-admin-root] a,
+    [data-admin-root] button,
+    [data-admin-root] [role="button"],
+    [data-admin-root] label {
+      cursor: pointer !important;
+    }
+    body.admin-mode input,
+    body.admin-mode textarea,
+    .admin-view input,
+    .admin-view textarea,
+    [data-admin-root] input,
+    [data-admin-root] textarea {
+      cursor: text !important;
     }
   }
 
