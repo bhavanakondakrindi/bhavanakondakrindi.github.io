@@ -7,6 +7,37 @@ import { DynamicSticker } from '../ui/DynamicSticker';
 export const HeroSection = () => {
   const { publishedData } = usePortfolio();
   const profile = publishedData?.profile || {};
+  const marquee = publishedData?.marqueeBanner || {
+    enabled: true,
+    bgColor: "#FEF08A",
+    textColor: "#1A1714",
+    speed: "normal",
+    separator: "•",
+    starPrefix: "★",
+    items: [
+      "COMPUTER SCIENCE ENGINEERING",
+      "KLH DEEMED TO BE UNIVERSITY",
+      "ACADEMIC CGPA ~9.5",
+      "REACT.JS FRONTEND ARCHITECTURE",
+      "PYTHON & CLASSICAL AI SIMULATION",
+      "JAVA OBJECT-ORIENTED SYSTEMS",
+      "DATA STRUCTURES & PROBLEM SOLVING"
+    ]
+  };
+
+  const marqueeItems = marquee.items && marquee.items.length > 0
+    ? marquee.items
+    : [
+        "COMPUTER SCIENCE ENGINEERING",
+        "KLH DEEMED TO BE UNIVERSITY",
+        "ACADEMIC CGPA ~9.5",
+        "REACT.JS FRONTEND ARCHITECTURE",
+        "PYTHON & CLASSICAL AI SIMULATION",
+        "JAVA OBJECT-ORIENTED SYSTEMS",
+        "DATA STRUCTURES & PROBLEM SOLVING"
+      ];
+
+  const speedDuration = marquee.speed === 'slow' ? '36s' : marquee.speed === 'fast' ? '14s' : '22s';
 
   return (
     <section className="relative pt-8 pb-20 md:pt-14 md:pb-28 overflow-hidden bg-graph-paper">
@@ -132,7 +163,7 @@ export const HeroSection = () => {
                       {profile.avatarCaption || "Bhavana Kondakrindi"}
                     </p>
                     <p className="text-[9px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">
-                      KLH CSE • 2025
+                      KLH CSE • SOPHOMORE
                     </p>
                   </div>
 
@@ -221,42 +252,41 @@ export const HeroSection = () => {
       </div>
 
       {/* Marquee Ribbon Banner Strip */}
-      <div className="mt-16 border-y-2 border-[#1A1714] bg-[#FEF08A] py-3.5 overflow-hidden shadow-xs">
-        <div className="flex whitespace-nowrap animate-marquee">
-          <div className="flex items-center gap-8 text-xs sm:text-sm font-mono font-bold tracking-widest text-[#1A1714] uppercase">
-            <span>★ COMPUTER SCIENCE ENGINEERING</span>
-            <span>•</span>
-            <span>KLH DEEMED TO BE UNIVERSITY</span>
-            <span>•</span>
-            <span>ACADEMIC CGPA ~9.5</span>
-            <span>•</span>
-            <span>REACT.JS FRONTEND ARCHITECTURE</span>
-            <span>•</span>
-            <span>PYTHON & CLASSICAL AI SIMULATION</span>
-            <span>•</span>
-            <span>JAVA OBJECT-ORIENTED SYSTEMS</span>
-            <span>•</span>
-            <span>DATA STRUCTURES & PROBLEM SOLVING</span>
-            <span>•</span>
-          </div>
-          <div className="flex items-center gap-8 text-xs sm:text-sm font-mono font-bold tracking-widest text-[#1A1714] uppercase pl-8">
-            <span>★ COMPUTER SCIENCE ENGINEERING</span>
-            <span>•</span>
-            <span>KLH DEEMED TO BE UNIVERSITY</span>
-            <span>•</span>
-            <span>ACADEMIC CGPA ~9.5</span>
-            <span>•</span>
-            <span>REACT.JS FRONTEND ARCHITECTURE</span>
-            <span>•</span>
-            <span>PYTHON & CLASSICAL AI SIMULATION</span>
-            <span>•</span>
-            <span>JAVA OBJECT-ORIENTED SYSTEMS</span>
-            <span>•</span>
-            <span>DATA STRUCTURES & PROBLEM SOLVING</span>
-            <span>•</span>
+      {marquee.enabled !== false && (
+        <div
+          style={{
+            backgroundColor: marquee.bgColor || '#FEF08A',
+            color: marquee.textColor || '#1A1714'
+          }}
+          className="mt-16 border-y-2 border-[#1A1714] py-3.5 overflow-hidden shadow-xs transition-colors"
+        >
+          <div
+            className="flex whitespace-nowrap animate-marquee"
+            style={{ animationDuration: speedDuration }}
+          >
+            <div className="flex items-center gap-8 text-xs sm:text-sm font-mono font-bold tracking-widest uppercase">
+              {marqueeItems.map((item, idx) => (
+                <React.Fragment key={idx}>
+                  <span>
+                    {marquee.starPrefix || '★'} {item}
+                  </span>
+                  <span>{marquee.separator || '•'}</span>
+                </React.Fragment>
+              ))}
+            </div>
+            <div className="flex items-center gap-8 text-xs sm:text-sm font-mono font-bold tracking-widest uppercase pl-8">
+              {marqueeItems.map((item, idx) => (
+                <React.Fragment key={`dup-${idx}`}>
+                  <span>
+                    {marquee.starPrefix || '★'} {item}
+                  </span>
+                  <span>{marquee.separator || '•'}</span>
+                </React.Fragment>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
     </section>
   );

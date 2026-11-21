@@ -27,7 +27,7 @@ export const Navbar = () => {
       <div className="bg-[#1A1714] text-white px-4 py-1 text-[10px] font-mono tracking-widest uppercase flex items-center justify-between border-b border-black">
         <div className="flex items-center gap-3">
           <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
-          <span>DEV JOURNAL // VOL. 2025</span>
+          <span>DEV JOURNAL // DIGITAL FOLIO</span>
           <span className="hidden sm:inline opacity-40">•</span>
           <span className="hidden sm:inline opacity-80">KLH DEEMED TO BE UNIVERSITY</span>
         </div>

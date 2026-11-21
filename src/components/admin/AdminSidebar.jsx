@@ -26,6 +26,7 @@ export const AdminSidebar = () => {
       items: [
         { id: 'overview', label: 'Overview', icon: LayoutDashboard },
         { id: 'hero', label: 'Profile & Laptop Photo', icon: User, highlight: true },
+        { id: 'marquee', label: 'Yellow Moving Tape', icon: Sparkles, highlight: true },
         { id: 'about', label: 'About & Journal', icon: BookOpen },
         { id: 'skills', label: 'Technical Skills', icon: Code2, badge: draftData?.skills?.reduce((acc, c) => acc + (c.items?.length || 0), 0) },
         { id: 'projects', label: 'Projects & Case Files', icon: FolderGit2, badge: draftData?.projects?.length },

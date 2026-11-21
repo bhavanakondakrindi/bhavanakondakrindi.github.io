@@ -2,7 +2,7 @@ import React from 'react';
 
 export const PaperStamp = ({
   text = 'KLH CSE',
-  subtext = '2025',
+  subtext = 'VERIFIED',
   color = '#F43F5E',
   className = '',
   rotate = -8,

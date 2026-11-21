@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Postage Cancellation Stamp with circular date and wavy postmark lines
-export const PostmarkStamp = ({ text = "KLH UNIVERSITY", date = "HYDERABAD • 2025", rotate = -8, color = "#DC2626", className = "" }) => {
+export const PostmarkStamp = ({ text = "KLH UNIVERSITY", date = "HYDERABAD • VERIFIED", rotate = -8, color = "#DC2626", className = "" }) => {
   return (
     <div
       style={{ transform: `rotate(${rotate}deg)`, color }}
@@ -47,7 +47,7 @@ export const EditorialBarcode = ({ className = "" }) => {
       </div>
       <div className="text-[9px] font-mono font-bold leading-none text-slate-800 uppercase tracking-tighter">
         <span>ISSUE 02</span>
-        <span className="block text-[7px] text-slate-500">VOL. 2025</span>
+        <span className="block text-[7px] text-slate-500">VOL. EDITION</span>
       </div>
     </div>
   );

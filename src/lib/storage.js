@@ -5,6 +5,34 @@ const STORAGE_KEY_PUBLISHED = 'bhavana_portfolio_published_v1';
 const STORAGE_KEY_DRAFT = 'bhavana_portfolio_draft_v1';
 const STORAGE_KEY_AUTH = 'bhavana_admin_session_v1';
 
+const sanitizePortfolioData = (parsed) => {
+  if (!parsed) return parsed;
+  if (parsed.projects && parsed.projects.length < initialPortfolioData.projects.length) {
+    parsed.projects = initialPortfolioData.projects;
+  }
+  if (!parsed.appearance) parsed.appearance = {};
+  if (!parsed.appearance.individualStickers) {
+    parsed.appearance.individualStickers = initialPortfolioData.appearance.individualStickers;
+  }
+  // Sanitize 2025 out of any stickers
+  if (parsed.appearance.individualStickers) {
+    Object.keys(parsed.appearance.individualStickers).forEach((key) => {
+      const s = parsed.appearance.individualStickers[key];
+      if (s.date && s.date.includes('2025')) {
+        s.date = s.date.replace(/2025/g, 'VERIFIED').replace(/\s*•\s*VERIFIED/, ' • VERIFIED').trim();
+      }
+      if (s.label && s.label.includes('2025')) {
+        s.label = s.label.replace(/2025/g, '').trim();
+      }
+    });
+  }
+  // Ensure marqueeBanner exists with defaults
+  if (!parsed.marqueeBanner) {
+    parsed.marqueeBanner = initialPortfolioData.marqueeBanner;
+  }
+  return parsed;
+};
+
 export const getPublishedData = async () => {
   // If Supabase is available, attempt to fetch published version
   if (isSupabaseConfigured && supabase) {
@@ -16,9 +44,9 @@ export const getPublishedData = async () => {
         .maybeSingle();
 
       if (!error && data?.content) {
-        // Cache locally as fallback
-        localStorage.setItem(STORAGE_KEY_PUBLISHED, JSON.stringify(data.content));
-        return data.content;
+        const sanitized = sanitizePortfolioData(data.content);
+        localStorage.setItem(STORAGE_KEY_PUBLISHED, JSON.stringify(sanitized));
+        return sanitized;
       }
     } catch (err) {
       console.warn('Supabase fetch failed, falling back to local cache:', err);
@@ -30,14 +58,9 @@ export const getPublishedData = async () => {
     const local = localStorage.getItem(STORAGE_KEY_PUBLISHED);
     if (local) {
       const parsed = JSON.parse(local);
-      if (parsed?.projects && parsed.projects.length < initialPortfolioData.projects.length) {
-        parsed.projects = initialPortfolioData.projects;
-      }
-      if (!parsed?.appearance?.individualStickers) {
-        if (!parsed.appearance) parsed.appearance = {};
-        parsed.appearance.individualStickers = initialPortfolioData.appearance.individualStickers;
-      }
-      return parsed;
+      const sanitized = sanitizePortfolioData(parsed);
+      localStorage.setItem(STORAGE_KEY_PUBLISHED, JSON.stringify(sanitized));
+      return sanitized;
     }
   } catch (e) {
     console.error('Error reading local published data:', e);
@@ -57,8 +80,9 @@ export const getDraftData = async () => {
         .maybeSingle();
 
       if (!error && data?.content) {
-        localStorage.setItem(STORAGE_KEY_DRAFT, JSON.stringify(data.content));
-        return data.content;
+        const sanitized = sanitizePortfolioData(data.content);
+        localStorage.setItem(STORAGE_KEY_DRAFT, JSON.stringify(sanitized));
+        return sanitized;
       }
     } catch (err) {
       console.warn('Supabase draft fetch error:', err);
@@ -69,11 +93,9 @@ export const getDraftData = async () => {
     const local = localStorage.getItem(STORAGE_KEY_DRAFT);
     if (local) {
       const parsed = JSON.parse(local);
-      if (!parsed?.appearance?.individualStickers) {
-        if (!parsed.appearance) parsed.appearance = {};
-        parsed.appearance.individualStickers = initialPortfolioData.appearance.individualStickers;
-      }
-      return parsed;
+      const sanitized = sanitizePortfolioData(parsed);
+      localStorage.setItem(STORAGE_KEY_DRAFT, JSON.stringify(sanitized));
+      return sanitized;
     }
   } catch (e) {
     console.error('Error reading local draft data:', e);

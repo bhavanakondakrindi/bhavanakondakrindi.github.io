@@ -29,7 +29,7 @@ export const EducationEditor = () => {
       title: "New Academic / Technical Milestone",
       issuer: "KLH Deemed to be University",
       category: "Academic",
-      date: "2025",
+      date: "Ongoing",
       description: "Brief summary of the milestone or recognition."
     };
     updateDraft(prev => ({
@@ -54,7 +54,7 @@ export const EducationEditor = () => {
       id: `cert-${Date.now()}`,
       title: "New Certification / Credential",
       issuer: "Issuing Organization",
-      issueDate: "2025",
+      issueDate: "Ongoing",
       credentialUrl: ""
     };
     updateDraft(prev => ({

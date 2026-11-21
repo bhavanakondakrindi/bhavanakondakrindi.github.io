@@ -144,7 +144,7 @@ export const AboutSection = () => {
                 {/* Bottom Quote Snippet */}
                 <div className="pt-4 border-t border-dashed border-[#1A1714]/20 flex items-center justify-between text-xs font-mono text-slate-500">
                   <span className="font-bold text-[#1A1714]">CONFIDENTIAL FIELD NOTES</span>
-                  <span>BK // 2025</span>
+                  <span>BK // FIELD LOG</span>
                 </div>
 
               </div>

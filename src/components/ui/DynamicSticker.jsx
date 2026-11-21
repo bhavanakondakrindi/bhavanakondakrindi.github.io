@@ -79,7 +79,7 @@ export const DynamicSticker = ({
       content = (
         <PostmarkStamp
           text={sticker.text || 'POSTAGE'}
-          date={sticker.date || '2025'}
+          date={sticker.date || 'VERIFIED'}
           color={sticker.color || '#DC2626'}
           rotate={rotate}
         />

@@ -294,6 +294,32 @@ export const HeroEditor = () => {
         </div>
       </div>
 
+      {/* Quick Access to Yellow Moving Tape Studio */}
+      <div className="bg-[#FEF9C3] p-5 rounded-2xl border-2 border-[#1A1714] shadow-scrapbook flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-amber-300 border-2 border-[#1A1714] flex items-center justify-center shrink-0">
+            <Sparkles className="w-5 h-5 text-amber-950" />
+          </div>
+          <div>
+            <h4 className="font-editorial font-bold text-amber-950 text-base">
+              Yellow Moving Ribbon Banner Tape
+            </h4>
+            <p className="text-xs font-mono text-amber-900">
+              Customize text phrases, background & text colors, speed, and separator icons on the animated banner.
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setActiveAdminTab('marquee')}
+          className="px-4 py-2.5 rounded-xl bg-[#1A1714] text-white text-xs font-mono font-bold hover:bg-slate-800 transition-colors shadow-xs shrink-0 flex items-center gap-2"
+        >
+          <span>Open Moving Tape Studio</span>
+          <span>→</span>
+        </button>
+      </div>
+
     </div>
   );
 };

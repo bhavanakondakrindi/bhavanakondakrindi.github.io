@@ -23,7 +23,7 @@ import { PostmarkStamp, CherriesSticker, RibbonBow, EditorialBarcode } from '../
 import { initialPortfolioData } from '../../../data/initialPortfolioData';
 
 export const ScrapbookEditor = () => {
-  const { draftData, updateDraft } = usePortfolio();
+  const { draftData, updateDraft, setActiveAdminTab } = usePortfolio();
   const appearance = draftData?.appearance || {};
   const stickers = appearance?.individualStickers || initialPortfolioData.appearance.individualStickers || {};
 
@@ -119,7 +119,7 @@ export const ScrapbookEditor = () => {
       case 'barcode':
         return <EditorialBarcode />;
       case 'postmark':
-        return <PostmarkStamp text={s.text || 'STAMP'} date={s.date || '2025'} color={s.color || '#DC2626'} rotate={rotate} />;
+        return <PostmarkStamp text={s.text || 'STAMP'} date={s.date || 'VERIFIED'} color={s.color || '#DC2626'} rotate={rotate} />;
       case 'washi':
         return <WashiTape color={s.color || 'yellow'} width="90px" height="20px" rotate={rotate} />;
       case 'binder-clip':
@@ -167,6 +167,28 @@ export const ScrapbookEditor = () => {
         >
           <RotateCcw className="w-3.5 h-3.5 text-slate-500" />
           <span>Reset All to Defaults</span>
+        </button>
+      </div>
+
+      {/* Moving Tape Banner Quick Access */}
+      <div className="bg-[#FEF9C3] p-4 rounded-2xl border-2 border-[#1A1714] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <Sparkles className="w-5 h-5 text-amber-700 shrink-0" />
+          <div>
+            <span className="font-editorial font-bold text-sm text-amber-950 block">
+              Looking for the Yellow Moving Ribbon Banner Tape?
+            </span>
+            <span className="text-xs text-amber-900 font-sans">
+              Edit phrases, color, speed, and separator symbols in its dedicated studio.
+            </span>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={() => setActiveAdminTab('marquee')}
+          className="px-3.5 py-1.5 rounded-xl bg-[#1A1714] text-white text-xs font-mono font-bold hover:bg-slate-800 transition-colors shadow-xs shrink-0 self-start sm:self-center"
+        >
+          Open Moving Tape Studio →
         </button>
       </div>
 
