@@ -51,7 +51,7 @@ export const PortfolioProvider = ({ children }) => {
     loadData();
   }, []);
 
-  // Sync theme changes with CSS variables
+  // Sync theme changes with CSS variables and typography
   useEffect(() => {
     const currentTheme =
       draftData?.appearance?.themes?.find(t => t.id === activeThemeId) ||
@@ -64,8 +64,46 @@ export const PortfolioProvider = ({ children }) => {
       document.documentElement.style.setProperty('--text-primary', currentTheme.textPrimary);
       document.documentElement.style.setProperty('--text-muted', currentTheme.textMuted);
       document.documentElement.style.setProperty('--accent-color', currentTheme.accent);
+
+      const paper = currentTheme.paperType || 'graph-paper';
+      document.documentElement.setAttribute('data-paper', paper);
+      document.body.setAttribute('data-paper', paper);
     }
-  }, [activeThemeId, draftData, publishedData]);
+
+    // Typography heading font pairing
+    const headingChoice = draftData?.appearance?.fontFamilyHeading || publishedData?.appearance?.fontFamilyHeading || 'editorial';
+    let fontVal = '"Fraunces", Georgia, serif';
+    if (headingChoice === 'serif') fontVal = '"Playfair Display", Georgia, serif';
+    if (headingChoice === 'display' || headingChoice === 'mono') fontVal = '"Space Grotesk", sans-serif';
+    document.documentElement.style.setProperty('--font-editorial', fontVal);
+  }, [activeThemeId, draftData?.appearance, publishedData?.appearance]);
+
+  // Unified theme selector that updates state and persists smoothly
+  const selectTheme = useCallback((themeId) => {
+    setActiveThemeId(themeId);
+    setDraftData(prev => ({
+      ...prev,
+      appearance: {
+        ...prev?.appearance,
+        activeTheme: themeId
+      }
+    }));
+    setPublishedData(prev => {
+      const updated = {
+        ...prev,
+        appearance: {
+          ...prev?.appearance,
+          activeTheme: themeId
+        }
+      };
+      try {
+        localStorage.setItem('bhavana_portfolio_published_v1', JSON.stringify(updated));
+      } catch (e) {
+        console.warn('Could not save theme to localStorage:', e);
+      }
+      return updated;
+    });
+  }, []);
 
   // Update draft in admin
   const updateDraft = useCallback((updater) => {
@@ -108,7 +146,14 @@ export const PortfolioProvider = ({ children }) => {
   const handlePublish = async () => {
     setSaveStatus('saving');
     try {
-      const published = await publishData(draftData);
+      const dataToPublish = {
+        ...draftData,
+        appearance: {
+          ...draftData?.appearance,
+          activeTheme: activeThemeId
+        }
+      };
+      const published = await publishData(dataToPublish);
       setPublishedData(published);
       setIsDirty(false);
       setSaveStatus('published');
@@ -164,6 +209,7 @@ export const PortfolioProvider = ({ children }) => {
         setActiveProjectModal,
         activeThemeId,
         setActiveThemeId,
+        selectTheme,
         updateDraft,
         updateProfile,
         saveDraft: handleSaveDraft,

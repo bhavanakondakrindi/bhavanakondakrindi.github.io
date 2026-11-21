@@ -5,7 +5,7 @@ import { Palette, Lock, Menu, X, ArrowUpRight, Sparkles } from 'lucide-react';
 import { EditorialBarcode } from '../ui/VintageStamps';
 
 export const Navbar = () => {
-  const { publishedData, activeThemeId, setActiveThemeId } = usePortfolio();
+  const { publishedData, activeThemeId, selectTheme } = usePortfolio();
   const { isAdmin } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [paletteDropdownOpen, setPaletteDropdownOpen] = useState(false);
@@ -21,7 +21,10 @@ export const Navbar = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-[#FAF7F2]/95 backdrop-blur-md border-b-2 border-[#1A1714] transition-colors">
+    <header
+      className="sticky top-0 z-50 backdrop-blur-md border-b-2 border-[#1A1714] transition-colors duration-300"
+      style={{ backgroundColor: 'var(--bg-primary)' }}
+    >
       
       {/* Top Editorial Masthead Ticker Strip */}
       <div className="bg-[#1A1714] text-white px-4 py-1 text-[10px] font-mono tracking-widest uppercase flex items-center justify-between border-b border-black">
@@ -111,7 +114,7 @@ export const Navbar = () => {
                   <button
                     key={t.id}
                     onClick={() => {
-                      setActiveThemeId(t.id);
+                      selectTheme(t.id);
                       setPaletteDropdownOpen(false);
                     }}
                     className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium text-left transition-colors ${
@@ -147,7 +150,10 @@ export const Navbar = () => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#FAF7F2] border-t-2 border-[#1A1714] px-4 pt-3 pb-6 space-y-2">
+        <div
+          className="lg:hidden border-t-2 border-[#1A1714] px-4 pt-3 pb-6 space-y-2 transition-colors duration-300"
+          style={{ backgroundColor: 'var(--bg-primary)' }}
+        >
           {navLinks.map((link) => (
             <a
               key={link.name}

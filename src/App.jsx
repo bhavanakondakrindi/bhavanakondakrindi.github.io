@@ -50,7 +50,10 @@ const MainApp = () => {
 
   if (isLoading) {
     return (
-      <div className="fixed inset-0 bg-[#FAF7F2] bg-graph-paper flex flex-col items-center justify-center p-4">
+      <div
+        className="fixed inset-0 flex flex-col items-center justify-center p-4 bg-graph-paper"
+        style={{ backgroundColor: 'var(--bg-primary, #FAF7F2)' }}
+      >
         <div className="w-14 h-14 bg-white rounded-2xl border-2 border-[#1E1E24] shadow-scrapbook flex items-center justify-center font-editorial font-black text-2xl animate-bounce">
           BK
         </div>
@@ -67,7 +70,10 @@ const MainApp = () => {
       <div data-admin-root="true" className="admin-view">
         <Suspense
           fallback={
-            <div className="fixed inset-0 bg-[#FAF7F2] bg-graph-paper flex flex-col items-center justify-center p-4">
+            <div
+              className="fixed inset-0 flex flex-col items-center justify-center p-4 bg-graph-paper"
+              style={{ backgroundColor: 'var(--bg-primary, #FAF7F2)' }}
+            >
               <div className="w-12 h-12 bg-white rounded-xl border-2 border-[#1E1E24] shadow-scrapbook flex items-center justify-center font-editorial font-bold text-xl animate-spin">
                 BK
               </div>
@@ -87,7 +93,10 @@ const MainApp = () => {
 
   // Visitor Experience
   return (
-    <div className="min-h-screen bg-[#FAF7F2] text-[#1E1E24] font-sans selection:bg-[#FBCFE8] selection:text-[#18181B] relative">
+    <div
+      className="min-h-screen font-sans selection:bg-[#FBCFE8] selection:text-[#18181B] relative transition-colors duration-300"
+      style={{ backgroundColor: 'var(--bg-primary, #FAF7F2)', color: 'var(--text-primary, #1E1E24)' }}
+    >
       
       {/* Desktop Custom Cursor */}
       <CustomCursor />

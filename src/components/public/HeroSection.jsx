@@ -40,7 +40,10 @@ export const HeroSection = () => {
   const speedDuration = marquee.speed === 'slow' ? '36s' : marquee.speed === 'fast' ? '14s' : '22s';
 
   return (
-    <section className="relative pt-8 pb-20 md:pt-14 md:pb-28 overflow-hidden bg-graph-paper">
+    <section
+      className="relative pt-8 pb-20 md:pt-14 md:pb-28 overflow-hidden bg-graph-paper transition-colors duration-300"
+      style={{ backgroundColor: 'var(--bg-primary, #FAF7F2)' }}
+    >
       
       {/* Background Decorative Postmark Stamps & Floating Accents */}
       <DynamicSticker id="hero_postmark" className="absolute top-6 left-6 hidden lg:block opacity-75" />

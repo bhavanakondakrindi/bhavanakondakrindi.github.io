@@ -61,22 +61,37 @@
     background-color: var(--bg-primary);
     color: var(--text-primary);
     overflow-x: hidden;
+    transition: background-color 0.35s ease, color 0.35s ease;
   }
 }
 
+/* Dynamic Heading Typography */
+.font-editorial {
+  font-family: var(--font-editorial, "Fraunces", Georgia, serif) !important;
+}
+
+/* Smooth Transition on Visual Elements When Theme Palettes Change */
+header, nav, section, main, .theme-transition {
+  transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease;
+}
+
 /* ==============================================================================
-   AUTHENTIC SCRAPBOOK & PAPER TEXTURES
+   AUTHENTIC SCRAPBOOK & PAPER TEXTURES (Dynamic Data-Paper & Utility Classes)
    ============================================================================== */
 
 /* Fine Millimeter / Graph Paper */
-.bg-graph-paper {
+.bg-graph-paper,
+[data-paper="graph-paper"],
+body[data-paper="graph-paper"] {
   background-size: 24px 24px;
   background-image: 
     linear-gradient(to right, rgba(148, 163, 184, 0.22) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(148, 163, 184, 0.22) 1px, transparent 1px);
 }
 
-.bg-graph-paper-fine {
+.bg-graph-paper-fine,
+[data-paper="graph-paper-fine"],
+body[data-paper="graph-paper-fine"] {
   background-size: 14px 14px;
   background-image: 
     linear-gradient(to right, rgba(148, 163, 184, 0.16) 1px, transparent 1px),
@@ -84,18 +99,26 @@
 }
 
 /* Ruled Notebook Paper with left margin */
-.bg-ruled-paper {
+.bg-ruled-paper,
+[data-paper="lined-paper"],
+[data-paper="ruled-paper"],
+body[data-paper="lined-paper"],
+body[data-paper="ruled-paper"] {
   background-size: 100% 28px;
   background-image: linear-gradient(to bottom, transparent 27px, rgba(148, 163, 184, 0.25) 28px);
 }
 
-.bg-dot-grid {
+.bg-dot-grid,
+[data-paper="dot-grid"],
+body[data-paper="dot-grid"] {
   background-image: radial-gradient(rgba(100, 116, 139, 0.28) 1.5px, transparent 1.5px);
   background-size: 20px 20px;
 }
 
 /* Blueprint Dark Grid Paper */
-.bg-blueprint-grid {
+.bg-blueprint-grid,
+[data-paper="blueprint"],
+body[data-paper="blueprint"] {
   background-color: #0F172A;
   background-size: 24px 24px;
   background-image: 
@@ -104,7 +127,7 @@
 }
 
 /* ==============================================================================
-   RIPPED & TORN PAPER EDGES
+   RIPPED & TORN PAPER EDGES (Dynamic Primary Background)
    ============================================================================== */
 
 .torn-paper-bottom {
@@ -119,7 +142,7 @@
   height: 14px;
   background-repeat: repeat-x;
   background-size: 28px 14px;
-  background-image: radial-gradient(circle at 14px 0, transparent 9px, #FAF7F2 10px);
+  background-image: radial-gradient(circle at 14px 0, transparent 9px, var(--bg-primary, #FAF7F2) 10px);
   pointer-events: none;
   z-index: 10;
 }
@@ -136,7 +159,7 @@
   height: 14px;
   background-repeat: repeat-x;
   background-size: 28px 14px;
-  background-image: radial-gradient(circle at 14px 14px, transparent 9px, #FAF7F2 10px);
+  background-image: radial-gradient(circle at 14px 14px, transparent 9px, var(--bg-primary, #FAF7F2) 10px);
   pointer-events: none;
   z-index: 10;
 }
@@ -304,4 +327,35 @@
   .cursor-ring {
     display: none !important;
   }
+}
+
+/* ==============================================================================
+   HORIZONTAL 3D PROJECTS RUNWAY & SLEEK SCRUBBER
+   ============================================================================== */
+.runway-perspective {
+  perspective: 1200px;
+  perspective-origin: 30% 50%;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(26, 23, 20, 0.25);
+  border-radius: 999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(26, 23, 20, 0.5);
 }

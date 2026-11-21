@@ -24,7 +24,11 @@ export const AboutSection = () => {
   const paragraphs = profile.bioParagraphs || [];
 
   return (
-    <section id="about" className="py-20 md:py-32 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-graph-paper">
+    <section
+      id="about"
+      className="py-20 md:py-32 relative border-b-2 border-[#1A1714] bg-graph-paper transition-colors duration-300"
+      style={{ backgroundColor: 'var(--bg-primary, #FAF7F2)' }}
+    >
       
       {/* Whimsical Bedazzling Background Accents */}
       <DynamicSticker id="about_gem_moon" className="absolute top-12 left-8 pointer-events-none hidden lg:block" />
@@ -76,7 +80,10 @@ export const AboutSection = () => {
             <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch divide-y-2 lg:divide-y-0 lg:divide-x-2 divide-[#1A1714]/15">
               
               {/* LEFT PAGE: Visual Scrapbook Collage (5 cols) */}
-              <div className="lg:col-span-5 p-7 sm:p-10 bg-[#FAF7F2] bg-ruled-paper flex flex-col justify-between space-y-8 relative">
+              <div
+                className="lg:col-span-5 p-7 sm:p-10 bg-ruled-paper flex flex-col justify-between space-y-8 relative transition-colors duration-300"
+                style={{ backgroundColor: 'var(--bg-primary, #FAF7F2)' }}
+              >
                 
                 <div className="space-y-6">
                   

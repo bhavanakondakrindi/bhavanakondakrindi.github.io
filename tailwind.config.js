@@ -8,7 +8,7 @@ export default {
     extend: {
       fontFamily: {
         serif: ['"Playfair Display"', 'Fraunces', 'Georgia', 'serif'],
-        editorial: ['Fraunces', '"Playfair Display"', 'Georgia', 'serif'],
+        editorial: ['var(--font-editorial, "Fraunces")', '"Playfair Display"', 'Georgia', 'serif'],
         sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         handwriting: ['Caveat', 'cursive'],
         mono: ['"JetBrains Mono"', 'monospace'],

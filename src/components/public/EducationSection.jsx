@@ -22,7 +22,11 @@ export const EducationSection = () => {
   const profile = publishedData?.profile || {};
 
   return (
-    <section id="education" className="py-20 md:py-32 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-ruled-paper">
+    <section
+      id="education"
+      className="py-20 md:py-32 relative border-b-2 border-[#1A1714] bg-ruled-paper transition-colors duration-300"
+      style={{ backgroundColor: 'var(--bg-primary, #FAF7F2)' }}
+    >
       
       {/* Whimsical Bedazzling Gems in Background */}
       <DynamicSticker id="edu_gem_topaz" className="absolute top-16 right-16 pointer-events-none hidden lg:block" />

@@ -27,7 +27,11 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-32 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-graph-paper">
+    <section
+      id="contact"
+      className="py-20 md:py-32 relative border-b-2 border-[#1A1714] bg-graph-paper transition-colors duration-300"
+      style={{ backgroundColor: 'var(--bg-primary, #FAF7F2)' }}
+    >
       
       {/* Whimsical Bedazzling Gem Background Accents */}
       <DynamicSticker id="contact_gem_diamond" className="absolute top-16 left-12 pointer-events-none hidden lg:block" />
