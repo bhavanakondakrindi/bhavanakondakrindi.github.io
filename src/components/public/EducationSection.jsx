@@ -15,7 +15,7 @@ import {
 import { WashiTape } from '../ui/WashiTape';
 import { BinderClip } from '../ui/BinderClip';
 import { PostmarkStamp, RibbonBow } from '../ui/VintageStamps';
-import { GemSticker } from '../ui/DoodleArrow';
+import { GemSticker, SparkleStar } from '../ui/DoodleArrow';
 
 export const EducationSection = () => {
   const { publishedData } = usePortfolio();
@@ -27,18 +27,31 @@ export const EducationSection = () => {
   return (
     <section id="education" className="py-20 md:py-32 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-ruled-paper">
       
+      {/* Whimsical Bedazzling Gems in Background */}
+      <div className="absolute top-16 right-16 pointer-events-none hidden lg:block">
+        <GemSticker type="topaz" size={32} />
+      </div>
+      <div className="absolute bottom-20 left-10 pointer-events-none hidden lg:block">
+        <GemSticker type="amethyst" size={36} />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 relative">
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DDD6FE] border-2 border-[#1A1714] font-mono text-xs font-bold text-purple-950 uppercase tracking-widest mb-3 shadow-xs">
               <Bookmark className="w-3.5 h-3.5 text-purple-700" />
               <span>Chapter 04 // Academics & Milestones</span>
             </div>
-            <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1714] tracking-tight">
-              Academic <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Standing</span>
-            </h2>
+            <div className="relative inline-block">
+              <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1714] tracking-tight">
+                Academic <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Standing</span>
+              </h2>
+              <div className="absolute -top-3 -right-6 pointer-events-none">
+                <SparkleStar size={24} color="#C084FC" />
+              </div>
+            </div>
             <p className="text-slate-600 font-sans text-base max-w-xl mt-2">
               Formal degree progression at KLH Deemed to be University, core foundational coursework, and verified milestones.
             </p>
@@ -50,19 +63,19 @@ export const EducationSection = () => {
         </div>
 
         {/* =========================================================================
-            UNIVERSITY DIPLOMA & ACADEMIC LEDGER SPREAD
+            UNIVERSITY DIPLOMA & ACADEMIC LEDGER SPREAD (No overflow-hidden clipping!)
            ========================================================================= */}
         {education.map((edu, idx) => (
           <div
             key={edu.id || idx}
-            className="relative bg-white rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-10 mb-12 overflow-hidden"
+            className="relative bg-white rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-10 mb-12 overflow-visible"
           >
-            {/* Washi Tape Header */}
-            <div className="absolute -top-3.5 left-12 z-20">
+            {/* Washi Tape & Bow Header (Sitting proud on top, completely uncut!) */}
+            <div className="absolute -top-3.5 left-12 z-20 pointer-events-none">
               <WashiTape color="lavender" width="140px" height="26px" rotate={-2} />
             </div>
 
-            <div className="absolute -top-4 right-10 z-20 hidden sm:block">
+            <div className="absolute -top-5 right-10 z-20 hidden sm:block pointer-events-none">
               <RibbonBow rotate={-6} />
             </div>
 
@@ -170,13 +183,13 @@ export const EducationSection = () => {
         ))}
 
         {/* =========================================================================
-            ACCOMPLISHMENTS & MILESTONE CLIPPINGS
+            ACCOMPLISHMENTS & MILESTONE CLIPPINGS (With Whimsical Stickers)
            ========================================================================= */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Achievements Card */}
-          <div className="relative bg-white rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-8 space-y-6">
-            <div className="absolute -top-3 left-10">
+          <div className="relative bg-white rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-8 space-y-6 overflow-visible">
+            <div className="absolute -top-3 left-10 pointer-events-none">
               <WashiTape color="yellow" width="110px" height="22px" rotate={1} />
             </div>
 
@@ -220,8 +233,8 @@ export const EducationSection = () => {
           </div>
 
           {/* Certifications & Practical Badges */}
-          <div className="relative bg-white rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-8 space-y-6">
-            <div className="absolute -top-3 right-10">
+          <div className="relative bg-white rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-8 space-y-6 overflow-visible">
+            <div className="absolute -top-3 right-10 pointer-events-none">
               <WashiTape color="green" width="110px" height="22px" rotate={-2} />
             </div>
 

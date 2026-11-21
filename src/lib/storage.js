@@ -29,7 +29,11 @@ export const getPublishedData = async () => {
   try {
     const local = localStorage.getItem(STORAGE_KEY_PUBLISHED);
     if (local) {
-      return JSON.parse(local);
+      const parsed = JSON.parse(local);
+      if (parsed?.projects && parsed.projects.length < initialPortfolioData.projects.length) {
+        parsed.projects = initialPortfolioData.projects;
+      }
+      return parsed;
     }
   } catch (e) {
     console.error('Error reading local published data:', e);

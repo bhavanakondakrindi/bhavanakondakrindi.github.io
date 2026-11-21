@@ -7,17 +7,16 @@ export const CustomCursor = () => {
 
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
   const [isHovered, setIsHovered] = useState(false);
-  const [isTextTarget, setIsTextTarget] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
 
-  // Smooth trail position
+  // Smooth trail position with lerp
   const trailPos = useRef({ x: -100, y: -100 });
   const trailElementRef = useRef(null);
   const dotElementRef = useRef(null);
 
   useEffect(() => {
-    // Detect touch device or accessibility preference
+    // Detect touch device or reduced motion
     if (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window) {
       setIsTouch(true);
       return;
@@ -34,18 +33,15 @@ export const CustomCursor = () => {
 
       if (!isVisible) setIsVisible(true);
 
-      // Instantly position the center dot with ZERO lag
+      // Instant positioning on the center core dot with zero latency
       if (dotElementRef.current) {
         dotElementRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
       }
 
-      // Check target type
+      // Check interactive hover target
       const target = e.target;
-      const isInput = target.closest('input, textarea, select, [contenteditable="true"]');
-      setIsTextTarget(Boolean(isInput));
-
-      const isInteractive = target.closest('a, button, [role="button"], input, select, textarea, .clickable, [tabindex="0"]');
-      setIsHovered(Boolean(isInteractive) && !isInput);
+      const isInteractive = target.closest('a, button, [role="button"], input, select, textarea, .clickable, [tabindex="0"], label');
+      setIsHovered(Boolean(isInteractive));
     };
 
     const onMouseLeave = () => setIsVisible(false);
@@ -62,7 +58,7 @@ export const CustomCursor = () => {
     };
   }, [isVisible]);
 
-  // Silky smooth interpolation loop for the outer ring aura
+  // Silky smooth interpolation loop for the outer blue ring aura
   useEffect(() => {
     if (isTouch || !enabled) return;
 
@@ -89,30 +85,30 @@ export const CustomCursor = () => {
 
   return (
     <div
-      className={`pointer-events-none fixed inset-0 z-[999999] transition-opacity duration-300 ${
-        isVisible && !isTextTarget ? 'opacity-100' : 'opacity-0'
+      className={`pointer-events-none fixed inset-0 z-[999999] transition-opacity duration-200 ${
+        isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       aria-hidden="true"
     >
-      {/* Precision Instant Pointer Dot (Zero Latency) */}
+      {/* Precision Center Blue Orb (Slightly bigger, vibrant blue, silky glint) */}
       <div
         ref={dotElementRef}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[99999] transition-[background-color,transform] duration-150 ease-out"
+        className="fixed top-0 left-0 w-3.5 h-3.5 rounded-full pointer-events-none z-[99999] transition-transform duration-75 ease-out shadow-[0_0_12px_rgba(14,165,233,0.7)]"
         style={{
-          backgroundColor: isHovered ? '#E11D48' : '#1A1714',
+          background: 'radial-gradient(circle at 35% 35%, #7DD3FC 0%, #0284C7 60%, #0369A1 100%)',
           willChange: 'transform',
         }}
       />
 
-      {/* Silky Outer Ring Aura */}
+      {/* Silky Outer Trailing Blue Ring Aura */}
       <div
         ref={trailElementRef}
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[99998] transition-[width,height,border-color,background-color] duration-200 ease-out"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[99998] transition-[width,height,border-color,background-color] duration-200 ease-out shadow-[0_0_16px_rgba(56,189,248,0.2)]"
         style={{
-          width: isHovered ? '36px' : '22px',
-          height: isHovered ? '36px' : '22px',
-          border: isHovered ? '1.5px solid #E11D48' : '1px solid rgba(26, 23, 20, 0.4)',
-          backgroundColor: isHovered ? 'rgba(225, 29, 72, 0.08)' : 'transparent',
+          width: isHovered ? '50px' : '36px',
+          height: isHovered ? '50px' : '36px',
+          border: isHovered ? '2px solid #0284C7' : '1.5px solid rgba(14, 165, 233, 0.65)',
+          backgroundColor: isHovered ? 'rgba(14, 165, 233, 0.16)' : 'rgba(56, 189, 248, 0.08)',
           willChange: 'transform',
         }}
       />

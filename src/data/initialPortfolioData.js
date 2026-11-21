@@ -220,6 +220,37 @@ export const initialPortfolioData = {
       githubUrl: "https://github.com/bhavanakondakrindi",
       demoUrl: "",
       badge: "Java Core"
+    },
+    {
+      id: "proj-algo-visualizer",
+      title: "Algorithmic Graph & Path Visualizer",
+      subtitle: "Interactive Data Structures & Graph Traversal Explorer",
+      category: "CS Foundations & Tools",
+      featured: false,
+      color: "#FECDD3", // soft rose
+      accent: "#E11D48",
+      washiColor: "rgba(254, 205, 211, 0.9)",
+      rotation: 0.8,
+      summary: "An interactive computer science visualization tool to trace and demonstrate graph algorithms, tree traversals, and dynamic pathfinding in real time.",
+      problemStatement: "Understanding complex graph traversal and shortest-path state mutations can be challenging without step-by-step visual feedback and execution control.",
+      objectives: [
+        "Provide real-time step-by-step visualization for BFS, DFS, Dijkstra, and A* algorithms.",
+        "Allow interactive graph creation with weighted edges and barrier placements.",
+        "Compare computational time and space complexity across varying graph topologies."
+      ],
+      features: [
+        "Interactive node and weighted edge placement canvas.",
+        "Step-by-step traversal playback with play, pause, and speed scrub controls.",
+        "Real-time visual node coloring denoting visited, queued, and optimal paths.",
+        "Comparative metrics dashboard showing total operations and memory states."
+      ],
+      technologies: ["JavaScript", "HTML5 Canvas", "DSA", "Graph Theory", "Algorithms"],
+      implementationDetails: "Engineered using HTML5 Canvas with custom animation scheduler and event-driven state updates to demonstrate classical graph algorithm executions.",
+      challenges: "Synchronizing visual rendering loops with algorithmic step generators without lagging during large node graph executions.",
+      image: "https://images.unsplash.com/photo-1516116211227-bbc3834f8e56?auto=format&fit=crop&w=1200&q=80",
+      githubUrl: "https://github.com/bhavanakondakrindi",
+      demoUrl: "",
+      badge: "DSA & Tools"
     }
   ],
 

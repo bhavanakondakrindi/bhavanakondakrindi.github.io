@@ -1,492 +1,474 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
 import { usePortfolio } from '../../context/PortfolioContext';
 import {
   ArrowUpRight,
-  Sparkles,
   Bookmark,
-  Layers,
   Plane,
   Compass,
   BookOpen,
   Leaf,
   Wallet,
-  ExternalLink,
   Code2,
-  CheckCircle2,
   Cpu,
-  FolderOpen
+  Layers,
+  Sparkles
 } from 'lucide-react';
-import { Github } from '../ui/BrandIcons';
 import { WashiTape } from '../ui/WashiTape';
 import { BinderClip } from '../ui/BinderClip';
 import { PostmarkStamp, RibbonBow } from '../ui/VintageStamps';
-import { GemSticker } from '../ui/DoodleArrow';
+import { GemSticker, SparkleStar } from '../ui/DoodleArrow';
 
 export const ProjectsSection = () => {
   const { publishedData, setActiveProjectModal } = usePortfolio();
-  const projects = publishedData?.projects || [];
-  const [selectedFilter, setSelectedFilter] = useState('all');
+  const rawProjects = publishedData?.projects || [];
 
-  const filteredProjects = selectedFilter === 'all'
-    ? projects
-    : projects.filter(p => {
-        if (selectedFilter === 'web') return p.category?.toLowerCase().includes('web') || p.technologies?.includes('React.js');
-        if (selectedFilter === 'ai') return p.title?.toLowerCase().includes('drone') || p.category?.toLowerCase().includes('ai') || p.category?.toLowerCase().includes('smart');
-        if (selectedFilter === 'systems') return p.category?.toLowerCase().includes('software') || p.technologies?.includes('Java');
-        return true;
-      });
-
-  // Highlight icons for project categories
-  const getProjectIcon = (title = '') => {
-    const t = title.toLowerCase();
-    if (t.includes('airline')) return <Plane className="w-5 h-5 text-sky-600" />;
-    if (t.includes('drone') || t.includes('route')) return <Compass className="w-5 h-5 text-indigo-600" />;
-    if (t.includes('study') || t.includes('forge')) return <BookOpen className="w-5 h-5 text-purple-600" />;
-    if (t.includes('eco') || t.includes('quest')) return <Leaf className="w-5 h-5 text-emerald-600" />;
-    if (t.includes('finance') || t.includes('manager')) return <Wallet className="w-5 h-5 text-amber-600" />;
-    return <Layers className="w-5 h-5 text-rose-600" />;
+  // Helper to safely get project by index or title keyword
+  const p1 = rawProjects[0] || {}; // Airline Disruption
+  const p2 = rawProjects[1] || {}; // SkyRoute Drone
+  const p3 = rawProjects[2] || {}; // StudyForge (Tall right column in sketch)
+  const p4 = rawProjects[3] || {}; // EcoQuest (Bottom left in sketch)
+  const p5 = rawProjects[4] || {}; // Personal Finance Manager (Bottom center left in sketch)
+  const p6 = rawProjects[5] || {
+    id: "proj-algo-visualizer",
+    title: "Algorithmic Graph Visualizer",
+    subtitle: "Interactive Data Structures & Pathfinding Engine",
+    category: "CS Foundations & Tools",
+    color: "#FFE4E6",
+    summary: "Real-time interactive traversal visualizer exploring BFS, DFS, Dijkstra, and A* pathfinding algorithms.",
+    technologies: ["JavaScript", "HTML5 Canvas", "DSA", "Algorithms"],
+    image: "https://images.unsplash.com/photo-1516116211227-bbc3834f8e56?auto=format&fit=crop&w=1200&q=80"
   };
 
   return (
-    <section id="projects" className="py-20 md:py-32 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-graph-paper">
+    <section id="projects" className="py-16 md:py-24 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-graph-paper">
       
+      {/* Whimsical Bedazzling Background Accents */}
+      <div className="absolute top-10 left-6 pointer-events-none hidden lg:block">
+        <GemSticker type="diamond" size={32} />
+      </div>
+      <div className="absolute top-16 right-10 pointer-events-none hidden lg:block">
+        <GemSticker type="pink-moon" size={36} />
+      </div>
+      <div className="absolute bottom-12 left-10 pointer-events-none hidden lg:block">
+        <GemSticker type="butterfly" size={34} />
+      </div>
+      <div className="absolute bottom-16 right-8 pointer-events-none hidden lg:block">
+        <GemSticker type="topaz" size={30} />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header with Editorial Badge & Timestamp */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 relative">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FEF08A] border-2 border-[#1A1714] font-mono text-xs font-bold text-amber-950 uppercase tracking-widest mb-3 shadow-xs">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FEF08A] border-2 border-[#1A1714] font-mono text-xs font-bold text-amber-950 uppercase tracking-widest mb-2 shadow-xs">
               <Bookmark className="w-3.5 h-3.5 text-amber-700" />
-              <span>Chapter 03 // Engineering Case Studies & Systems</span>
+              <span>Chapter 03 // Sticky Note Project Desk</span>
             </div>
-            <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1714] tracking-tight">
-              Selected <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Works</span>
-            </h2>
-            <p className="text-slate-600 font-sans text-base max-w-xl mt-2">
-              End-to-end software implementations, operational disruption management tools, pathfinding simulations, and practical utility engines.
+            
+            <div className="relative inline-block">
+              <h2 className="font-editorial text-4xl sm:text-5xl font-black text-[#1A1714] tracking-tight">
+                Selected <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Works</span>
+              </h2>
+              <div className="absolute -top-3 -right-6 pointer-events-none">
+                <SparkleStar size={24} color="#FDE047" />
+              </div>
+            </div>
+
+            <p className="text-slate-600 font-sans text-sm max-w-xl mt-1">
+              Click any project sticky note to inspect full architecture diagrams, objectives, and problem dossiers.
             </p>
           </div>
 
-          {/* Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2 bg-white p-2 rounded-2xl border-2 border-[#1A1714] shadow-scrapbook">
-            {[
-              { id: 'all', label: 'All Projects' },
-              { id: 'web', label: 'Web Applications' },
-              { id: 'ai', label: 'AI & Pathfinding' },
-              { id: 'systems', label: 'OOP & Systems' },
-            ].map(f => (
-              <button
-                key={f.id}
-                onClick={() => setSelectedFilter(f.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all ${
-                  selectedFilter === f.id
-                    ? 'bg-[#1A1714] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                }`}
-              >
-                {f.label}
-              </button>
-            ))}
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-lg border-2 border-[#1A1714] shadow-xs">
+              📌 6 Interactive Dossiers
+            </span>
+            <div className="hidden sm:block">
+              <PostmarkStamp text="FIELD SPEC" date="2025" color="#0284C7" rotate={-4} />
+            </div>
           </div>
         </div>
 
         {/* =========================================================================
-            BESPOKE ASYMMETRICAL EDITORIAL GALLERY
+            STICKY NOTE GRID MOSAIC (Exact Layout From Hand-Drawn Sketch)
+            - Column 1: Project 1 (top) + Project 4 (bottom)
+            - Column 2: Project 2 (top wide) + Project 5 & Project 6 (bottom side-by-side)
+            - Column 3: Project 3 (tall full-height right column)
+            - Crisp, non-blunted paper edges (rounded-lg) with realistic sticky tape!
            ========================================================================= */}
-        <div className="space-y-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
           
-          {/* 1. HERO SPOTLIGHT CARD (Featured Landmark: Airline Disruption or First Item) */}
-          {filteredProjects.length > 0 && (
-            <div className="relative rounded-3xl bg-white border-3 border-[#1A1714] shadow-scrapbook-xl overflow-hidden">
-              
-              {/* Top Washi Tape accent */}
-              <div className="absolute -top-3 left-16 z-20">
-                <WashiTape color="yellow" width="140px" height="26px" rotate={-2} />
+          {/* ==========================================
+              COLUMN 1 (Left): Project 1 & Project 4
+             ========================================== */}
+          <div className="lg:col-span-3 flex flex-col gap-5">
+            
+            {/* PROJECT 1 (Top Left Sticky Note - Canary Yellow) */}
+            <div
+              onClick={() => setActiveProjectModal(p1)}
+              className="group relative bg-[#FEF9C3] rounded-lg border-2 border-[#1A1714] shadow-[4px_5px_0px_#1A1714] hover:shadow-[6px_8px_0px_#1A1714] hover:-translate-y-1 transition-all duration-200 cursor-pointer p-4 flex flex-col justify-between transform -rotate-1 hover:rotate-0 overflow-visible"
+            >
+              {/* Sticky Tape at Top Center (Uncut, no overflow clipping!) */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+                <WashiTape color="yellow" width="90px" height="20px" rotate={1} />
               </div>
 
-              {/* Ribbon Bow on top-right */}
-              <div className="absolute -top-4 right-8 z-20 hidden sm:block">
-                <RibbonBow rotate={8} />
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
-                
-                {/* Left Area: Editorial Project Summary (7 cols) */}
-                <div className="lg:col-span-7 p-7 sm:p-10 flex flex-col justify-between space-y-6">
-                  
-                  <div className="space-y-4">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-mono text-xs font-bold px-3 py-1 rounded bg-[#FEF08A] border border-amber-300 text-amber-950 uppercase tracking-wider">
-                        EXHIBIT #01 • FLAGSHIP PROTOTYPE
-                      </span>
-                      <span className="font-mono text-xs text-slate-500 font-semibold">
-                        {filteredProjects[0].category}
-                      </span>
-                    </div>
-
-                    <h3 className="font-editorial text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
-                      {filteredProjects[0].title}
-                    </h3>
-
-                    <p className="font-sans text-slate-700 text-base leading-relaxed">
-                      {filteredProjects[0].problemStatement || filteredProjects[0].summary}
-                    </p>
-
-                    {/* Key Technical Features Checklist */}
-                    <div className="space-y-2 pt-2">
-                      <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 block">
-                        Engineered Capabilities:
-                      </span>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-sans text-slate-800">
-                        {filteredProjects[0].features?.slice(0, 4).map((feat, idx) => (
-                          <div key={idx} className="flex items-center gap-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                            <span className="truncate">{feat}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bottom Action Bar */}
-                  <div className="pt-6 border-t-2 border-[#1A1714]/10 flex flex-wrap items-center justify-between gap-4">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      {filteredProjects[0].technologies?.map((tech, idx) => (
-                        <span
-                          key={idx}
-                          className="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-300 font-mono text-[11px] font-bold text-slate-800"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-
-                    <button
-                      onClick={() => setActiveProjectModal(filteredProjects[0])}
-                      className="px-5 py-2.5 rounded-xl bg-[#1A1714] text-white hover:bg-slate-800 font-mono text-xs font-bold flex items-center gap-2 shadow-xs transition-all hover:scale-102"
-                    >
-                      <span>Examine Case File</span>
-                      <ArrowUpRight className="w-4 h-4 text-yellow-300" />
-                    </button>
-                  </div>
-
+              <div className="space-y-2 pt-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-200/60 px-2 py-0.5 rounded border border-amber-300">
+                    PROJECT // 01
+                  </span>
+                  <Plane className="w-4 h-4 text-sky-700" />
                 </div>
 
-                {/* Right Area: Interactive Screenshot Inset with Blueprint Frame (5 cols) */}
-                <div
-                  onClick={() => setActiveProjectModal(filteredProjects[0])}
-                  className="lg:col-span-5 bg-slate-950 p-6 sm:p-8 flex flex-col justify-between border-t-2 lg:border-t-0 lg:border-l-3 border-[#1A1714] cursor-pointer group relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-blueprint-grid opacity-30 pointer-events-none" />
+                <h3 className="font-editorial text-lg font-black text-slate-900 leading-snug group-hover:text-rose-700 transition-colors">
+                  {p1.title || "Airline Disruption Management"}
+                </h3>
 
-                  <div className="relative z-10 flex items-center justify-between text-xs font-mono text-slate-400 mb-4">
-                    <span className="font-bold flex items-center gap-1.5 text-white">
-                      {getProjectIcon(filteredProjects[0].title)}
-                      <span>SYSTEM MONITOR</span>
-                    </span>
-                    <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold">
-                      LIVE SPEC
-                    </span>
-                  </div>
+                <p className="font-sans text-xs text-slate-700 line-clamp-2 leading-relaxed">
+                  {p1.summary || "Operations dashboard managing flight delays, passenger re-accommodations, and meal vouchers."}
+                </p>
 
-                  {/* Project Image Frame */}
-                  <div className="relative z-10 rounded-2xl overflow-hidden border-2 border-white/20 aspect-[16/10] bg-slate-900 shadow-2xl group-hover:border-white/50 transition-colors">
+                {/* Compact Screenshot Inset */}
+                {p1.image && (
+                  <div className="rounded-md overflow-hidden border border-[#1A1714] aspect-[16/9] bg-slate-900 relative mt-1">
                     <img
-                      src={filteredProjects[0].image}
-                      alt={filteredProjects[0].title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      src={p1.image}
+                      alt={p1.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       onError={(e) => {
-                        e.currentTarget.src = "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80";
+                        e.currentTarget.src = "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80";
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white font-mono">
-                      <span className="truncate">{filteredProjects[0].subtitle}</span>
-                      <span className="bg-white/20 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold">
-                        Click to expand
-                      </span>
-                    </div>
                   </div>
+                )}
+              </div>
 
-                  <div className="relative z-10 mt-4 text-[11px] font-mono text-slate-400 flex items-center justify-between">
-                    <span>STATUS: OPERATIONAL DISPATCH</span>
-                    <span className="text-yellow-300 font-bold flex items-center gap-1">
-                      View Dossier ↗
-                    </span>
-                  </div>
-
-                </div>
-
+              {/* Bottom Tags */}
+              <div className="pt-3 mt-2 border-t border-amber-300/80 flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-amber-950">
+                  React.js • Operations
+                </span>
+                <span className="w-6 h-6 rounded bg-white border border-[#1A1714] flex items-center justify-center text-slate-800 shadow-xs group-hover:bg-[#1A1714] group-hover:text-white transition-colors">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </span>
               </div>
             </div>
-          )}
 
-          {/* 2. ASYMMETRICAL TWO-COLUMN SPREAD (SkyRoute & StudyForge) */}
-          {filteredProjects.length > 2 && (
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-              
-              {/* Left Item: SkyRoute (Aerospace & Simulation Card) - 7 cols */}
-              <div className="md:col-span-7 bg-[#0F172A] text-white rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-9 relative overflow-hidden flex flex-col justify-between space-y-6">
-                
-                {/* Washi Tape */}
-                <div className="absolute -top-3 left-10">
-                  <WashiTape color="blue" width="120px" height="24px" rotate={1} />
-                </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between text-xs font-mono text-cyan-400">
-                    <span className="px-2.5 py-1 rounded bg-cyan-950/80 border border-cyan-800 font-bold uppercase">
-                      EXHIBIT #02 // ALGORITHMIC SIMULATION
-                    </span>
-                    <span className="text-slate-400 font-bold">A* PATHFINDING</span>
-                  </div>
-
-                  <h3 className="font-editorial text-3xl sm:text-4xl font-black text-white leading-tight">
-                    {filteredProjects[1].title}
-                  </h3>
-
-                  <p className="text-slate-300 font-sans text-sm leading-relaxed">
-                    {filteredProjects[1].summary}
-                  </p>
-
-                  {/* Screenshot frame */}
-                  <div
-                    onClick={() => setActiveProjectModal(filteredProjects[1])}
-                    className="relative rounded-2xl overflow-hidden border-2 border-cyan-900 aspect-video cursor-pointer group"
-                  >
-                    <img
-                      src={filteredProjects[1].image}
-                      alt={filteredProjects[1].title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      onError={(e) => {
-                        e.currentTarget.src = "https://images.unsplash.com/photo-1517976487507-5b3bb113295e?auto=format&fit=crop&w=1200&q=80";
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                    <div className="absolute bottom-3 left-3 text-xs font-mono text-cyan-300 font-bold">
-                      Dynamic Weather & Battery Matrix
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1.5">
-                    {filteredProjects[1].technologies?.map((tech, idx) => (
-                      <span key={idx} className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-[10px] font-bold">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <button
-                    onClick={() => setActiveProjectModal(filteredProjects[1])}
-                    className="px-4 py-2 rounded-xl bg-cyan-400 text-slate-950 hover:bg-cyan-300 font-mono text-xs font-bold flex items-center gap-1.5 shadow-xs transition-colors"
-                  >
-                    <span>Inspect</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
+            {/* PROJECT 4 (Bottom Left Sticky Note - Mint Green) */}
+            <div
+              onClick={() => setActiveProjectModal(p4)}
+              className="group relative bg-[#DCFCE7] rounded-lg border-2 border-[#1A1714] shadow-[4px_5px_0px_#1A1714] hover:shadow-[6px_8px_0px_#1A1714] hover:-translate-y-1 transition-all duration-200 cursor-pointer p-4 flex-1 flex flex-col justify-between transform rotate-0.5 hover:rotate-0 overflow-visible"
+            >
+              {/* Sticky Tape */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+                <WashiTape color="green" width="90px" height="20px" rotate={-1} />
               </div>
 
-              {/* Right Item: StudyForge (Soft Lavender Journal Card) - 5 cols */}
-              <div className="md:col-span-5 bg-[#FAF5FF] text-slate-900 rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 relative flex flex-col justify-between space-y-6">
-                
-                {/* Binder Clip */}
-                <div className="absolute -top-4 right-8">
-                  <BinderClip type="lavender" rotate={-4} />
+              <div className="space-y-2 pt-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] font-black uppercase tracking-wider text-emerald-950 bg-emerald-200/60 px-2 py-0.5 rounded border border-emerald-300">
+                    PROJECT // 04
+                  </span>
+                  <Leaf className="w-4 h-4 text-emerald-700" />
                 </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between text-xs font-mono text-purple-900">
-                    <span className="px-2.5 py-1 rounded bg-[#E9D5FF] border border-purple-300 font-bold uppercase">
-                      EXHIBIT #03 // COLLABORATIVE
-                    </span>
-                    <span className="font-bold">PEER HUB</span>
-                  </div>
+                <h3 className="font-editorial text-lg font-black text-slate-900 leading-snug group-hover:text-emerald-800 transition-colors">
+                  {p4.title || "EcoQuest"}
+                </h3>
 
-                  <h3 className="font-editorial text-2xl sm:text-3xl font-black text-slate-900 leading-snug">
-                    {filteredProjects[2].title}
-                  </h3>
+                <p className="font-sans text-xs text-slate-700 leading-relaxed">
+                  {p4.summary || "Waste-management and community recycling platform promoting sustainable urban disposal."}
+                </p>
 
-                  <p className="text-slate-700 font-sans text-xs sm:text-sm leading-relaxed">
-                    {filteredProjects[2].summary}
-                  </p>
-
-                  {/* Screenshot frame */}
-                  <div
-                    onClick={() => setActiveProjectModal(filteredProjects[2])}
-                    className="relative rounded-2xl overflow-hidden border-2 border-[#1A1714] aspect-video cursor-pointer group shadow-sm"
-                  >
+                {/* Screenshot Inset */}
+                {p4.image && (
+                  <div className="rounded-md overflow-hidden border border-[#1A1714] aspect-[16/10] bg-slate-900 relative mt-1">
                     <img
-                      src={filteredProjects[2].image}
-                      alt={filteredProjects[2].title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      src={p4.image}
+                      alt={p4.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       onError={(e) => {
-                        e.currentTarget.src = "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80";
+                        e.currentTarget.src = "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80";
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                    <div className="absolute bottom-2.5 left-2.5 text-[11px] font-mono text-white font-bold">
-                      Study Room & Note Collaboration
-                    </div>
                   </div>
-                </div>
-
-                <div className="pt-4 border-t-2 border-[#1A1714]/10 flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1">
-                    {filteredProjects[2].technologies?.slice(0, 3).map((tech, idx) => (
-                      <span key={idx} className="px-2 py-0.5 rounded bg-purple-100 text-purple-900 font-mono text-[10px] font-bold border border-purple-200">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <button
-                    onClick={() => setActiveProjectModal(filteredProjects[2])}
-                    className="px-3.5 py-1.5 rounded-xl bg-[#1A1714] text-white hover:bg-slate-800 font-mono text-xs font-bold flex items-center gap-1 transition-colors"
-                  >
-                    <span>View</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
+                )}
               </div>
 
+              {/* Bottom Tags */}
+              <div className="pt-3 mt-2 border-t border-emerald-300/80 flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-emerald-950">
+                  React.js • Recycling
+                </span>
+                <span className="w-6 h-6 rounded bg-white border border-[#1A1714] flex items-center justify-center text-slate-800 shadow-xs group-hover:bg-[#1A1714] group-hover:text-white transition-colors">
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
             </div>
-          )}
 
-          {/* 3. PAIRED ASYMMETRICAL CARDS (EcoQuest & Personal Finance Manager) */}
-          {filteredProjects.length > 4 && (
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-              
-              {/* EcoQuest - Mint Ecological Card (5 cols) */}
-              <div className="md:col-span-5 bg-[#F0FDF4] text-slate-900 rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 relative flex flex-col justify-between space-y-6">
+          </div>
+
+          {/* ==============================================================
+              COLUMN 2 (Center): Project 2 (Wide Top) & Projects 5 + 6 (Bottom)
+             ============================================================== */}
+          <div className="lg:col-span-6 flex flex-col gap-5">
+            
+            {/* PROJECT 2 (Top Center Wide Sticky Note - Sky Blue) */}
+            <div
+              onClick={() => setActiveProjectModal(p2)}
+              className="group relative bg-[#E0F2FE] rounded-lg border-2 border-[#1A1714] shadow-[4px_5px_0px_#1A1714] hover:shadow-[6px_8px_0px_#1A1714] hover:-translate-y-1 transition-all duration-200 cursor-pointer p-5 flex flex-col justify-between transform -rotate-0.5 hover:rotate-0 overflow-visible"
+            >
+              {/* Sticky Tape at Top Center */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+                <WashiTape color="blue" width="130px" height="22px" rotate={-1} />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center pt-1">
                 
-                <div className="absolute -top-3 left-8">
-                  <WashiTape color="green" width="110px" height="22px" rotate={-2} />
-                </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between text-xs font-mono text-emerald-900">
-                    <span className="px-2.5 py-1 rounded bg-[#DCFCE7] border border-emerald-300 font-bold uppercase">
-                      EXHIBIT #04 // SUSTAINABILITY
+                {/* Left Description (7 cols) */}
+                <div className="sm:col-span-7 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-[10px] font-black uppercase tracking-wider text-sky-950 bg-sky-200/70 px-2.5 py-0.5 rounded border border-sky-300">
+                      PROJECT // 02 • AI SIMULATION
                     </span>
-                    <span className="font-bold">GAMIFIED</span>
+                    <Compass className="w-4 h-4 text-sky-700" />
                   </div>
 
-                  <h3 className="font-editorial text-2xl sm:text-3xl font-black text-slate-900 leading-snug">
-                    {filteredProjects[3].title}
+                  <h3 className="font-editorial text-xl sm:text-2xl font-black text-slate-900 leading-tight group-hover:text-sky-800 transition-colors">
+                    {p2.title || "SkyRoute: AI Smart Drone Delivery"}
                   </h3>
 
-                  <p className="text-slate-700 font-sans text-xs sm:text-sm leading-relaxed">
-                    {filteredProjects[3].summary}
+                  <p className="font-sans text-xs text-slate-700 leading-relaxed">
+                    {p2.summary || "Intelligent drone pathfinding simulation balancing dynamic weather, wind drag vectors, and battery management."}
                   </p>
 
-                  <div
-                    onClick={() => setActiveProjectModal(filteredProjects[3])}
-                    className="relative rounded-2xl overflow-hidden border-2 border-[#1A1714] aspect-video cursor-pointer group shadow-sm"
-                  >
-                    <img
-                      src={filteredProjects[3].image}
-                      alt={filteredProjects[3].title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      onError={(e) => {
-                        e.currentTarget.src = "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80";
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                    <div className="absolute bottom-2.5 left-2.5 text-[11px] font-mono text-white font-bold">
-                      Eco-Tracker & Rewards Engine
-                    </div>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t-2 border-[#1A1714]/10 flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1">
-                    {filteredProjects[3].technologies?.slice(0, 3).map((tech, idx) => (
-                      <span key={idx} className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-mono text-[10px] font-bold border border-emerald-200">
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {p2.technologies?.slice(0, 4).map((tech, idx) => (
+                      <span key={idx} className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-white/80 border border-sky-300 text-sky-950">
                         {tech}
                       </span>
                     ))}
                   </div>
+                </div>
 
-                  <button
-                    onClick={() => setActiveProjectModal(filteredProjects[3])}
-                    className="px-3.5 py-1.5 rounded-xl bg-[#1A1714] text-white hover:bg-slate-800 font-mono text-xs font-bold flex items-center gap-1 transition-colors"
-                  >
-                    <span>View</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </button>
+                {/* Right Image Inset (5 cols) */}
+                <div className="sm:col-span-5">
+                  <div className="rounded-md overflow-hidden border border-[#1A1714] aspect-[16/10] bg-slate-950 relative shadow-sm">
+                    <img
+                      src={p2.image}
+                      alt={p2.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.src = "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80";
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-1.5 left-2 text-[10px] font-mono text-cyan-200 font-bold">
+                      A* Dynamic Routing
+                    </div>
+                  </div>
                 </div>
 
               </div>
 
-              {/* Personal Finance Manager - Warm Ledger Card (7 cols) */}
-              <div className="md:col-span-7 bg-[#FFFBEB] text-slate-900 rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-9 relative flex flex-col justify-between space-y-6">
-                
-                <div className="absolute -top-3 right-10">
-                  <WashiTape color="pink" width="130px" height="24px" rotate={2} />
+              {/* Bottom Footer Strip */}
+              <div className="pt-3 mt-3 border-t border-sky-300/80 flex items-center justify-between text-xs font-mono">
+                <span className="font-bold text-sky-950">
+                  Python • Pygame • A* Pathfinding
+                </span>
+                <span className="text-xs font-bold text-sky-800 flex items-center gap-1 group-hover:underline">
+                  Examine Simulation ↗
+                </span>
+              </div>
+            </div>
+
+            {/* BOTTOM CENTER ROW: Projects 5 & 6 (Side-by-side squares) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
+              
+              {/* PROJECT 5 (Peach Sticky Note - Personal Finance Manager) */}
+              <div
+                onClick={() => setActiveProjectModal(p5)}
+                className="group relative bg-[#FFEDD5] rounded-lg border-2 border-[#1A1714] shadow-[4px_5px_0px_#1A1714] hover:shadow-[6px_8px_0px_#1A1714] hover:-translate-y-1 transition-all duration-200 cursor-pointer p-4 flex flex-col justify-between transform rotate-1 hover:rotate-0 overflow-visible"
+              >
+                {/* Sticky Tape */}
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+                  <WashiTape color="coral" width="80px" height="18px" rotate={-2} />
                 </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between text-xs font-mono text-amber-950">
-                    <span className="px-2.5 py-1 rounded bg-[#FEF3C7] border border-amber-300 font-bold uppercase">
-                      EXHIBIT #05 // FINANCIAL LEDGER
+                <div className="space-y-2 pt-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] font-black uppercase tracking-wider text-orange-950 bg-orange-200/60 px-2 py-0.5 rounded border border-orange-300">
+                      PROJECT // 05
                     </span>
-                    <span className="font-bold">JAVA OOP</span>
+                    <Wallet className="w-4 h-4 text-orange-700" />
                   </div>
 
-                  <h3 className="font-editorial text-3xl sm:text-4xl font-black text-slate-900 leading-tight">
-                    {filteredProjects[4].title}
+                  <h3 className="font-editorial text-base sm:text-lg font-black text-slate-900 leading-snug group-hover:text-orange-800 transition-colors">
+                    {p5.title || "Personal Finance Manager"}
                   </h3>
 
-                  <p className="text-slate-700 font-sans text-sm leading-relaxed">
-                    {filteredProjects[4].summary}
+                  <p className="font-sans text-xs text-slate-700 line-clamp-2 leading-relaxed">
+                    {p5.summary || "Java-based OOP personal finance ledger tracking expenditures and savings."}
                   </p>
 
-                  <div
-                    onClick={() => setActiveProjectModal(filteredProjects[4])}
-                    className="relative rounded-2xl overflow-hidden border-2 border-[#1A1714] aspect-video cursor-pointer group shadow-sm"
-                  >
-                    <img
-                      src={filteredProjects[4].image}
-                      alt={filteredProjects[4].title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      onError={(e) => {
-                        e.currentTarget.src = "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80";
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                    <div className="absolute bottom-3 left-3 text-xs font-mono text-white font-bold">
-                      OOP Encapsulation & Expense Tracking
+                  {p5.image && (
+                    <div className="rounded-md overflow-hidden border border-[#1A1714] aspect-[16/9] bg-slate-900 relative">
+                      <img
+                        src={p5.image}
+                        alt={p5.title}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        onError={(e) => {
+                          e.currentTarget.src = "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80";
+                        }}
+                      />
                     </div>
-                  </div>
+                  )}
                 </div>
 
-                <div className="pt-4 border-t-2 border-[#1A1714]/10 flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1.5">
-                    {filteredProjects[4].technologies?.map((tech, idx) => (
-                      <span key={idx} className="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-950 font-mono text-[11px] font-bold border border-amber-200">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                <div className="pt-2 mt-2 border-t border-orange-300/80 flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold text-orange-950">
+                    Java • OOP • Ledger
+                  </span>
+                  <span className="w-6 h-6 rounded bg-white border border-[#1A1714] flex items-center justify-center text-slate-800 shadow-xs group-hover:bg-[#1A1714] group-hover:text-white transition-colors">
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
 
-                  <button
-                    onClick={() => setActiveProjectModal(filteredProjects[4])}
-                    className="px-4 py-2 rounded-xl bg-[#1A1714] text-white hover:bg-slate-800 font-mono text-xs font-bold flex items-center gap-1.5 shadow-xs transition-colors"
-                  >
-                    <span>Examine Case File</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-yellow-300" />
-                  </button>
+              {/* PROJECT 6 (Soft Rose Sticky Note - Algorithmic Visualizer) */}
+              <div
+                onClick={() => setActiveProjectModal(p6)}
+                className="group relative bg-[#FFE4E6] rounded-lg border-2 border-[#1A1714] shadow-[4px_5px_0px_#1A1714] hover:shadow-[6px_8px_0px_#1A1714] hover:-translate-y-1 transition-all duration-200 cursor-pointer p-4 flex flex-col justify-between transform -rotate-1 hover:rotate-0 overflow-visible"
+              >
+                {/* Sticky Tape */}
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+                  <WashiTape color="pink" width="80px" height="18px" rotate={2} />
                 </div>
 
+                <div className="space-y-2 pt-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] font-black uppercase tracking-wider text-rose-950 bg-rose-200/60 px-2 py-0.5 rounded border border-rose-300">
+                      PROJECT // 06
+                    </span>
+                    <Cpu className="w-4 h-4 text-rose-700" />
+                  </div>
+
+                  <h3 className="font-editorial text-base sm:text-lg font-black text-slate-900 leading-snug group-hover:text-rose-800 transition-colors">
+                    {p6.title || "Algorithmic Graph Visualizer"}
+                  </h3>
+
+                  <p className="font-sans text-xs text-slate-700 line-clamp-2 leading-relaxed">
+                    {p6.summary || "Interactive traversal engine tracing graph algorithms, trees, and pathfinding states."}
+                  </p>
+
+                  {p6.image && (
+                    <div className="rounded-md overflow-hidden border border-[#1A1714] aspect-[16/9] bg-slate-900 relative">
+                      <img
+                        src={p6.image}
+                        alt={p6.title}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        onError={(e) => {
+                          e.currentTarget.src = "https://images.unsplash.com/photo-1516116211227-bbc3834f8e56?auto=format&fit=crop&w=600&q=80";
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div className="pt-2 mt-2 border-t border-rose-300/80 flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold text-rose-950">
+                    JavaScript • DSA
+                  </span>
+                  <span className="w-6 h-6 rounded bg-white border border-[#1A1714] flex items-center justify-center text-slate-800 shadow-xs group-hover:bg-[#1A1714] group-hover:text-white transition-colors">
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
               </div>
 
             </div>
-          )}
+
+          </div>
+
+          {/* ==============================================================
+              COLUMN 3 (Right): Project 3 (Tall Full-Height Sticky Note)
+             ============================================================== */}
+          <div className="lg:col-span-3 flex flex-col">
+            
+            {/* PROJECT 3 (Lavender Tall Sticky Note - StudyForge) */}
+            <div
+              onClick={() => setActiveProjectModal(p3)}
+              className="group relative bg-[#F3E8FF] rounded-lg border-2 border-[#1A1714] shadow-[4px_5px_0px_#1A1714] hover:shadow-[6px_8px_0px_#1A1714] hover:-translate-y-1 transition-all duration-200 cursor-pointer p-5 h-full flex flex-col justify-between transform rotate-1 hover:rotate-0 overflow-visible"
+            >
+              {/* Lavender Sticky Tape at Top Center */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+                <WashiTape color="lavender" width="100px" height="20px" rotate={-1} />
+              </div>
+
+              {/* Binder Clip on Top Right */}
+              <div className="absolute -top-4 right-4 z-20 pointer-events-none hidden sm:block">
+                <BinderClip type="lavender" rotate={4} />
+              </div>
+
+              <div className="space-y-3 pt-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] font-black uppercase tracking-wider text-purple-950 bg-purple-200/70 px-2.5 py-0.5 rounded border border-purple-300">
+                    PROJECT // 03 • PLATFORM
+                  </span>
+                  <BookOpen className="w-4 h-4 text-purple-700" />
+                </div>
+
+                <h3 className="font-editorial text-2xl font-black text-slate-900 leading-tight group-hover:text-purple-900 transition-colors">
+                  {p3.title || "StudyForge"}
+                </h3>
+
+                <p className="font-sans text-xs text-slate-700 leading-relaxed">
+                  {p3.summary || "Collaborative learning platform facilitating resource sharing, study rooms, and peer accountability."}
+                </p>
+
+                {/* Vertical/Tall Image Inset */}
+                {p3.image && (
+                  <div className="rounded-md overflow-hidden border border-[#1A1714] aspect-[4/3] bg-slate-900 relative my-2">
+                    <img
+                      src={p3.image}
+                      alt={p3.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.src = "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80";
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute bottom-2 left-2 text-[10px] font-mono text-purple-200 font-bold">
+                      Collaborative Study Room
+                    </div>
+                  </div>
+                )}
+
+                <div className="p-3 rounded bg-white/70 border border-purple-200 space-y-1 text-xs">
+                  <span className="font-mono text-[10px] font-bold text-purple-900 uppercase block">
+                    Core Architecture:
+                  </span>
+                  <ul className="text-[11px] text-slate-700 space-y-1">
+                    <li>▸ Modular Subject Hubs</li>
+                    <li>▸ Collaborative Workspaces</li>
+                    <li>▸ Peer Progress Milestones</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Bottom Footer */}
+              <div className="pt-3 mt-3 border-t border-purple-300/80 flex items-center justify-between text-xs font-mono">
+                <span className="font-bold text-purple-950">
+                  React.js • Web Platform
+                </span>
+                <span className="w-7 h-7 rounded bg-white border border-[#1A1714] flex items-center justify-center text-slate-800 shadow-xs group-hover:bg-[#1A1714] group-hover:text-white transition-colors">
+                  <ArrowUpRight className="w-4 h-4" />
+                </span>
+              </div>
+            </div>
+
+          </div>
 
         </div>
 

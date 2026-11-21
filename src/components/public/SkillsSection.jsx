@@ -15,7 +15,7 @@ import {
 import { WashiTape } from '../ui/WashiTape';
 import { BinderClip } from '../ui/BinderClip';
 import { PostmarkStamp, RibbonBow } from '../ui/VintageStamps';
-import { GemSticker } from '../ui/DoodleArrow';
+import { GemSticker, SparkleStar } from '../ui/DoodleArrow';
 
 export const SkillsSection = () => {
   const { publishedData } = usePortfolio();
@@ -68,18 +68,33 @@ export const SkillsSection = () => {
   return (
     <section id="skills" className="py-20 md:py-32 relative bg-[#FAF7F2] border-b-2 border-[#1A1714] bg-graph-paper">
       
+      {/* Whimsical Bedazzling Gem Background Accents */}
+      <div className="absolute top-12 right-12 pointer-events-none hidden lg:block">
+        <GemSticker type="diamond" size={34} />
+      </div>
+      <div className="absolute bottom-12 left-10 pointer-events-none hidden lg:block">
+        <GemSticker type="amethyst" size={32} />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 relative">
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#BBF7D0] border-2 border-[#1A1714] font-mono text-xs font-bold text-emerald-950 uppercase tracking-widest mb-3 shadow-xs">
               <Bookmark className="w-3.5 h-3.5 text-emerald-700" />
               <span>Chapter 02 // Repertoire & Technical Toolbox</span>
             </div>
-            <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1714] tracking-tight">
-              Technical <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Toolbox</span>
-            </h2>
+            
+            <div className="relative inline-block">
+              <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1714] tracking-tight">
+                Technical <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Toolbox</span>
+              </h2>
+              <div className="absolute -top-3 -right-6 pointer-events-none">
+                <SparkleStar size={24} color="#86EFAC" />
+              </div>
+            </div>
+
             <p className="text-slate-600 font-sans text-base max-w-xl mt-2">
               Core programming languages, modern web frameworks, and foundational computer science principles—presented honestly without arbitrary ratings.
             </p>
@@ -91,7 +106,7 @@ export const SkillsSection = () => {
         </div>
 
         {/* =========================================================================
-            TACTILE 3-DRAWER SPECIMEN WORKBENCH
+            TACTILE 3-DRAWER SPECIMEN WORKBENCH (No clipping!)
            ========================================================================= */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
           
@@ -101,10 +116,10 @@ export const SkillsSection = () => {
             return (
               <div
                 key={categoryGroup.id || catIdx}
-                className={`relative rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-8 flex flex-col justify-between space-y-6 ${theme.bg}`}
+                className={`relative rounded-3xl border-3 border-[#1A1714] shadow-scrapbook-xl p-7 sm:p-8 flex flex-col justify-between space-y-6 overflow-visible ${theme.bg}`}
               >
-                {/* Washi Tape Header */}
-                <div className="absolute -top-3 left-10">
+                {/* Washi Tape Header (Uncut) */}
+                <div className="absolute -top-3.5 left-10 pointer-events-none z-20">
                   <WashiTape color={theme.tapeColor} width="120px" height="24px" rotate={catIdx % 2 === 0 ? -2 : 2} />
                 </div>
 
@@ -172,7 +187,7 @@ export const SkillsSection = () => {
         {/* =========================================================================
             TRANSPARENCY MANIFESTO BANNER (Honest Engineering Guarantee)
            ========================================================================= */}
-        <div className="mt-12 p-6 sm:p-7 rounded-3xl bg-white border-3 border-[#1A1714] shadow-scrapbook flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="mt-12 p-6 sm:p-7 rounded-3xl bg-white border-3 border-[#1A1714] shadow-scrapbook flex flex-col sm:flex-row sm:items-center justify-between gap-4 overflow-visible relative">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-[#BBF7D0] border-2 border-[#1A1714] shadow-xs flex items-center justify-center shrink-0">
               <Sparkles className="w-5 h-5 text-emerald-800" />
