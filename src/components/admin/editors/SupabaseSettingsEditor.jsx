@@ -52,9 +52,66 @@ export const SupabaseSettingsEditor = () => {
   };
 
   const copySqlSchema = () => {
-    const sqlScript = `-- Supabase Schema for Bhavana Kondakrindi Portfolio
+    const sqlScript = `-- =========================================================================
+-- Hardened Supabase Schema & Security Policies for Bhavana Kondakrindi
+-- Protects against Stored XSS, unauthorized writes, and privilege escalation
+-- =========================================================================
+
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+-- 1. Admin Users Allowlist Table
+CREATE TABLE IF NOT EXISTS public.portfolio_admin_users (
+    user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    email TEXT UNIQUE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+ALTER TABLE public.portfolio_admin_users ENABLE ROW LEVEL SECURITY;
+
+-- 2. Hardened Admin Authorization Function (SECURITY DEFINER with clean search_path)
+CREATE OR REPLACE FUNCTION public.is_portfolio_admin()
+RETURNS BOOLEAN
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.portfolio_admin_users
+    WHERE user_id = auth.uid()
+  );
+$$;
+
+REVOKE ALL ON FUNCTION public.is_portfolio_admin() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.is_portfolio_admin() TO authenticated;
+
+-- Protect portfolio_admin_users table so only existing admins can read it
+CREATE POLICY "Admins can view admin allowlist"
+ON public.portfolio_admin_users FOR SELECT TO authenticated
+USING (public.is_portfolio_admin());
+
+-- 3. Trigger to automatically enroll bhavanakondakrindi26@gmail.com upon sign-in/creation
+CREATE OR REPLACE FUNCTION public.handle_admin_auth_user()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+BEGIN
+  IF LOWER(NEW.email) = 'bhavanakondakrindi26@gmail.com' THEN
+    INSERT INTO public.portfolio_admin_users (user_id, email)
+    VALUES (NEW.id, NEW.email)
+    ON CONFLICT (user_id) DO NOTHING;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS on_admin_user_created ON auth.users;
+CREATE TRIGGER on_admin_user_created
+AFTER INSERT OR UPDATE OF email ON auth.users
+FOR EACH ROW EXECUTE FUNCTION public.handle_admin_auth_user();
+
+-- 4. Portfolio Content Table
 CREATE TABLE IF NOT EXISTS public.portfolio_content (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     version_type TEXT NOT NULL CHECK (version_type IN ('draft', 'published')),
@@ -69,13 +126,51 @@ ON public.portfolio_content (version_type);
 
 ALTER TABLE public.portfolio_content ENABLE ROW LEVEL SECURITY;
 
+-- SELECT Policy: Public (anon + authenticated) can ONLY read published version
 CREATE POLICY "Public visitors can read published content"
 ON public.portfolio_content FOR SELECT TO anon, authenticated
 USING (version_type = 'published');
 
-CREATE POLICY "Admin can modify portfolio content"
-ON public.portfolio_content FOR ALL TO authenticated
-USING (true) WITH CHECK (true);
+-- WRITE Policies: ONLY verified admin can INSERT, UPDATE, or DELETE
+CREATE POLICY "Admin can insert portfolio content"
+ON public.portfolio_content FOR INSERT TO authenticated
+WITH CHECK (public.is_portfolio_admin());
+
+CREATE POLICY "Admin can update portfolio content"
+ON public.portfolio_content FOR UPDATE TO authenticated
+USING (public.is_portfolio_admin())
+WITH CHECK (public.is_portfolio_admin());
+
+CREATE POLICY "Admin can delete portfolio content"
+ON public.portfolio_content FOR DELETE TO authenticated
+USING (public.is_portfolio_admin());
+
+-- 5. Storage Bucket Configuration (portfolio-assets)
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('portfolio-assets', 'portfolio-assets', true)
+ON CONFLICT (id) DO UPDATE SET public = true;
+
+-- Storage RLS: Public Read
+CREATE POLICY "Public read portfolio assets"
+ON storage.objects FOR SELECT TO anon, authenticated
+USING (bucket_id = 'portfolio-assets');
+
+-- Storage RLS: Admin-Only Upload with Strict File Extension Whitelist (Blocks SVG/HTML/XSS)
+CREATE POLICY "Admin upload portfolio assets"
+ON storage.objects FOR INSERT TO authenticated
+WITH CHECK (
+    bucket_id = 'portfolio-assets'
+    AND public.is_portfolio_admin()
+    AND (storage.extension(name) IN ('png', 'jpg', 'jpeg', 'webp', 'gif'))
+);
+
+CREATE POLICY "Admin update portfolio assets"
+ON storage.objects FOR UPDATE TO authenticated
+USING (bucket_id = 'portfolio-assets' AND public.is_portfolio_admin());
+
+CREATE POLICY "Admin delete portfolio assets"
+ON storage.objects FOR DELETE TO authenticated
+USING (bucket_id = 'portfolio-assets' AND public.is_portfolio_admin());
 `;
     navigator.clipboard.writeText(sqlScript);
     setCopiedSchema(true);

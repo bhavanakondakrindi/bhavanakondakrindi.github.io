@@ -21,6 +21,7 @@ import { Github } from '../ui/BrandIcons';
 import { WashiTape } from '../ui/WashiTape';
 import { BinderClip } from '../ui/BinderClip';
 import { PostmarkStamp, RibbonBow } from '../ui/VintageStamps';
+import { sanitizeUrl } from '../../lib/security';
 
 export const ProjectDetailModal = () => {
   const { activeProjectModal, setActiveProjectModal, publishedData } = usePortfolio();
@@ -189,7 +190,7 @@ export const ProjectDetailModal = () => {
                 <div className="flex flex-wrap items-center gap-3">
                   {activeProjectModal.githubUrl ? (
                     <a
-                      href={activeProjectModal.githubUrl}
+                      href={sanitizeUrl(activeProjectModal.githubUrl)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1A1714] text-white text-xs font-mono font-bold shadow-xs hover:bg-slate-800 transition-colors"
@@ -206,7 +207,7 @@ export const ProjectDetailModal = () => {
 
                   {activeProjectModal.demoUrl ? (
                     <a
-                      href={activeProjectModal.demoUrl}
+                      href={sanitizeUrl(activeProjectModal.demoUrl)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-mono font-bold shadow-xs hover:bg-emerald-700 transition-colors"

@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Github, Linkedin } from '../ui/BrandIcons';
 import { DynamicSticker } from '../ui/DynamicSticker';
+import { sanitizeUrl } from '../../lib/security';
 
 export const ContactSection = () => {
   const { publishedData } = usePortfolio();
@@ -112,7 +113,7 @@ export const ContactSection = () => {
                 
                 {/* GitHub Card */}
                 <a
-                  href="https://github.com/bhavanakondakrindi"
+                  href={sanitizeUrl(profile.socialLinks?.github || contact.github || 'https://github.com/bhavanakondakrindi')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group p-5 rounded-2xl bg-white border-2 border-[#1A1714] shadow-scrapbook hover:shadow-scrapbook-lg hover:-translate-y-0.5 transition-all flex items-center justify-between"
@@ -140,7 +141,7 @@ export const ContactSection = () => {
 
                 {/* LinkedIn Card */}
                 <a
-                  href="https://linkedin.com/in/bhavana-kondakrindi-26bb57379"
+                  href={sanitizeUrl(profile.socialLinks?.linkedin || contact.linkedin || 'https://linkedin.com/in/bhavana-kondakrindi-26bb57379')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group p-5 rounded-2xl bg-white border-2 border-[#1A1714] shadow-scrapbook hover:shadow-scrapbook-lg hover:-translate-y-0.5 transition-all flex items-center justify-between"

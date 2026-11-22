@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { usePortfolio } from '../../../context/PortfolioContext';
+import { validateImageFile } from '../../../lib/security';
 import {
   Upload,
   Image as ImageIcon,
@@ -47,8 +48,9 @@ export const HeroEditor = () => {
 
   // Direct Laptop File Upload Handler
   const handlePhotoUpload = (file) => {
-    if (!file || !file.type.startsWith('image/')) {
-      alert('Please select a valid image file (PNG, JPG, JPEG, WEBP).');
+    const check = validateImageFile(file);
+    if (!check.valid) {
+      alert(check.error);
       return;
     }
 

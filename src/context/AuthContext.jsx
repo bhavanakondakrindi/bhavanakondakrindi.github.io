@@ -4,7 +4,7 @@ import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 const AuthContext = createContext();
 
 const LOCAL_ADMIN_KEY = 'bhavana_admin_auth_v1';
-const DEFAULT_LOCAL_PASS = 'admin123'; // Default demo password for local offline mode
+const DEFAULT_LOCAL_PASS = 'admin123'; // Permitted for offline development only
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -19,6 +19,12 @@ export const AuthProvider = ({ children }) => {
         if (session?.user) {
           setUser(session.user);
           setIsAdmin(true);
+        } else if (import.meta.env.DEV) {
+          // In local dev, allow checking cached local session
+          checkLocalSession();
+        } else {
+          setUser(null);
+          setIsAdmin(false);
         }
         setAuthLoading(false);
       });
@@ -28,13 +34,18 @@ export const AuthProvider = ({ children }) => {
           setUser(session.user);
           setIsAdmin(true);
         } else {
-          // If logged out from Supabase, check local storage
-          checkLocalSession();
+          if (import.meta.env.DEV) {
+            checkLocalSession();
+          } else {
+            setUser(null);
+            setIsAdmin(false);
+          }
         }
       });
 
       return () => subscription.unsubscribe();
     } else {
+      // Offline mode before Supabase is configured
       checkLocalSession();
     }
   }, []);
@@ -62,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     setAuthError(null);
     setAuthLoading(true);
 
-    // Try Supabase first if configured
+    // 1. Try Supabase Auth when configured
     if (isSupabaseConfigured && supabase) {
       try {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -71,9 +82,9 @@ export const AuthProvider = ({ children }) => {
         });
 
         if (error) {
-          // If Supabase authentication fails, fallback check for local admin fallback
-          if (email === 'admin@portfolio.local' && password === DEFAULT_LOCAL_PASS) {
-            const localUser = { email, role: 'admin', provider: 'local' };
+          // Security: Only allow local backdoor in development environment
+          if (import.meta.env.DEV && email === 'admin@portfolio.local' && password === DEFAULT_LOCAL_PASS) {
+            const localUser = { email, role: 'admin', provider: 'local-dev' };
             localStorage.setItem(LOCAL_ADMIN_KEY, JSON.stringify(localUser));
             setUser(localUser);
             setIsAdmin(true);
@@ -94,13 +105,12 @@ export const AuthProvider = ({ children }) => {
       }
     }
 
-    // Offline / Local admin mode
-    // Allows admin access with admin credentials
+    // 2. Offline / Local admin mode (Used prior to connecting Supabase)
     if (
-      (email === 'bhavana' || email === 'admin' || email === 'admin@portfolio.local') &&
-      (password === 'admin123' || password === 'bhavana2025' || password === 'admin')
+      (email === 'bhavanakondakrindi26@gmail.com' || email === 'admin' || email === 'admin@portfolio.local') &&
+      (password === 'admin123' || password === 'bhavana2026' || password === 'admin')
     ) {
-      const localUser = { email, role: 'admin', provider: 'local-demo' };
+      const localUser = { email, role: 'admin', provider: 'local-offline' };
       localStorage.setItem(LOCAL_ADMIN_KEY, JSON.stringify(localUser));
       setUser(localUser);
       setIsAdmin(true);
@@ -139,4 +149,10 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};

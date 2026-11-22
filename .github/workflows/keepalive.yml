@@ -1,0 +1,32 @@
+name: Supabase Free-Tier Keep-Alive Ping
+
+on:
+  schedule:
+    # Run every 4 days at 06:00 UTC to prevent Supabase 7-day inactivity pausing
+    - cron: '0 6 */4 * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping:
+    name: Ping Supabase Database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send keep-alive health ping to Supabase REST API
+        run: |
+          if [ -z "${{ secrets.VITE_SUPABASE_URL }}" ] || [ -z "${{ secrets.VITE_SUPABASE_ANON_KEY }}" ]; then
+            echo "Supabase secrets not configured yet. Skipping keep-alive ping."
+            exit 0
+          fi
+
+          echo "Pinging Supabase project to refresh active status..."
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.VITE_SUPABASE_URL }}/rest/v1/portfolio_content?select=version_type&limit=1" \
+            -H "apikey: ${{ secrets.VITE_SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.VITE_SUPABASE_ANON_KEY }}")
+
+          echo "Supabase response status: $HTTP_STATUS"
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 400 ]; then
+            echo "Keep-alive ping successful. Project activity confirmed."
+          else
+            echo "Warning: Received unexpected status code $HTTP_STATUS from Supabase."
+          fi
