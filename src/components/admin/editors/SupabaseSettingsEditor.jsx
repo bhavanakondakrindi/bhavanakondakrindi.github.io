@@ -200,9 +200,9 @@ USING (bucket_id = 'portfolio-assets' AND public.is_portfolio_admin());
           <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-300 text-xs font-mono text-emerald-900 flex items-start gap-3">
             <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
             <div>
-              <p className="font-bold text-sm">Supabase Connected & Protected with RLS</p>
+              <p className="font-bold text-sm">Supabase Authentication & PostgreSQL RLS Active</p>
               <p className="mt-1 text-[11px] text-emerald-800 font-sans">
-                Your portfolio is syncing drafts and published revisions to your Supabase PostgreSQL cluster. Public visitors can only query published rows.
+                Your portfolio is securely connected. All administrative actions require an authenticated session verified against the PostgreSQL admin allowlist (<code className="font-bold font-mono">is_portfolio_admin()</code>). Public visitors can only query published records.
               </p>
             </div>
           </div>
@@ -210,9 +210,9 @@ USING (bucket_id = 'portfolio-assets' AND public.is_portfolio_admin());
           <div className="p-4 rounded-xl bg-amber-50 border border-amber-300 text-xs font-mono text-amber-900 flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
             <div>
-              <p className="font-bold text-sm">Local Storage Mode Active (Offline-Ready)</p>
+              <p className="font-bold text-sm">Supabase Configuration Required</p>
               <p className="mt-1 text-[11px] text-amber-800 font-sans">
-                You are currently running in robust Local Mode. All your edits, drafts, and published content are fully preserved in your browser's persistent storage. To connect your live Supabase project, add <code className="font-bold">VITE_SUPABASE_URL</code> and <code className="font-bold">VITE_SUPABASE_ANON_KEY</code> to your environment file.
+                To enable administrator authentication, add <code className="font-bold">VITE_SUPABASE_URL</code> and <code className="font-bold">VITE_SUPABASE_ANON_KEY</code> to your environment variables (or GitHub Repository Secrets for production). Demo logins and local fallback modes have been permanently disabled for security.
               </p>
             </div>
           </div>

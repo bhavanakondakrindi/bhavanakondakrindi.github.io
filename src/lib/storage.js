@@ -3,7 +3,6 @@ import { supabase, isSupabaseConfigured } from './supabaseClient';
 
 const STORAGE_KEY_PUBLISHED = 'bhavana_portfolio_published_v1';
 const STORAGE_KEY_DRAFT = 'bhavana_portfolio_draft_v1';
-const STORAGE_KEY_AUTH = 'bhavana_admin_session_v1';
 
 const sanitizePortfolioData = (parsed) => {
   if (!parsed) return parsed;
@@ -130,26 +129,31 @@ export const getDraftData = async () => {
 };
 
 export const saveDraftData = async (draft) => {
+  if (isSupabaseConfigured && supabase) {
+    const { data: { session }, error: sessionErr } = await supabase.auth.getSession();
+    if (sessionErr || !session?.user) {
+      throw new Error('Unauthorized: An authenticated administrator session is required to save drafts.');
+    }
+
+    const { error } = await supabase
+      .from('portfolio_content')
+      .upsert({
+        version_type: 'draft',
+        content: draft,
+        updated_at: new Date().toISOString(),
+        updated_by: session.user.id
+      }, { onConflict: 'version_type' });
+
+    if (error) {
+      console.error('Supabase save draft error:', error);
+      throw error;
+    }
+  }
+
   try {
     localStorage.setItem(STORAGE_KEY_DRAFT, JSON.stringify(draft));
   } catch (e) {
-    console.error('Error saving local draft:', e);
-  }
-
-  if (isSupabaseConfigured && supabase) {
-    try {
-      const { error } = await supabase
-        .from('portfolio_content')
-        .upsert({
-          version_type: 'draft',
-          content: draft,
-          updated_at: new Date().toISOString()
-        }, { onConflict: 'version_type' });
-
-      if (error) throw error;
-    } catch (err) {
-      console.warn('Could not save draft to Supabase:', err);
-    }
+    console.error('Error saving local draft cache:', e);
   }
 
   return true;
@@ -161,28 +165,33 @@ export const publishData = async (draft) => {
     lastPublishedAt: new Date().toISOString()
   };
 
+  if (isSupabaseConfigured && supabase) {
+    const { data: { session }, error: sessionErr } = await supabase.auth.getSession();
+    if (sessionErr || !session?.user) {
+      throw new Error('Unauthorized: An authenticated administrator session is required to publish content.');
+    }
+
+    const { error } = await supabase
+      .from('portfolio_content')
+      .upsert({
+        version_type: 'published',
+        content: publishedVersion,
+        published_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        updated_by: session.user.id
+      }, { onConflict: 'version_type' });
+
+    if (error) {
+      console.error('Supabase publish error:', error);
+      throw error;
+    }
+  }
+
   try {
     localStorage.setItem(STORAGE_KEY_PUBLISHED, JSON.stringify(publishedVersion));
     localStorage.setItem(STORAGE_KEY_DRAFT, JSON.stringify(publishedVersion));
   } catch (e) {
     console.error('Error saving published state locally:', e);
-  }
-
-  if (isSupabaseConfigured && supabase) {
-    try {
-      const { error } = await supabase
-        .from('portfolio_content')
-        .upsert({
-          version_type: 'published',
-          content: publishedVersion,
-          published_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        }, { onConflict: 'version_type' });
-
-      if (error) throw error;
-    } catch (err) {
-      console.warn('Could not publish to Supabase:', err);
-    }
   }
 
   return publishedVersion;

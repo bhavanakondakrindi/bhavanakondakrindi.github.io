@@ -1,19 +1,95 @@
 -- ==============================================================================
--- BHAVANA KONDAKRINDI — PORTFOLIO SUPABASE SCHEMA & SECURITY POLICIES
+-- BHAVANA KONDAKRINDI PORTFOLIO — PRODUCTION SUPABASE SECURITY & RLS SCHEMA
 -- ==============================================================================
--- This SQL script sets up all tables, Row Level Security (RLS) policies,
--- and storage bucket configuration for Bhavana's portfolio CMS.
+-- This script configures:
+-- 1. UUID extensions
+-- 2. Administrator Allowlist table (portfolio_admin_users)
+-- 3. Hardened security-definer authorization function (is_portfolio_admin)
+-- 4. Content storage table (portfolio_content) with strict RLS policies
+-- 5. Storage bucket (portfolio-assets) with anti-XSS upload policies
+-- 6. Automated trigger to register bhavanakondakrindi26@gmail.com on sign-up
 --
--- HOW TO RUN THIS IN SUPABASE:
--- 1. Log in to your Supabase Dashboard: https://supabase.com/dashboard
--- 2. Open your project -> Navigate to 'SQL Editor' -> Click 'New Query'
--- 3. Paste this entire script and click 'Run'.
+-- HOW TO EXECUTE:
+-- 1. Open your Supabase Dashboard: https://supabase.com/dashboard
+-- 2. Navigate to SQL Editor -> New Query
+-- 3. Paste this entire script and click "Run".
 -- ==============================================================================
 
 -- 1. Enable UUID Extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 2. PORTFOLIO CONTENT (Stores Draft & Published versions of site data)
+-- ==============================================================================
+-- 2. ADMINISTRATOR ALLOWLIST TABLE
+-- ==============================================================================
+CREATE TABLE IF NOT EXISTS public.portfolio_admin_users (
+    user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    email TEXT UNIQUE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Enable Row Level Security on the admin allowlist table
+ALTER TABLE public.portfolio_admin_users ENABLE ROW LEVEL SECURITY;
+
+-- ==============================================================================
+-- 3. HARDENED AUTHORIZATION FUNCTION (Zero-Trust Security Definer)
+-- ==============================================================================
+CREATE OR REPLACE FUNCTION public.is_portfolio_admin()
+RETURNS BOOLEAN
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.portfolio_admin_users
+    WHERE user_id = auth.uid()
+  );
+$$;
+
+-- Revoke public execution; grant only to authenticated sessions
+REVOKE ALL ON FUNCTION public.is_portfolio_admin() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.is_portfolio_admin() TO authenticated;
+
+-- Allow authenticated admins to view the allowlist (blocks public/anon from viewing admin identities)
+DROP POLICY IF EXISTS "Admins can view admin allowlist" ON public.portfolio_admin_users;
+CREATE POLICY "Admins can view admin allowlist"
+ON public.portfolio_admin_users FOR SELECT TO authenticated
+USING (public.is_portfolio_admin());
+
+-- ==============================================================================
+-- 4. AUTOMATIC ENROLLMENT TRIGGER FOR BHAVANA'S ADMIN ACCOUNT
+-- Automatically records bhavanakondakrindi26@gmail.com into the allowlist
+-- upon user registration or invitation in Supabase Auth.
+-- ==============================================================================
+CREATE OR REPLACE FUNCTION public.handle_admin_auth_user()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+BEGIN
+  IF LOWER(NEW.email) = 'bhavanakondakrindi26@gmail.com' THEN
+    INSERT INTO public.portfolio_admin_users (user_id, email)
+    VALUES (NEW.id, NEW.email)
+    ON CONFLICT (user_id) DO NOTHING;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS on_admin_user_created ON auth.users;
+CREATE TRIGGER on_admin_user_created
+AFTER INSERT OR UPDATE OF email ON auth.users
+FOR EACH ROW EXECUTE FUNCTION public.handle_admin_auth_user();
+
+-- Also auto-enroll if the user already exists in auth.users
+INSERT INTO public.portfolio_admin_users (user_id, email)
+SELECT id, email FROM auth.users 
+WHERE LOWER(email) = 'bhavanakondakrindi26@gmail.com'
+ON CONFLICT (user_id) DO NOTHING;
+
+-- ==============================================================================
+-- 5. PORTFOLIO CONTENT TABLE & RLS POLICIES
+-- ==============================================================================
 CREATE TABLE IF NOT EXISTS public.portfolio_content (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     version_type TEXT NOT NULL CHECK (version_type IN ('draft', 'published')),
@@ -23,176 +99,71 @@ CREATE TABLE IF NOT EXISTS public.portfolio_content (
     updated_by UUID REFERENCES auth.users(id)
 );
 
--- Ensure only one active draft and one active published row
 CREATE UNIQUE INDEX IF NOT EXISTS idx_portfolio_version_type 
 ON public.portfolio_content (version_type);
 
--- 3. PROJECTS TABLE (Structured records for individual queries)
-CREATE TABLE IF NOT EXISTS public.projects (
-    id TEXT PRIMARY KEY,
-    title TEXT NOT NULL,
-    subtitle TEXT,
-    category TEXT NOT NULL,
-    featured BOOLEAN DEFAULT false,
-    color TEXT DEFAULT '#FEF9C3',
-    accent TEXT DEFAULT '#EAB308',
-    summary TEXT NOT NULL,
-    problem_statement TEXT,
-    objectives TEXT[],
-    features TEXT[] NOT NULL,
-    technologies TEXT[] NOT NULL,
-    implementation_details TEXT,
-    challenges TEXT,
-    image TEXT,
-    github_url TEXT,
-    demo_url TEXT,
-    badge TEXT,
-    display_order INT DEFAULT 0,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-);
-
--- 4. SKILLS TABLE
-CREATE TABLE IF NOT EXISTS public.skills (
-    id TEXT PRIMARY KEY,
-    category TEXT NOT NULL,
-    name TEXT NOT NULL,
-    level TEXT,
-    notes TEXT,
-    display_order INT DEFAULT 0,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-);
-
--- 5. CONTACT INQUIRIES TABLE (Optional storage for visitor messages)
-CREATE TABLE IF NOT EXISTS public.contact_messages (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    sender_name TEXT NOT NULL,
-    sender_email TEXT NOT NULL,
-    subject TEXT,
-    message TEXT NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
-    is_read BOOLEAN DEFAULT false
-);
-
--- ==============================================================================
--- ROW LEVEL SECURITY (RLS) POLICIES
--- Strict Security: Public visitors may only READ published content.
--- Writes, updates, and deletes are strictly restricted to authenticated administrators.
--- ==============================================================================
-
--- Enable RLS on all tables
 ALTER TABLE public.portfolio_content ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.projects ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.skills ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.contact_messages ENABLE ROW LEVEL SECURITY;
 
--- Policy A: Public visitors can ONLY SELECT published portfolio content
+-- Policy 1: Public visitors (anon) and authenticated users can ONLY read published content
+DROP POLICY IF EXISTS "Public visitors can read published content" ON public.portfolio_content;
 CREATE POLICY "Public visitors can read published content"
-ON public.portfolio_content
-FOR SELECT
-TO anon, authenticated
+ON public.portfolio_content FOR SELECT TO anon, authenticated
 USING (version_type = 'published');
 
--- Policy B: Authenticated admin can read draft and published content
+-- Policy 2: Authenticated administrator can also read drafts
+DROP POLICY IF EXISTS "Admin can read all content versions" ON public.portfolio_content;
 CREATE POLICY "Admin can read all content versions"
-ON public.portfolio_content
-FOR SELECT
-TO authenticated
-USING (true);
+ON public.portfolio_content FOR SELECT TO authenticated
+USING (public.is_portfolio_admin());
 
--- Policy C: Only authenticated admin can insert/update/delete portfolio content
-CREATE POLICY "Admin can modify portfolio content"
-ON public.portfolio_content
-FOR ALL
-TO authenticated
-USING (true)
-WITH CHECK (true);
+-- Policy 3: ONLY verified administrators can INSERT content
+DROP POLICY IF EXISTS "Admin can insert portfolio content" ON public.portfolio_content;
+CREATE POLICY "Admin can insert portfolio content"
+ON public.portfolio_content FOR INSERT TO authenticated
+WITH CHECK (public.is_portfolio_admin());
 
--- Policy D: Public can read all published projects
-CREATE POLICY "Public can read projects"
-ON public.projects
-FOR SELECT
-TO anon, authenticated
-USING (true);
+-- Policy 4: ONLY verified administrators can UPDATE content
+DROP POLICY IF EXISTS "Admin can update portfolio content" ON public.portfolio_content;
+CREATE POLICY "Admin can update portfolio content"
+ON public.portfolio_content FOR UPDATE TO authenticated
+USING (public.is_portfolio_admin())
+WITH CHECK (public.is_portfolio_admin());
 
--- Policy E: Only admin can insert/update/delete projects
-CREATE POLICY "Admin can modify projects"
-ON public.projects
-FOR ALL
-TO authenticated
-USING (true)
-WITH CHECK (true);
-
--- Policy F: Public can read skills
-CREATE POLICY "Public can read skills"
-ON public.skills
-FOR SELECT
-TO anon, authenticated
-USING (true);
-
--- Policy G: Only admin can modify skills
-CREATE POLICY "Admin can modify skills"
-ON public.skills
-FOR ALL
-TO authenticated
-USING (true)
-WITH CHECK (true);
-
--- Policy H: Public can submit contact messages, but cannot read other people's messages
-CREATE POLICY "Public can submit contact messages"
-ON public.contact_messages
-FOR INSERT
-TO anon, authenticated
-WITH CHECK (true);
-
--- Policy I: Only authenticated admin can read or delete contact messages
-CREATE POLICY "Admin can read contact messages"
-ON public.contact_messages
-FOR SELECT
-TO authenticated
-USING (true);
+-- Policy 5: ONLY verified administrators can DELETE content
+DROP POLICY IF EXISTS "Admin can delete portfolio content" ON public.portfolio_content;
+CREATE POLICY "Admin can delete portfolio content"
+ON public.portfolio_content FOR DELETE TO authenticated
+USING (public.is_portfolio_admin());
 
 -- ==============================================================================
--- STORAGE BUCKET CONFIGURATION (portfolio_media)
+-- 6. STORAGE BUCKET CONFIGURATION & POLICIES (portfolio-assets)
 -- ==============================================================================
--- Run this block to set up the storage bucket for screenshots, avatars, and assets
 INSERT INTO storage.buckets (id, name, public)
-VALUES ('portfolio_media', 'portfolio_media', true)
-ON CONFLICT (id) DO NOTHING;
+VALUES ('portfolio-assets', 'portfolio-assets', true)
+ON CONFLICT (id) DO UPDATE SET public = true;
 
--- Public can view images in portfolio_media
-CREATE POLICY "Public Media Access"
-ON storage.objects
-FOR SELECT
-TO anon, authenticated
-USING (bucket_id = 'portfolio_media');
+-- Storage Read Policy: Public can view assets
+DROP POLICY IF EXISTS "Public read portfolio assets" ON storage.objects;
+CREATE POLICY "Public read portfolio assets"
+ON storage.objects FOR SELECT TO anon, authenticated
+USING (bucket_id = 'portfolio-assets');
 
--- Only authenticated admin can upload/update/delete media files
-CREATE POLICY "Admin Media Upload"
-ON storage.objects
-FOR INSERT
-TO authenticated
-WITH CHECK (bucket_id = 'portfolio_media');
+-- Storage Upload Policy: Admin only, restricted strictly to safe raster images (blocks SVG/HTML Stored XSS)
+DROP POLICY IF EXISTS "Admin upload portfolio assets" ON storage.objects;
+CREATE POLICY "Admin upload portfolio assets"
+ON storage.objects FOR INSERT TO authenticated
+WITH CHECK (
+    bucket_id = 'portfolio-assets'
+    AND public.is_portfolio_admin()
+    AND (storage.extension(name) IN ('png', 'jpg', 'jpeg', 'webp', 'gif'))
+);
 
-CREATE POLICY "Admin Media Update"
-ON storage.objects
-FOR UPDATE
-TO authenticated
-USING (bucket_id = 'portfolio_media');
+DROP POLICY IF EXISTS "Admin update portfolio assets" ON storage.objects;
+CREATE POLICY "Admin update portfolio assets"
+ON storage.objects FOR UPDATE TO authenticated
+USING (bucket_id = 'portfolio-assets' AND public.is_portfolio_admin());
 
-CREATE POLICY "Admin Media Delete"
-ON storage.objects
-FOR DELETE
-TO authenticated
-USING (bucket_id = 'portfolio_media');
-
--- ==============================================================================
--- CREATING YOUR FIRST ADMIN USER
--- ==============================================================================
--- In the Supabase dashboard:
--- 1. Go to 'Authentication' -> 'Users' -> Click 'Add user' -> 'Create user'.
--- 2. Enter your admin email and a strong password.
--- 3. Confirm the user.
--- 4. In your portfolio website, click 'Admin Portal' in the footer or header,
---    and log in with those credentials!
--- ==============================================================================
+DROP POLICY IF EXISTS "Admin delete portfolio assets" ON storage.objects;
+CREATE POLICY "Admin delete portfolio assets"
+ON storage.objects FOR DELETE TO authenticated
+USING (bucket_id = 'portfolio-assets' AND public.is_portfolio_admin());
