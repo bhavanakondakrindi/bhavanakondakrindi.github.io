@@ -1,13 +1,24 @@
 import React from 'react';
 import { usePortfolio } from '../../../context/PortfolioContext';
-import { Plus, Trash2, Award, GraduationCap, BookOpen } from 'lucide-react';
+import { Plus, Trash2, Award, GraduationCap, BookOpen, Bookmark } from 'lucide-react';
 
 export const EducationEditor = () => {
   const { draftData, updateDraft } = usePortfolio();
+  const headings = draftData?.sectionHeadings || {};
   const education = draftData?.education || [];
   const achievements = draftData?.achievements || [];
   const certifications = draftData?.certifications || [];
   const profile = draftData?.profile || {};
+
+  const handleHeadingChange = (field, value) => {
+    updateDraft(prev => ({
+      ...prev,
+      sectionHeadings: {
+        ...(prev.sectionHeadings || {}),
+        [field]: value
+      }
+    }));
+  };
 
   const handleEducationChange = (index, field, value) => {
     const updated = [...education];
@@ -84,6 +95,68 @@ export const EducationEditor = () => {
         <p className="text-xs font-mono text-slate-500 mt-1">
           Keep your CGPA updated and log new achievements, hackathons, and certifications.
         </p>
+      </div>
+
+      {/* Section Headings Card */}
+      <div className="bg-white p-6 rounded-2xl border-2 border-[#1A1714] shadow-scrapbook space-y-4">
+        <div className="flex items-center gap-2 text-slate-900 font-mono text-xs font-bold uppercase pb-2 border-b border-slate-200">
+          <Bookmark className="w-4 h-4 text-purple-600" />
+          <span>Chapter 04 Headings & Badge</span>
+        </div>
+
+        <div>
+          <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+            Chapter Badge Label
+          </label>
+          <input
+            type="text"
+            value={headings.educationBadge || ''}
+            onChange={(e) => handleHeadingChange('educationBadge', e.target.value)}
+            placeholder="Chapter 04 // Academics & Milestones"
+            className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-mono font-bold"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+              Heading Main
+            </label>
+            <input
+              type="text"
+              value={headings.educationTitleMain || ''}
+              onChange={(e) => handleHeadingChange('educationTitleMain', e.target.value)}
+              placeholder="Academic"
+              className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm font-editorial font-bold"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+              Heading Accent
+            </label>
+            <input
+              type="text"
+              value={headings.educationTitleAccent || ''}
+              onChange={(e) => handleHeadingChange('educationTitleAccent', e.target.value)}
+              placeholder="Standing"
+              className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm font-serif italic text-rose-600 font-bold"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+            Section Subtitle
+          </label>
+          <textarea
+            rows={2}
+            value={headings.educationSubtitle || ''}
+            onChange={(e) => handleHeadingChange('educationSubtitle', e.target.value)}
+            placeholder="Formal degree progression at KLH Deemed to be University..."
+            className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm font-sans"
+          />
+        </div>
       </div>
 
       {/* University Record */}

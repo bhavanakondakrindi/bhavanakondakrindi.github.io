@@ -16,6 +16,7 @@ import { DynamicSticker } from '../ui/DynamicSticker';
 
 export const EducationSection = () => {
   const { publishedData } = usePortfolio();
+  const headings = publishedData?.sectionHeadings || {};
   const education = publishedData?.education || [];
   const achievements = publishedData?.achievements || [];
   const certifications = publishedData?.certifications || [];
@@ -39,18 +40,21 @@ export const EducationSection = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#DDD6FE] border-2 border-[#1A1714] font-mono text-xs font-bold text-purple-950 uppercase tracking-widest mb-3 shadow-xs">
               <Bookmark className="w-3.5 h-3.5 text-purple-700" />
-              <span>Chapter 04 // Academics & Milestones</span>
+              <span>{headings.educationBadge || "Chapter 04 // Academics & Milestones"}</span>
             </div>
             <div className="relative inline-block">
               <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1714] tracking-tight">
-                Academic <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Standing</span>
+                {headings.educationTitleMain || "Academic"}{' '}
+                <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">
+                  {headings.educationTitleAccent || "Standing"}
+                </span>
               </h2>
               <div className="absolute -top-3 -right-6 pointer-events-none">
                 <DynamicSticker id="edu_sparkle" />
               </div>
             </div>
             <p className="text-slate-600 font-sans text-base max-w-xl mt-2">
-              Formal degree progression at KLH Deemed to be University, core foundational coursework, and verified milestones.
+              {headings.educationSubtitle || "Formal degree progression at KLH Deemed to be University, core foundational coursework, and verified milestones."}
             </p>
           </div>
 

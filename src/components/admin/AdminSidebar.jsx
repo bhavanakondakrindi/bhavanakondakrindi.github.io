@@ -2,6 +2,7 @@ import React from 'react';
 import { usePortfolio } from '../../context/PortfolioContext';
 import {
   LayoutDashboard,
+  Layout,
   User,
   BookOpen,
   Code2,
@@ -32,6 +33,7 @@ export const AdminSidebar = () => {
         { id: 'projects', label: 'Projects & Case Files', icon: FolderGit2, badge: draftData?.projects?.length },
         { id: 'education', label: 'Education & CGPA', icon: GraduationCap },
         { id: 'contact', label: 'Contact Details', icon: Mail },
+        { id: 'headerFooter', label: 'Header & Footer Branding', icon: Layout },
       ]
     },
     {

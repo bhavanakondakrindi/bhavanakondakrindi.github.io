@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import { usePortfolio } from '../../../context/PortfolioContext';
-import { Plus, Trash2, Edit2, Tag, Check, ArrowUp, ArrowDown } from 'lucide-react';
+import { Plus, Trash2, Edit2, Tag, Check, ArrowUp, ArrowDown, Bookmark } from 'lucide-react';
 
 export const SkillsEditor = () => {
   const { draftData, updateDraft } = usePortfolio();
+  const headings = draftData?.sectionHeadings || {};
   const categories = draftData?.skills || [];
+
+  const handleHeadingChange = (field, value) => {
+    updateDraft(prev => ({
+      ...prev,
+      sectionHeadings: {
+        ...(prev.sectionHeadings || {}),
+        [field]: value
+      }
+    }));
+  };
 
   const [activeCatId, setActiveCatId] = useState(categories[0]?.id || 'cat-languages');
 
@@ -113,6 +124,68 @@ export const SkillsEditor = () => {
           <Plus className="w-3.5 h-3.5" />
           <span>New Category</span>
         </button>
+      </div>
+
+      {/* Section Headings Card */}
+      <div className="bg-white p-6 rounded-2xl border-2 border-[#1A1714] shadow-scrapbook space-y-4">
+        <div className="flex items-center gap-2 text-slate-900 font-mono text-xs font-bold uppercase pb-2 border-b border-slate-200">
+          <Bookmark className="w-4 h-4 text-emerald-600" />
+          <span>Chapter 02 Headings & Badge</span>
+        </div>
+
+        <div>
+          <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+            Chapter Badge Label
+          </label>
+          <input
+            type="text"
+            value={headings.skillsBadge || ''}
+            onChange={(e) => handleHeadingChange('skillsBadge', e.target.value)}
+            placeholder="Chapter 02 // Repertoire & Technical Toolbox"
+            className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-mono font-bold"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+              Heading Main
+            </label>
+            <input
+              type="text"
+              value={headings.skillsTitleMain || ''}
+              onChange={(e) => handleHeadingChange('skillsTitleMain', e.target.value)}
+              placeholder="Technical"
+              className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm font-editorial font-bold"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+              Heading Accent
+            </label>
+            <input
+              type="text"
+              value={headings.skillsTitleAccent || ''}
+              onChange={(e) => handleHeadingChange('skillsTitleAccent', e.target.value)}
+              placeholder="Toolbox"
+              className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm font-serif italic text-rose-600 font-bold"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+            Section Subtitle
+          </label>
+          <textarea
+            rows={2}
+            value={headings.skillsSubtitle || ''}
+            onChange={(e) => handleHeadingChange('skillsSubtitle', e.target.value)}
+            placeholder="Core programming languages, modern web frameworks, and foundational computer science principles..."
+            className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm font-sans"
+          />
+        </div>
       </div>
 
       {/* Category Tabs */}

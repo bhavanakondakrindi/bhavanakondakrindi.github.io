@@ -9,6 +9,7 @@ export const Footer = () => {
   const { publishedData } = usePortfolio();
   const { isAdmin } = useAuth();
   const profile = publishedData?.profile || {};
+  const headerFooter = publishedData?.headerFooter || {};
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -26,19 +27,19 @@ export const Footer = () => {
           <div className="md:col-span-6 space-y-3">
             <div className="flex items-center gap-2">
               <span className="font-editorial text-3xl font-black text-[#1A1714] tracking-tight">
-                Bhavana Kondakrindi
+                {headerFooter.footerBrand || profile.name || "Bhavana Kondakrindi"}
               </span>
               <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-[#FEF08A] text-amber-950 font-black border border-amber-300">
-                CSE 2ND YR
+                {headerFooter.footerYearBadge || "CSE 2ND YR"}
               </span>
             </div>
 
             <p className="text-xs font-mono text-slate-600 max-w-md leading-relaxed">
-              COLOPHON: Designed as a bespoke digital scrapbook and editorial magazine. Typeset in Fraunces, Playfair Display & Plus Jakarta Sans. Built with React, Tailwind CSS, Framer Motion & Supabase.
+              {headerFooter.footerColophon || "COLOPHON: Designed as a bespoke digital scrapbook and editorial magazine. Typeset in Fraunces, Playfair Display & Plus Jakarta Sans. Built with React, Tailwind CSS, Framer Motion & Supabase."}
             </p>
 
             <div className="text-[11px] font-mono font-bold text-slate-500 uppercase tracking-widest">
-              KLH Deemed to be University • Hyderabad, India
+              {headerFooter.footerUniversity || "KLH Deemed to be University • Hyderabad, India"}
             </div>
           </div>
 
@@ -83,9 +84,7 @@ export const Footer = () => {
         {/* Bottom Metadata & Admin Entry */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
           <p className="flex items-center gap-1.5">
-            <span>Authored & Engineered with craft</span>
-            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
-            <span>• Bhavana Kondakrindi © {new Date().getFullYear()}</span>
+            <span>{headerFooter.footerCopyright || `© Bhavana Kondakrindi. Built with code, curiosity, and care.`}</span>
           </p>
 
           <div className="flex items-center gap-6">

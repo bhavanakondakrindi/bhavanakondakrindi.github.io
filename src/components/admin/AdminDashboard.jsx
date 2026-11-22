@@ -18,6 +18,7 @@ import { AnimationsEditor } from './editors/AnimationsEditor';
 import { MediaLibraryEditor } from './editors/MediaLibraryEditor';
 import { SupabaseSettingsEditor } from './editors/SupabaseSettingsEditor';
 import { MarqueeEditor } from './editors/MarqueeEditor';
+import { HeaderFooterEditor } from './editors/HeaderFooterEditor';
 
 export const AdminDashboard = () => {
   const { activeAdminTab } = usePortfolio();
@@ -42,6 +43,8 @@ export const AdminDashboard = () => {
         return <EducationEditor />;
       case 'contact':
         return <ContactEditor />;
+      case 'headerFooter':
+        return <HeaderFooterEditor />;
       case 'appearance':
         return <AppearanceEditor />;
       case 'scrapbook':

@@ -30,6 +30,30 @@ const sanitizePortfolioData = (parsed) => {
   if (!parsed.marqueeBanner) {
     parsed.marqueeBanner = initialPortfolioData.marqueeBanner;
   }
+  // Ensure headerFooter exists with defaults
+  if (!parsed.headerFooter) {
+    parsed.headerFooter = initialPortfolioData.headerFooter;
+  } else {
+    parsed.headerFooter = { ...initialPortfolioData.headerFooter, ...parsed.headerFooter };
+  }
+  // Ensure heroContent exists with defaults
+  if (!parsed.heroContent) {
+    parsed.heroContent = initialPortfolioData.heroContent;
+  } else {
+    parsed.heroContent = { ...initialPortfolioData.heroContent, ...parsed.heroContent };
+  }
+  // Ensure aboutContent exists with defaults
+  if (!parsed.aboutContent) {
+    parsed.aboutContent = initialPortfolioData.aboutContent;
+  } else {
+    parsed.aboutContent = { ...initialPortfolioData.aboutContent, ...parsed.aboutContent };
+  }
+  // Ensure sectionHeadings exists with defaults
+  if (!parsed.sectionHeadings) {
+    parsed.sectionHeadings = initialPortfolioData.sectionHeadings;
+  } else {
+    parsed.sectionHeadings = { ...initialPortfolioData.sectionHeadings, ...parsed.sectionHeadings };
+  }
   return parsed;
 };
 

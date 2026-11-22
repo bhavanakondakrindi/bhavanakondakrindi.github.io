@@ -11,13 +11,25 @@ import {
   X,
   Sparkles,
   Layers,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Bookmark
 } from 'lucide-react';
 import { Github } from '../../ui/BrandIcons';
 
 export const ProjectsEditor = () => {
   const { draftData, updateDraft } = usePortfolio();
+  const headings = draftData?.sectionHeadings || {};
   const projects = draftData?.projects || [];
+
+  const handleHeadingChange = (field, value) => {
+    updateDraft(prev => ({
+      ...prev,
+      sectionHeadings: {
+        ...(prev.sectionHeadings || {}),
+        [field]: value
+      }
+    }));
+  };
 
   const [activeProjectId, setActiveProjectId] = useState(projects[0]?.id || 'proj-airline-disruption');
 
@@ -133,6 +145,68 @@ export const ProjectsEditor = () => {
           <Plus className="w-4 h-4" />
           <span>Add New Project</span>
         </button>
+      </div>
+
+      {/* Section Headings Card */}
+      <div className="bg-white p-6 rounded-2xl border-2 border-[#1A1714] shadow-scrapbook space-y-4">
+        <div className="flex items-center gap-2 text-slate-900 font-mono text-xs font-bold uppercase pb-2 border-b border-slate-200">
+          <Bookmark className="w-4 h-4 text-amber-600" />
+          <span>Chapter 03 Headings & Badge</span>
+        </div>
+
+        <div>
+          <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+            Chapter Badge Label
+          </label>
+          <input
+            type="text"
+            value={headings.projectsBadge || ''}
+            onChange={(e) => handleHeadingChange('projectsBadge', e.target.value)}
+            placeholder="Chapter 03 // Sticky Note Project Desk"
+            className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-mono font-bold"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+              Heading Main
+            </label>
+            <input
+              type="text"
+              value={headings.projectsTitleMain || ''}
+              onChange={(e) => handleHeadingChange('projectsTitleMain', e.target.value)}
+              placeholder="Selected"
+              className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm font-editorial font-bold"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+              Heading Accent
+            </label>
+            <input
+              type="text"
+              value={headings.projectsTitleAccent || ''}
+              onChange={(e) => handleHeadingChange('projectsTitleAccent', e.target.value)}
+              placeholder="Works"
+              className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm font-serif italic text-rose-600 font-bold"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-xs font-mono font-bold text-slate-700 uppercase mb-1">
+            Section Subtitle
+          </label>
+          <textarea
+            rows={2}
+            value={headings.projectsSubtitle || ''}
+            onChange={(e) => handleHeadingChange('projectsSubtitle', e.target.value)}
+            placeholder="Tactile project mosaic arranged as a personal workspace desk..."
+            className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm font-sans"
+          />
+        </div>
       </div>
 
       {/* Project Selector Bar */}

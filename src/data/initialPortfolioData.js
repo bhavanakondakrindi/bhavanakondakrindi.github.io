@@ -477,5 +477,111 @@ export const initialPortfolioData = {
     linkedin: "https://linkedin.com/in/bhavana-kondakrindi-26bb57379",
     closingMessage: "Thank you for flipping through my digital scrapbook! Built with care, code, and curiosity.",
     formPlaceholderNotes: "Note: Real email delivery requires connecting a backend service (e.g. Supabase Edge Function, Formspree, or EmailJS). This form currently demonstrates complete client-side validation and state tracking."
+  },
+
+  // 1. Site-wide Header & Footer Branding & Ticker
+  headerFooter: {
+    tickerLeft: "DEV JOURNAL // DIGITAL FOLIO • KLH DEEMED TO BE UNIVERSITY",
+    tickerRight: "CSE 2ND YEAR • CGPA ~9.5",
+    brandInitials: "BK",
+    brandTitle: "Bhavana Kondakrindi",
+    brandSubtitle: "Creative Developer Portfolio",
+    footerBrand: "Bhavana Kondakrindi",
+    footerYearBadge: "CSE 2ND YR",
+    footerColophon: "COLOPHON: Designed as a bespoke digital scrapbook and editorial magazine. Typeset in Fraunces, Playfair Display & Plus Jakarta Sans. Built with React, Tailwind CSS, Framer Motion & Supabase.",
+    footerUniversity: "KLH Deemed to be University • Hyderabad, India",
+    footerCopyright: "© Bhavana Kondakrindi. Built with code, curiosity, and care."
+  },
+
+  // 2. Hero Section: All Headings & The 4 Photo Notes (From User Screenshot)
+  heroContent: {
+    issuePill: "KLH Deemed to be University • Computer Science & Engineering",
+    cgpaHighlight: "CGPA ~9.5",
+    firstName: "Bhavana",
+    lastName: "Kondakrindi",
+    handwrittenSubtitle: "creative developer portfolio & digital sketchbook",
+    polaroidCaption: "Bhavana Kondakrindi • CSE 2nd Year @ KLH",
+    polaroidSubCaption: "KLH CSE • SOPHOMORE",
+    
+    // The 4 notes around the hero photo desk:
+    note1Tag: "ACADEMIC LOG",
+    note1Title: "KLH University",
+    note1Subtitle: "CSE Sophomore (2nd Yr)",
+    note1CgpaLabel: "CGPA:",
+    note1CgpaValue: "~9.5 / 10",
+    
+    note2Tag: "Focus: Systems & Web",
+    note2Desc: "React.js dashboards, Python AI simulations & Java OOP.",
+    
+    note3Tag: "CORE PHILOSOPHY",
+    note3Title: "Practical Technology",
+    note3Quote: '"I believe in building working, user-centered software that solves real-world challenges."',
+    
+    note4Tag: "Algorithmic Thinking",
+    note4Desc: "Classical algorithms, data structures & pathfinding models.",
+    
+    tagline: "Exploring code, designing interactive software & solving practical problems.",
+    intro: "I am a Computer Science Engineering student interested in software development, problem-solving and building practical technology solutions. I enjoy exploring new technologies, developing user-focused applications, working on projects and continuously improving my technical skills.",
+    primaryBtnText: "Explore Selected Projects",
+    secondaryBtnText: "Send a Direct Note"
+  },
+
+  // 3. About Section: All Headings, Slips, Quotes, Philosophy & Pillars (From User Screenshot)
+  aboutContent: {
+    chapterBadge: "Chapter 01 // Field Journal & Biography",
+    headingMain: "Behind the",
+    headingAccent: "Journal",
+    subheading: "Engineering perspective, academic grounding at KLH Deemed to be University, and my approach to building practical software solutions.",
+    
+    page1Header: "PAGE 01 // FIELD IDENTITY",
+    polaroidName: "Bhavana Kondakrindi",
+    polaroidDegree: "B.Tech Computer Science & Engineering",
+    polaroidLocation: "KLH CAMPUS • HYDERABAD",
+    
+    dossierInstitutionLabel: "Institution",
+    dossierInstitutionValue: "KLH University",
+    dossierStandingLabel: "Degree Standing",
+    dossierStandingValue: "2nd Year (Sophomore)",
+    dossierMeritLabel: "Academic Merit",
+    dossierMeritValue: "CGPA ~9.5 / 10.0",
+    dossierFooterNote: "CONFIDENTIAL FIELD NOTES • BK // FIELD LOG",
+    
+    page2Header: "PAGE 02 // ESSAY & PRINCIPLES",
+    page2Badge: "SOPHOMORE PERSPECTIVE",
+    editorialQuote: '"I believe the most rewarding engineering happens at the intersection of robust data structures and thoughtful human interaction."',
+    
+    philosophyTitle: "My Engineering Philosophy",
+    philosophyBody: "Rather than stopping at conceptual design, I value building complete, working prototypes—whether modeling flight disruption re-accommodations, implementing A* drone pathfinding under variable weather, or writing clean OOP financial ledgers.",
+    
+    pillar1Text: "Clean Code & OOP",
+    pillar2Text: "Algorithmic Problem-Solving",
+    pillar3Text: "User-Focused Applications"
+  },
+
+  // 4. Section Headings for Skills, Projects, Education, Contact
+  sectionHeadings: {
+    skillsBadge: "Chapter 02 // Repertoire & Technical Toolbox",
+    skillsTitleMain: "Technical",
+    skillsTitleAccent: "Toolbox",
+    skillsSubtitle: "Languages, modern frameworks, and computer science foundations that shape my engineering approach.",
+    
+    projectsBadge: "Chapter 03 // Sticky Note Project Desk",
+    projectsTitleMain: "Selected",
+    projectsTitleAccent: "Works",
+    projectsSubtitle: "Tactile project mosaic arranged as a personal workspace desk. Click any sticky note to inspect full architecture diagrams and problem dossiers.",
+    
+    educationBadge: "Chapter 04 // Academics & Milestones",
+    educationTitleMain: "Academic",
+    educationTitleAccent: "Standing",
+    educationSubtitle: "Formal degree progression at KLH Deemed to be University, core foundational coursework, and verified milestones.",
+    
+    contactBadge: "Chapter 05 // Air-Mail Dispatch & Direct Channels",
+    contactTitleMain: "Get In",
+    contactTitleAccent: "Touch",
+    contactSubtitle: "Whether you have questions about my projects, want to collaborate on engineering initiatives, or just say hello—reach out directly!",
+    
+    contactSenderTitle: "Bhavana Kondakrindi",
+    contactSenderUniv: "KLH Deemed to be University",
+    contactSenderLoc: "Hyderabad, India"
   }
 };

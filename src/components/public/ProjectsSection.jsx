@@ -23,6 +23,7 @@ import { DynamicSticker } from '../ui/DynamicSticker';
 
 export const ProjectsSection = () => {
   const { publishedData, setActiveProjectModal } = usePortfolio();
+  const headings = publishedData?.sectionHeadings || {};
   
   // All projects from publishedData (ensuring all user-added projects 7, 8+ are included!)
   const rawProjects = publishedData?.projects && publishedData.projects.length > 0
@@ -197,12 +198,15 @@ export const ProjectsSection = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FEF08A] border-2 border-[#1A1714] font-mono text-xs font-bold text-amber-950 uppercase tracking-widest mb-3 shadow-xs">
               <Bookmark className="w-3.5 h-3.5 text-amber-700" />
-              <span>Chapter 03 // Sticky Note Project Desk</span>
+              <span>{headings.projectsBadge || "Chapter 03 // Sticky Note Project Desk"}</span>
             </div>
             
             <div className="relative inline-block">
               <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1714] tracking-tight">
-                Selected <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Works</span>
+                {headings.projectsTitleMain || "Selected"}{' '}
+                <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">
+                  {headings.projectsTitleAccent || "Works"}
+                </span>
               </h2>
               <div className="absolute -top-3 -right-6 pointer-events-none">
                 <DynamicSticker id="proj_sparkle" />
@@ -210,7 +214,7 @@ export const ProjectsSection = () => {
             </div>
 
             <p className="text-slate-600 font-sans text-sm sm:text-base max-w-xl mt-2 leading-relaxed">
-              Tactile project mosaic arranged as a personal workspace desk. Click any sticky note to inspect full architecture diagrams and problem dossiers.
+              {headings.projectsSubtitle || "Tactile project mosaic arranged as a personal workspace desk. Click any sticky note to inspect full architecture diagrams and problem dossiers."}
             </p>
           </div>
 

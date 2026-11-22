@@ -16,6 +16,7 @@ import { DynamicSticker } from '../ui/DynamicSticker';
 
 export const SkillsSection = () => {
   const { publishedData } = usePortfolio();
+  const headings = publishedData?.sectionHeadings || {};
   const categories = publishedData?.skills || [];
 
   // Descriptive highlights for each skill to make them tangible without fake percentages
@@ -80,12 +81,15 @@ export const SkillsSection = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#BBF7D0] border-2 border-[#1A1714] font-mono text-xs font-bold text-emerald-950 uppercase tracking-widest mb-3 shadow-xs">
               <Bookmark className="w-3.5 h-3.5 text-emerald-700" />
-              <span>Chapter 02 // Repertoire & Technical Toolbox</span>
+              <span>{headings.skillsBadge || "Chapter 02 // Repertoire & Technical Toolbox"}</span>
             </div>
             
             <div className="relative inline-block">
               <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1714] tracking-tight">
-                Technical <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Toolbox</span>
+                {headings.skillsTitleMain || "Technical"}{' '}
+                <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">
+                  {headings.skillsTitleAccent || "Toolbox"}
+                </span>
               </h2>
               <div className="absolute -top-3 -right-6 pointer-events-none">
                 <DynamicSticker id="skills_sparkle" />
@@ -93,7 +97,7 @@ export const SkillsSection = () => {
             </div>
 
             <p className="text-slate-600 font-sans text-base max-w-xl mt-2">
-              Core programming languages, modern web frameworks, and foundational computer science principles—presented honestly without arbitrary ratings.
+              {headings.skillsSubtitle || "Core programming languages, modern web frameworks, and foundational computer science principles—presented honestly without arbitrary ratings."}
             </p>
           </div>
 

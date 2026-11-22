@@ -21,6 +21,7 @@ import { DynamicSticker } from '../ui/DynamicSticker';
 export const AboutSection = () => {
   const { publishedData } = usePortfolio();
   const profile = publishedData?.profile || {};
+  const aboutContent = publishedData?.aboutContent || {};
   const paragraphs = profile.bioParagraphs || [];
 
   return (
@@ -41,12 +42,15 @@ export const AboutSection = () => {
         <div className="text-center max-w-2xl mx-auto mb-16 relative">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#BAE6FD] border-2 border-[#1A1714] font-mono text-xs font-bold text-sky-950 uppercase tracking-widest mb-3 shadow-xs">
             <Bookmark className="w-3.5 h-3.5 text-sky-700" />
-            <span>Chapter 01 // Field Journal & Biography</span>
+            <span>{aboutContent.chapterBadge || "Chapter 01 // Field Journal & Biography"}</span>
           </div>
 
           <div className="relative inline-block">
             <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1714] tracking-tight">
-              Behind the <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Journal</span>
+              {aboutContent.headingMain || "Behind the"}{' '}
+              <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">
+                {aboutContent.headingAccent || "Journal"}
+              </span>
             </h2>
             {/* Whimsical bedazzling sparkle */}
             <div className="absolute -top-3 -right-6 pointer-events-none">
@@ -55,7 +59,7 @@ export const AboutSection = () => {
           </div>
 
           <p className="text-slate-600 font-sans text-base mt-2">
-            Engineering perspective, academic grounding at KLH Deemed to be University, and my approach to building practical software solutions.
+            {aboutContent.subheading || "Engineering perspective, academic grounding at KLH Deemed to be University, and my approach to building practical software solutions."}
           </p>
         </div>
 
@@ -90,7 +94,7 @@ export const AboutSection = () => {
                   {/* Field Log Postmark */}
                   <div className="flex items-center justify-between border-b-2 border-dashed border-[#1A1714]/20 pb-3">
                     <span className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
-                      PAGE 01 // FIELD IDENTITY
+                      {aboutContent.page1Header || "PAGE 01 // FIELD IDENTITY"}
                     </span>
                     <DynamicSticker id="about_postmark" />
                   </div>
@@ -104,21 +108,21 @@ export const AboutSection = () => {
                     <div className="aspect-square rounded-xl overflow-hidden border border-slate-200 bg-slate-900 relative">
                       <img
                         src={profile.avatarUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"}
-                        alt="Bhavana Kondakrindi"
+                        alt={aboutContent.polaroidName || profile.name || "Bhavana Kondakrindi"}
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                       <div className="absolute bottom-2 left-2 text-[10px] font-mono text-white/90 font-bold">
-                        KLH CAMPUS • HYDERABAD
+                        {aboutContent.polaroidLocation || "KLH CAMPUS • HYDERABAD"}
                       </div>
                     </div>
 
                     <div className="mt-3 text-center">
                       <span className="font-editorial text-sm font-bold text-slate-800 block">
-                        Bhavana Kondakrindi
+                        {aboutContent.polaroidName || profile.name || "Bhavana Kondakrindi"}
                       </span>
                       <span className="text-[11px] font-mono text-slate-500 font-semibold block">
-                        B.Tech Computer Science & Engineering
+                        {aboutContent.polaroidDegree || profile.role || "B.Tech Computer Science & Engineering"}
                       </span>
                     </div>
 
@@ -131,17 +135,27 @@ export const AboutSection = () => {
                   {/* Tangible University Dossier Slip */}
                   <div className="p-4 rounded-2xl bg-white border-2 border-[#1A1714] shadow-xs space-y-2.5">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-slate-500 uppercase">Institution</span>
-                      <span className="text-xs font-mono font-bold text-slate-900">KLH University</span>
+                      <span className="font-mono text-xs font-bold text-slate-500 uppercase">
+                        {aboutContent.dossierInstitutionLabel || "Institution"}
+                      </span>
+                      <span className="text-xs font-mono font-bold text-slate-900">
+                        {aboutContent.dossierInstitutionValue || profile.university || "KLH University"}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-slate-500 uppercase">Degree Standing</span>
-                      <span className="text-xs font-mono font-bold text-slate-900">2nd Year (Sophomore)</span>
+                      <span className="font-mono text-xs font-bold text-slate-500 uppercase">
+                        {aboutContent.dossierStandingLabel || "Degree Standing"}
+                      </span>
+                      <span className="text-xs font-mono font-bold text-slate-900">
+                        {aboutContent.dossierStandingValue || "2nd Year (Sophomore)"}
+                      </span>
                     </div>
                     <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                      <span className="font-mono text-xs font-bold text-slate-500 uppercase">Academic Merit</span>
+                      <span className="font-mono text-xs font-bold text-slate-500 uppercase">
+                        {aboutContent.dossierMeritLabel || "Academic Merit"}
+                      </span>
                       <span className="font-mono font-black text-xs text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-200">
-                        CGPA ~{profile.cgpa || "9.5"} / 10.0
+                        {aboutContent.dossierMeritValue || `CGPA ~${profile.cgpa || "9.5"} / 10.0`}
                       </span>
                     </div>
                   </div>
@@ -150,7 +164,7 @@ export const AboutSection = () => {
 
                 {/* Bottom Quote Snippet */}
                 <div className="pt-4 border-t border-dashed border-[#1A1714]/20 flex items-center justify-between text-xs font-mono text-slate-500">
-                  <span className="font-bold text-[#1A1714]">CONFIDENTIAL FIELD NOTES</span>
+                  <span className="font-bold text-[#1A1714]">{aboutContent.dossierFooterNote || "CONFIDENTIAL FIELD NOTES • BK // FIELD LOG"}</span>
                   <span>BK // FIELD LOG</span>
                 </div>
 
@@ -164,19 +178,19 @@ export const AboutSection = () => {
                   {/* Page Masthead */}
                   <div className="flex items-center justify-between border-b-2 border-dashed border-[#1A1714]/15 pb-3">
                     <span className="font-mono text-xs uppercase font-bold text-slate-500 tracking-wider">
-                      PAGE 02 // ESSAY & PRINCIPLES
+                      {aboutContent.page2Header || "PAGE 02 // ESSAY & PRINCIPLES"}
                     </span>
                     <div className="flex items-center gap-2">
                       <DynamicSticker id="about_amethyst" />
                       <span className="font-mono text-[11px] font-bold text-sky-800 bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-200">
-                        SOPHOMORE PERSPECTIVE
+                        {aboutContent.page2Badge || "SOPHOMORE PERSPECTIVE"}
                       </span>
                     </div>
                   </div>
 
                   {/* Oversized Quote Callout */}
                   <div className="font-editorial text-2xl sm:text-3xl font-bold text-slate-900 leading-snug">
-                    "I believe the most rewarding engineering happens at the intersection of robust data structures and thoughtful human interaction."
+                    {aboutContent.editorialQuote || '"I believe the most rewarding engineering happens at the intersection of robust data structures and thoughtful human interaction."'}
                   </div>
 
                   {/* Narrative Paragraphs with Drop-Cap */}
@@ -207,10 +221,10 @@ export const AboutSection = () => {
                       <Lightbulb className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
                       <div>
                         <h4 className="font-editorial font-bold text-amber-950 text-base">
-                          My Engineering Philosophy
+                          {aboutContent.philosophyTitle || "My Engineering Philosophy"}
                         </h4>
                         <p className="text-xs text-amber-900 mt-1 leading-relaxed font-sans">
-                          Rather than stopping at conceptual design, I value building complete, working prototypes—whether modeling flight disruption re-accommodations, implementing A* drone pathfinding under variable weather, or writing clean OOP financial ledgers.
+                          {aboutContent.philosophyBody || "Rather than stopping at conceptual design, I value building complete, working prototypes—whether modeling flight disruption re-accommodations, implementing A* drone pathfinding under variable weather, or writing clean OOP financial ledgers."}
                         </p>
                       </div>
                     </div>
@@ -222,15 +236,15 @@ export const AboutSection = () => {
                 <div className="pt-6 border-t-2 border-[#1A1714]/10 grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5">
                     <Code2 className="w-4 h-4 text-rose-600 shrink-0" />
-                    <span className="text-xs font-mono font-bold text-slate-800">Clean Code & OOP</span>
+                    <span className="text-xs font-mono font-bold text-slate-800">{aboutContent.pillar1Text || "Clean Code & OOP"}</span>
                   </div>
                   <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5">
                     <Compass className="w-4 h-4 text-sky-600 shrink-0" />
-                    <span className="text-xs font-mono font-bold text-slate-800">Algorithmic Problem-Solving</span>
+                    <span className="text-xs font-mono font-bold text-slate-800">{aboutContent.pillar2Text || "Algorithmic Problem-Solving"}</span>
                   </div>
                   <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2.5">
                     <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
-                    <span className="text-xs font-mono font-bold text-slate-800">User-Focused Applications</span>
+                    <span className="text-xs font-mono font-bold text-slate-800">{aboutContent.pillar3Text || "User-Focused Applications"}</span>
                   </div>
                 </div>
 

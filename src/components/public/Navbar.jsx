@@ -10,6 +10,7 @@ export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [paletteDropdownOpen, setPaletteDropdownOpen] = useState(false);
 
+  const headerFooter = publishedData?.headerFooter || {};
   const themes = publishedData?.appearance?.themes || [];
 
   const navLinks = [
@@ -30,12 +31,10 @@ export const Navbar = () => {
       <div className="bg-[#1A1714] text-white px-4 py-1 text-[10px] font-mono tracking-widest uppercase flex items-center justify-between border-b border-black">
         <div className="flex items-center gap-3">
           <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
-          <span>DEV JOURNAL // DIGITAL FOLIO</span>
-          <span className="hidden sm:inline opacity-40">•</span>
-          <span className="hidden sm:inline opacity-80">KLH DEEMED TO BE UNIVERSITY</span>
+          <span>{headerFooter.tickerLeft || "DEV JOURNAL // DIGITAL FOLIO • KLH DEEMED TO BE UNIVERSITY"}</span>
         </div>
         <div className="flex items-center gap-4 text-slate-300">
-          <span className="hidden md:inline">CSE 2ND YEAR • CGPA ~9.5</span>
+          <span className="hidden md:inline">{headerFooter.tickerRight || "CSE 2ND YEAR • CGPA ~9.5"}</span>
           <a
             href="#/admin"
             className="text-amber-300 hover:text-white flex items-center gap-1 font-bold transition-colors"
@@ -55,7 +54,7 @@ export const Navbar = () => {
         <a href="#" className="group flex items-center gap-3">
           <div className="relative">
             <div className="w-11 h-11 bg-white border-2 border-[#1A1714] shadow-scrapbook rounded-md flex items-center justify-center font-editorial font-bold text-lg text-[#1A1714] group-hover:-rotate-3 transition-transform">
-              BK
+              {headerFooter.brandInitials || "BK"}
             </div>
             <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#FEF08A] border border-[#1A1714] rounded-full flex items-center justify-center text-[7px] font-black">
               ★
@@ -63,10 +62,10 @@ export const Navbar = () => {
           </div>
           <div>
             <span className="font-editorial text-lg sm:text-xl font-black tracking-tight text-[#1A1714] block leading-none group-hover:text-rose-600 transition-colors">
-              Bhavana Kondakrindi
+              {headerFooter.brandTitle || publishedData?.profile?.name || "Bhavana Kondakrindi"}
             </span>
             <span className="text-[11px] font-mono text-slate-500 tracking-wider">
-              Creative Developer Portfolio
+              {headerFooter.brandSubtitle || publishedData?.profile?.role || "Creative Developer Portfolio"}
             </span>
           </div>
         </a>

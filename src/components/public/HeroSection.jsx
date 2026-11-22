@@ -7,6 +7,7 @@ import { DynamicSticker } from '../ui/DynamicSticker';
 export const HeroSection = () => {
   const { publishedData } = usePortfolio();
   const profile = publishedData?.profile || {};
+  const heroContent = publishedData?.heroContent || {};
   const marquee = publishedData?.marqueeBanner || {
     enabled: true,
     bgColor: "#FEF08A",
@@ -59,9 +60,9 @@ export const HeroSection = () => {
           className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border-2 border-[#1A1714] shadow-scrapbook text-xs font-mono font-bold text-slate-900 mb-8"
         >
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span>KLH Deemed to be University • Computer Science & Engineering</span>
+          <span>{heroContent.issuePill || "KLH Deemed to be University • Computer Science & Engineering"}</span>
           <span className="text-slate-300">•</span>
-          <span className="text-rose-600 font-black">CGPA ~{profile.cgpa || "9.5"}</span>
+          <span className="text-rose-600 font-black">{heroContent.cgpaHighlight || `CGPA ~${profile.cgpa || "9.5"}`}</span>
         </motion.div>
 
         {/* MASSIVE CENTERED EDITORIAL MASTHEAD */}
@@ -78,9 +79,9 @@ export const HeroSection = () => {
           <DynamicSticker id="hero_sparkle" className="absolute -top-4 right-16 hidden sm:block animate-float" />
 
           <h1 className="font-editorial text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-[#1A1714] leading-[0.9] select-none">
-            Bhavana <br />
+            {heroContent.firstName || "Bhavana"} <br />
             <span className="relative inline-block font-serif italic font-normal text-slate-900 mt-2">
-              <span className="relative z-10">Kondakrindi</span>
+              <span className="relative z-10">{heroContent.lastName || "Kondakrindi"}</span>
               {/* Soft highlighter brush stroke */}
               <span className="absolute -bottom-1 -left-3 -right-3 h-8 sm:h-12 bg-[#FBCFE8]/80 -rotate-0.5 rounded-sm -z-0" />
             </span>
@@ -88,7 +89,7 @@ export const HeroSection = () => {
 
           <div className="mt-4 flex items-center justify-center gap-2">
             <span className="font-handwriting text-2xl text-rose-600 font-bold -rotate-1">
-              creative developer portfolio & digital sketchbook
+              {heroContent.handwrittenSubtitle || "creative developer portfolio & digital sketchbook"}
             </span>
           </div>
         </motion.div>
@@ -119,18 +120,18 @@ export const HeroSection = () => {
               <div className="md:col-span-4 text-left space-y-3 order-2 md:order-1">
                 <div className="bg-white p-3.5 rounded-xl border-2 border-[#1A1714] shadow-xs transform -rotate-1 hover:rotate-0 transition-transform">
                   <span className="font-mono text-[9px] uppercase font-bold text-slate-400 block tracking-wider">
-                    ACADEMIC LOG
+                    {heroContent.note1Tag || "ACADEMIC LOG"}
                   </span>
                   <div className="font-editorial font-bold text-sm text-slate-900 mt-0.5">
-                    KLH University
+                    {heroContent.note1Title || profile.university || "KLH University"}
                   </div>
                   <p className="text-[11px] font-mono text-slate-600 mt-0.5">
-                    CSE Sophomore (2nd Yr)
+                    {heroContent.note1Subtitle || "CSE Sophomore (2nd Yr)"}
                   </p>
                   <div className="mt-2 pt-1.5 border-t border-slate-200 flex items-center justify-between text-xs font-mono font-bold">
-                    <span>CGPA:</span>
+                    <span>{heroContent.note1CgpaLabel || "CGPA:"}</span>
                     <span className="text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">
-                      ~{profile.cgpa || "9.5"} / 10
+                      {heroContent.note1CgpaValue || `~${profile.cgpa || "9.5"} / 10`}
                     </span>
                   </div>
                 </div>
@@ -138,10 +139,10 @@ export const HeroSection = () => {
                 <div className="bg-white p-3 rounded-xl border-2 border-[#1A1714] shadow-xs hidden sm:block">
                   <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-slate-800">
                     <Code2 className="w-3.5 h-3.5 text-purple-700" />
-                    <span>Focus: Systems & Web</span>
+                    <span>{heroContent.note2Tag || "Focus: Systems & Web"}</span>
                   </div>
                   <p className="text-[11px] text-slate-600 font-sans mt-1 leading-normal">
-                    React.js dashboards, Python AI simulations & Java OOP.
+                    {heroContent.note2Desc || "React.js dashboards, Python AI simulations & Java OOP."}
                   </p>
                 </div>
               </div>
@@ -163,10 +164,10 @@ export const HeroSection = () => {
 
                   <div className="mt-2.5 text-center">
                     <p className="font-handwriting text-xl text-[#1A1714] font-bold leading-tight">
-                      {profile.avatarCaption || "Bhavana Kondakrindi"}
+                      {heroContent.polaroidCaption || profile.avatarCaption || "Bhavana Kondakrindi"}
                     </p>
                     <p className="text-[9px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">
-                      KLH CSE • SOPHOMORE
+                      {heroContent.polaroidSubCaption || "KLH CSE • SOPHOMORE"}
                     </p>
                   </div>
 
@@ -186,23 +187,23 @@ export const HeroSection = () => {
               <div className="md:col-span-4 text-left space-y-3 order-3">
                 <div className="bg-white p-3.5 rounded-xl border-2 border-[#1A1714] shadow-xs transform rotate-1 hover:rotate-0 transition-transform">
                   <span className="font-mono text-[9px] uppercase font-bold text-slate-400 block tracking-wider">
-                    CORE PHILOSOPHY
+                    {heroContent.note3Tag || "CORE PHILOSOPHY"}
                   </span>
                   <div className="font-editorial font-bold text-sm text-slate-900 mt-0.5">
-                    Practical Technology
+                    {heroContent.note3Title || "Practical Technology"}
                   </div>
                   <p className="text-[11px] font-sans text-slate-600 mt-1 leading-normal">
-                    "I believe in building working, user-centered software that solves real-world challenges."
+                    {heroContent.note3Quote || '"I believe in building working, user-centered software that solves real-world challenges."'}
                   </p>
                 </div>
 
                 <div className="bg-white p-3 rounded-xl border-2 border-[#1A1714] shadow-xs hidden sm:block">
                   <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-slate-800">
                     <Terminal className="w-3.5 h-3.5 text-emerald-700" />
-                    <span>Algorithmic Thinking</span>
+                    <span>{heroContent.note4Tag || "Algorithmic Thinking"}</span>
                   </div>
                   <p className="text-[11px] text-slate-600 font-sans mt-1 leading-normal">
-                    Classical algorithms, data structures & pathfinding models.
+                    {heroContent.note4Desc || "Classical algorithms, data structures & pathfinding models."}
                   </p>
                 </div>
               </div>
@@ -220,11 +221,11 @@ export const HeroSection = () => {
           className="max-w-2xl mx-auto space-y-4 mb-8"
         >
           <p className="font-display text-lg sm:text-xl font-bold text-slate-900 leading-snug">
-            {profile.tagline || "Exploring code, designing interactive software & solving practical problems."}
+            {heroContent.tagline || profile.tagline || "Exploring code, designing interactive software & solving practical problems."}
           </p>
 
           <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-sans">
-            {profile.intro}
+            {heroContent.intro || profile.intro}
           </p>
         </motion.div>
 
@@ -239,7 +240,7 @@ export const HeroSection = () => {
             href="#projects"
             className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#1A1714] text-white font-mono font-bold text-xs uppercase tracking-wider shadow-scrapbook hover:shadow-scrapbook-lg hover:-translate-y-0.5 active:translate-y-0 transition-all"
           >
-            <span>Explore Selected Projects</span>
+            <span>{heroContent.primaryBtnText || "Explore Selected Projects"}</span>
             <ArrowDown className="w-4 h-4 text-yellow-300 group-hover:translate-y-1 transition-transform" />
           </a>
 
@@ -248,7 +249,7 @@ export const HeroSection = () => {
             className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-white border-2 border-[#1A1714] text-slate-900 font-mono font-bold text-xs uppercase tracking-wider shadow-scrapbook hover:bg-slate-50 hover:-translate-y-0.5 transition-all"
           >
             <Mail className="w-4 h-4 text-rose-500" />
-            <span>Send a Direct Note</span>
+            <span>{heroContent.secondaryBtnText || "Send a Direct Note"}</span>
           </a>
         </motion.div>
 

@@ -15,6 +15,7 @@ import { DynamicSticker } from '../ui/DynamicSticker';
 
 export const ContactSection = () => {
   const { publishedData } = usePortfolio();
+  const headings = publishedData?.sectionHeadings || {};
   const contact = publishedData?.contactInfo || {};
   const profile = publishedData?.profile || {};
 
@@ -43,12 +44,15 @@ export const ContactSection = () => {
         <div className="text-center max-w-2xl mx-auto mb-14 relative">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDA4AF] border-2 border-[#1A1714] font-mono text-xs font-bold text-rose-950 uppercase tracking-widest mb-3 shadow-xs">
             <Bookmark className="w-3.5 h-3.5 text-rose-700" />
-            <span>Chapter 05 // Air-Mail Dispatch & Direct Channels</span>
+            <span>{headings.contactBadge || "Chapter 05 // Air-Mail Dispatch & Direct Channels"}</span>
           </div>
 
           <div className="relative inline-block">
             <h2 className="font-editorial text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1714] tracking-tight">
-              Get In <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">Touch</span>
+              {headings.contactTitleMain || "Get In"}{' '}
+              <span className="italic font-serif font-normal text-rose-600 underline decoration-wavy decoration-rose-300">
+                {headings.contactTitleAccent || "Touch"}
+              </span>
             </h2>
             <div className="absolute -top-3 -right-6 pointer-events-none">
               <DynamicSticker id="contact_sparkle" />
@@ -56,7 +60,7 @@ export const ContactSection = () => {
           </div>
 
           <p className="text-slate-600 font-sans text-base mt-2">
-            {contact.subheading || "Whether you have questions about my projects, want to collaborate on engineering initiatives, or just say hello—reach out directly!"}
+            {headings.contactSubtitle || contact.subheading || "Whether you have questions about my projects, want to collaborate on engineering initiatives, or just say hello—reach out directly!"}
           </p>
         </div>
 
@@ -82,17 +86,17 @@ export const ContactSection = () => {
                     RETURN DISPATCH // SENDER
                   </span>
                   <h3 className="font-editorial text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
-                    Bhavana Kondakrindi
+                    {headings.contactSenderTitle || "Bhavana Kondakrindi"}
                   </h3>
                   <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-slate-600 font-bold">
                     <span className="flex items-center gap-1">
                       <GraduationCap className="w-3.5 h-3.5 text-rose-600" />
-                      KLH Deemed to be University
+                      {headings.contactSenderUniv || "KLH Deemed to be University"}
                     </span>
                     <span>•</span>
                     <span className="flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5 text-slate-500" />
-                      Hyderabad, India
+                      {headings.contactSenderLoc || "Hyderabad, India"}
                     </span>
                   </div>
                 </div>
