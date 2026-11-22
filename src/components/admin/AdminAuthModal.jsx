@@ -108,7 +108,6 @@ export const AdminAuthModal = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="bhavanakondakrindi26@gmail.com"
               disabled={!isSupabaseConnected || authLoading}
               className="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#1E1E24]/30 focus:border-[#1E1E24] bg-slate-50 text-sm font-sans focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               required
@@ -124,7 +123,6 @@ export const AdminAuthModal = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••••••"
               disabled={!isSupabaseConnected || authLoading}
               className="w-full px-3.5 py-2.5 rounded-xl border-2 border-[#1E1E24]/30 focus:border-[#1E1E24] bg-slate-50 text-sm font-mono focus:outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               required
